@@ -1,5 +1,4 @@
 #include "BearGraphics.hpp"
-#include "..\..\..\engine\bear\bearengine\include\BearRender\BearTexture2D.h"
 extern BEARGRAPHICS_API BearRHI::BearRHIFactory*RHIFactoty;
 BearGraphics::BearTexture2DRef::BearTexture2DRef()
 {
