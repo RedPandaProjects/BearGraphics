@@ -1,9 +1,10 @@
 #pragma once
 #include "BearCore.hpp"
 #define BEARGRAPHICS_API  BEARPROJECT_IMPORT
-#include "BearGraphicsEnum.h"
+#include "BearGraphicsEnums.h"
 #include "BearRHI/BearRHITextureUtils.h"
 #include "BearRHI/BearRHITexture2D.h"
+#include "BearRHI/BearRHITexture2DArray.h"
 
 #include "BearRHI/BearRHIView.h"
 #include "BearRHI/BearRHIViewPort.h"
@@ -14,15 +15,16 @@
 #include "BearRHI/BearRHIVertexShader.h"
 #include "BearRHI/BearRHIVertexShaderCompiler.h"
 
-#include "BearRHI/BearRHIVertexInputLayout.h"
 #include "BearRender/BearRenderResource.h" 
-#include "BearRender/BearVertexInputLayout.h"
 
 #include "BearRHI/BearRHIPixelShader.h"
 #include "BearRHI/BearRHIPixelShaderCompiler.h"
 
+#include "BearRHI/BearRHIShaderConstants.h"
+
 #include "BearRHI/BearRHIStats.h"
 #include "BearRender/BearStatsInitializers.h"
+#include "BearRender/BearShaderConstants.h"
 
 #include "BearRHI/BearRHIInterface.h"
 #include "BearRHI/BearRHIFactory.h"

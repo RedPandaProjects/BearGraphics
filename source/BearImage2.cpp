@@ -6,7 +6,11 @@ extern "C"
 {
 	void* Malloc(bsize a)
 	{
-		return BearCore::BearMemory::Malloc(a, "stb_image");
+		return BearCore::BearMemory::Malloc(a
+#ifdef DEBUG
+			, "stb_image"
+#endif
+		);
 	}
 	void Free(void* a)
 	{
@@ -16,71 +20,75 @@ extern "C"
 	}
 	void* Realloc(void* x, bsize n)
 	{
-		return  BearCore::BearMemory::Realloc(x, n, "stb_image");
+		return  BearCore::BearMemory::Realloc(x, n
+#ifdef DEBUG
+			, "stb_image"
+#endif
+		);
 	}
 }
 #include "stb_image.h"
 #include "stb_image_write.h"
-bool BearGraphics::BearImage::loadFromFile(const bchar * str)
+bool BearGraphics::BearImage::LoadFromFile(const bchar * str)
 {
 	BearCore::BearFileStream stream;
-	if (!stream.open(str))
+	if (!stream.Open(str))
 		return false;
-	return loadFromInput(stream);
+	return LoadFromStream(stream);
 }
 
-bool BearGraphics::BearImage::loadFromInput(const BearCore::BearInputStream & stream)
+bool BearGraphics::BearImage::LoadFromStream(const BearCore::BearInputStream & stream)
 {
 	BearCore::BearMemoryTranslationStream memory(stream);
-	return loadFromBuffer(memory);
+	return LoadFromBuffer(memory);
 }
 
-bool BearGraphics::BearImage::loadFromBuffer(const BearCore::BearBufferedReader & stream)
+bool BearGraphics::BearImage::LoadFromBuffer(const BearCore::BearBufferedReader & stream)
 {
-	clear();
+	Clear();
 	int w, h, comp;
-	stbi_uc*data1 = stbi_load_from_memory((const stbi_uc*)stream.begin(), (int)((uint8*)stream.end() - (uint8*)stream.begin()), &w, &h, &comp, STBI_rgb_alpha);
+	stbi_uc*data1 = stbi_load_from_memory((const stbi_uc*)stream.Begin(), (int)((uint8*)stream.End() - (uint8*)stream.Begin()), &w, &h, &comp, STBI_rgb_alpha);
 	if (!data1) {
 		return false;
 	}
-	create(w, h);
+	Create(w, h);
 	BearCore::bear_copy(m_images, data1, BearRHI::BearRHITexture2D::GetSizeInMemory(w, h, 1, m_px));
 	BearCore::bear_free(data1);
 	return true;
 }
 
-bool BearGraphics::BearImage::loadFromFile(bsize depth, const bchar * str)
+bool BearGraphics::BearImage::LoadFromFile(bsize depth, const bchar * str)
 {
-	if (empty())return false;
+	if (Empty())return false;
 	BearCore::BearFileStream stream;
-	if (!stream.open(str))
+	if (!stream.Open(str))
 		return false;
-	return loadFromInput(depth, stream);
+	return LoadFromStream(depth, stream);
 }
 
-bool BearGraphics::BearImage::loadFromInput(bsize depth, const BearCore::BearInputStream & stream)
+bool BearGraphics::BearImage::LoadFromStream(bsize depth, const BearCore::BearInputStream & stream)
 {
-	if (empty())return false;
+	if (Empty())return false;
 	BearCore::BearMemoryTranslationStream memory(stream);
-	return loadFromBuffer(depth, memory);
+	return LoadFromBuffer(depth, memory);
 }
 
-bool BearGraphics::BearImage::loadFromBuffer(bsize depth, const BearCore::BearBufferedReader & stream)
+bool BearGraphics::BearImage::LoadFromBuffer(bsize depth, const BearCore::BearBufferedReader & stream)
 {
-	if (empty())return false;
+	if (Empty())return false;
 	int w, h, comp;
-	stbi_uc*data = stbi_load_from_memory((const stbi_uc*)stream.begin(), (int)((uint8*)stream.end() - (uint8*)stream.begin()), &w, &h, &comp, STBI_rgb_alpha);
+	stbi_uc*data = stbi_load_from_memory((const stbi_uc*)stream.Begin(), (int)((uint8*)stream.End() - (uint8*)stream.Begin()), &w, &h, &comp, STBI_rgb_alpha);
 	if (!data)
 	{
 		return false;
 	}
-	resize(w, h, depth, TPF_R8G8B8A8);
+	Resize(w, h, depth, TPF_R8G8B8A8);
 	bsize size = BearRHI::BearRHITexture2D::GetSizeInMemory(w, h, m_mips, m_px);
 	BearCore::bear_copy(m_images + (depth*size), data, BearRHI::BearRHITexture2D::GetSizeInMemory(w, h, 1, m_px));
 	BearCore::bear_free(data);
 	return true;
 }
-bool BearGraphics::BearImage::saveToJpg(const bchar * name, bsize depth)
+bool BearGraphics::BearImage::SaveToJpg(const bchar * name, bsize depth)
 {
 	BEAR_FATALERROR(m_depth > depth, TEXT("Значение глубены [%llu] вышло за пределы [%llu] масива"), depth, m_depth);
 	BEAR_FATALERROR(!BearRHI::BearRHITextureUtils::isCompressor(m_px), TEXT("BlockCompressor нередактируеться"));
@@ -89,7 +97,7 @@ bool BearGraphics::BearImage::saveToJpg(const bchar * name, bsize depth)
 	return stbi_write_jpg(*BearCore::BearEncoding::ToANSI(name), static_cast<int>(m_w), static_cast<int>(m_h), static_cast<int>(BearRHI::BearRHITextureUtils::GetCountComp(m_px)), m_images + depth * BearRHI::BearRHITextureUtils::GetSizeInMemory(m_w, m_h, m_mips, m_px), 100);
 }
 
-bool BearGraphics::BearImage::saveToPng(const bchar * name, bsize depth)
+bool BearGraphics::BearImage::SaveToPng(const bchar * name, bsize depth)
 {
 	BEAR_FATALERROR(m_depth > depth, TEXT("Значение глубены [%llu] вышло за пределы [%llu] масива"), depth, m_depth);
 	BEAR_FATALERROR(!BearRHI::BearRHITextureUtils::isCompressor(m_px), TEXT("BlockCompressor нередактируеться"));
@@ -99,7 +107,7 @@ bool BearGraphics::BearImage::saveToPng(const bchar * name, bsize depth)
 
 }
 
-bool BearGraphics::BearImage::saveToBmp(const bchar * name, bsize depth)
+bool BearGraphics::BearImage::SaveToBmp(const bchar * name, bsize depth)
 {
 	BEAR_FATALERROR(m_depth > depth, TEXT("Значение глубены [%llu] вышло за пределы [%llu] масива"), depth, m_depth);
 	BEAR_FATALERROR(!BearRHI::BearRHITextureUtils::isCompressor(m_px), TEXT("BlockCompressor нередактируеться"));
@@ -108,7 +116,7 @@ bool BearGraphics::BearImage::saveToBmp(const bchar * name, bsize depth)
 
 }
 
-bool BearGraphics::BearImage::saveToTga(const bchar * name, bsize depth)
+bool BearGraphics::BearImage::SaveToTga(const bchar * name, bsize depth)
 {
 	BEAR_FATALERROR(m_depth > depth, TEXT("Значение глубены [%llu] вышло за пределы [%llu] масива"), depth, m_depth);
 	BEAR_FATALERROR(!BearRHI::BearRHITextureUtils::isCompressor(m_px), TEXT("BlockCompressor нередактируеться"));

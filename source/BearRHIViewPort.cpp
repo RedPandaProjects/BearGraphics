@@ -1,5 +1,5 @@
 #include "BearGraphics.hpp"
 
-void BearRHI::BearRHIViewPort::generateMips()
+void BearRHI::BearRHIViewport::GenerateMips()
 {
 }

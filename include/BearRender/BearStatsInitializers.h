@@ -111,4 +111,19 @@ namespace BearGraphics
 		float DepthBias;
 		float SlopeScaleDepthBias;
 	};
+	struct BearVertexStateElement
+	{
+		BearVertexStateElement(const char*Name, BearVertexFormat Type, bsize Offset,bool IsInstance=false) :Name(Name), Type(Type), Offset(Offset), IsInstance(IsInstance){}
+		BearVertexStateElement() :Type(VF_NONE), Offset(0) , IsInstance(0){}
+		BearVertexFormat Type;
+		BearCore::BearStringAnsiConteniar Name;
+		bsize Offset;
+		bsize SemanticIndex;
+		bool IsInstance;
+	};
+	struct BearVertexStateInitializer
+	{
+		BearVertexStateElement Elements[16];
+	};
+
 }

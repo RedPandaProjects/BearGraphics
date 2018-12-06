@@ -11,25 +11,26 @@ namespace BearGraphics
 		BearShader##name##CompilerRef();\
 		~BearShader##name##CompilerRef();\
 		\
-		bool compileText(const bchar*text, BearCore::BearString&out_error);\
-		bool compileFromFile(const bchar*file, BearCore:: BearEncoding::Encoding  coding, BearCore::BearString&out_error);\
-		bool compileFromInput(BearCore::BearInputStream&stream, BearCore:: BearEncoding::Encoding  coding, BearCore::BearString&out_error);\
-		bool compileFromBuffer(BearCore::BearBufferedReader&stream, BearCore:: BearEncoding::Encoding  coding, BearCore::BearString&out_error);\
+		bool CompileText(const bchar*text, BearCore::BearString&out_error);\
+		bool CompileFromFile(const bchar*file, BearCore:: BearEncoding::Encoding  coding, BearCore::BearString&out_error);\
+		bool CompileFromStream(BearCore::BearInputStream&stream, BearCore:: BearEncoding::Encoding  coding, BearCore::BearString&out_error);\
+		bool CompileFromBuffer(BearCore::BearBufferedReader&stream, BearCore:: BearEncoding::Encoding  coding, BearCore::BearString&out_error);\
 		\
-		bool saveToFile(const bchar*file);\
+		bool SaveToFile(const bchar*file);\
 		\
-		void*begin();\
-		void*end();\
-		const void*begin()const;\
-		const void*end()const;\
-		bsize getSize()const;\
+		void*Begin();\
+		void*End();\
+		const void*Begin()const;\
+		const void*End()const;\
+		bsize GetSize()const;\
 		\
-		bool empty()const;\
+		inline bool Empty()const { return m_data.empty(); }\
+	   inline bool IsOne()const { return m_data.is_one(); }\
 		\
-		void clear();\
+		void Clear();\
 		\
-		void copy(const BearShader##name##CompilerRef&right);\
-		void swap(BearShader##name##CompilerRef&right);\
+		void Copy(const BearShader##name##CompilerRef&right);\
+		void Swap(BearShader##name##CompilerRef&right);\
 		BearShader##name##CompilerRef(const BearShader##name##CompilerRef&right);\
 		BearShader##name##CompilerRef&operator=(const BearShader##name##CompilerRef&right);\
 		\
@@ -50,20 +51,21 @@ namespace BearGraphics
 		Bear##name##ShaderRef();\
 		~Bear##name##ShaderRef();\
 		\
-		bool compileText(const bchar*text, BearCore::BearString&out_error);\
-		bool compileFromFile(const bchar*file, BearCore:: BearEncoding::Encoding  coding, BearCore::BearString&out_error);\
-		bool compileFromInput(BearCore::BearInputStream&stream, BearCore:: BearEncoding::Encoding  coding, BearCore::BearString&out_error);\
-		bool compileFromBuffer(BearCore::BearBufferedReader&stream, BearCore:: BearEncoding::Encoding  coding, BearCore::BearString&out_error);\
-		bool loadFromFile(const bchar*file);\
-		bool loadFromCompiler(const BearShader##name##CompilerRef&compiler);\
-		bool loadFromInput(BearCore::BearInputStream&stream);\
-		bool loadFromBuffer(BearCore::BearBufferedReader&stream);\
-		bool empty()const;\
+		bool CompileText(const bchar*text, BearCore::BearString&out_error);\
+		bool CompileFromFile(const bchar*file, BearCore:: BearEncoding::Encoding  coding, BearCore::BearString&out_error);\
+		bool CompileFromStream(BearCore::BearInputStream&stream, BearCore:: BearEncoding::Encoding  coding, BearCore::BearString&out_error);\
+		bool CompileFromBuffer(BearCore::BearBufferedReader&stream, BearCore:: BearEncoding::Encoding  coding, BearCore::BearString&out_error);\
+		bool LoadFromFile(const bchar*file);\
+		bool LoadFromCompiler(const BearShader##name##CompilerRef&compiler);\
+		bool LoadFromStream(BearCore::BearInputStream&stream);\
+		bool LoadFromBuffer(BearCore::BearBufferedReader&stream);\
+		inline bool Empty()const { return m_data.empty(); }\
+	   inline bool IsOne()const { return m_data.is_one(); }\
 		\
-		void clear();\
+		void Clear();\
 		\
-		void copy(const Bear##name##ShaderRef&right);\
-		void swap(Bear##name##ShaderRef&right);\
+		void Copy(const Bear##name##ShaderRef&right);\
+		void Swap(Bear##name##ShaderRef&right);\
 		Bear##name##ShaderRef(const Bear##name##ShaderRef&right);\
 		Bear##name##ShaderRef&operator=(const Bear##name##ShaderRef&right);\
 	private:\

@@ -42,12 +42,26 @@ namespace BearGraphics
 		RTF_R32G32B32F,
 		RTF_R32G32B32A32F,
 	};
-	enum BearInputLayoutElementType
+	enum BearVertexFormat
 	{
-		ILE_R32_FLOAT=0,
-		ILE_R32G32_FLOAT,
-		ILE_R32G32B32_FLOAT,
-		ILE_R32G32B32A32_FLOAT,
+		VF_NONE=0,
+		VF_R32_FLOAT,
+		VF_R32G32_FLOAT,
+		VF_R32G32B32_FLOAT,
+		VF_R32G32B32A32_FLOAT,
+		VF_R32_INT,
+		VF_R8,
+		VF_R8G8,
+		VF_R8G8B8A8,
+	};
+	enum BearConstantFormat
+	{
+		CF_R32_FLOAT = 0,
+		CF_R32G32_FLOAT,
+		CF_R32G32B32_FLOAT,
+		CF_R32G32B32A32_FLOAT,
+		CF_R32_INT,
+		CF_MATRIX,
 	};
 	enum BearDrawType
 	{

@@ -8,15 +8,15 @@ namespace BearGraphics
 	friend class BearRenderInterface;\
 		Bear##name##BufferRef();\
 		~Bear##name##BufferRef();\
-		void create(void*data, bsize size, bool dynamic);\
-		void create(bsize size);\
-		void clear();\
-		void*lock();\
-		void unlock();\
-		bool empty()const;\
-		\
-		void copy(const Bear##name##BufferRef&right);\
-		void swap(Bear##name##BufferRef&right);\
+		void Create(void*data, bsize size, bool dynamic);\
+		void Create(bsize size);\
+		void Clear();\
+		void*Lock();\
+		void Unlock();\
+		inline bool Empty()const{return m_data.empty();}\
+		inline bool IsOne()const{return m_data.is_one();}\
+		void Copy(const Bear##name##BufferRef&right);\
+		void Swap(Bear##name##BufferRef&right);\
 		Bear##name##BufferRef&operator=(const Bear##name##BufferRef&right);\
 		Bear##name##BufferRef(const Bear##name##BufferRef&right);\
 	private:\

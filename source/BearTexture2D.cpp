@@ -6,73 +6,79 @@ BearGraphics::BearTexture2DRef::BearTexture2DRef()
 
 BearGraphics::BearTexture2DRef::~BearTexture2DRef()
 {
-	clear();
+	Clear();
 }
 
-void BearGraphics::BearTexture2DRef::create(const BearImage & image, bsize depth , bool dynamic)
+void BearGraphics::BearTexture2DRef::Create(const BearImage & image, bsize depth , bool dynamic)
 {
-	if (image.empty())return;
+	if (image.Empty())return;
 	if (!RHIFactoty)return;
-	if (BearRHI::BearRHITextureUtils::isCompressor(image.getFormat()))
-		BEAR_FATALERROR(image.getSize().x % 4 == 0 && image.getSize().y % 4 == 0, TEXT("Ќекоректный размер[%dx%d] картики типа BC"), uint32(image.getSize().x), uint32(image.getSize().y));
+	if (BearRHI::BearRHITextureUtils::isCompressor(image.GetFormat()))
+		BEAR_FATALERROR(image.GetSize().x % 4 == 0 && image.GetSize().y % 4 == 0, TEXT("Ќекоректный размер[%dx%d] картики типа BC"), uint32(image.GetSize().x), uint32(image.GetSize().y));
 	
-	BEAR_FATALERROR(image.getDepth() > depth, TEXT("«начение глубены [%llu] вышло за пределы [%llu] масива"), depth, image.getDepth());
-	clear();
+	BEAR_FATALERROR(image.GetDepth() > depth, TEXT("«начение глубены [%llu] вышло за пределы [%llu] масива"), depth, image.GetDepth());
+	Clear();
 	m_data.create();
-	m_data.get()->resource = RHIFactoty->createTexture2D(image.getSize().x, image.getSize().y, image.getMips(), image.getFormat(), dynamic, (uint8*)*image+BearRHI::BearRHITextureUtils::GetSizeInMemory(image.getSize().x, image.getSize().y,image.getMips(),image.getFormat())*depth);
+	m_data.get()->resource = RHIFactoty->CreateTexture2D(image.GetSize().x, image.GetSize().y, image.GetMips(), image.GetFormat(), dynamic, (uint8*)*image+BearRHI::BearRHITextureUtils::GetSizeInMemory(image.GetSize().x, image.GetSize().y,image.GetMips(),image.GetFormat())*depth);
+	m_data.get()->size.x = static_cast<float>(image.GetSize().x);
+	m_data.get()->size.y = static_cast<float>(image.GetSize().y);
 }
 
-void BearGraphics::BearTexture2DRef::create(bsize w, bsize h, bsize mip, BearTexturePixelFormat format, bool dynamic)
+void BearGraphics::BearTexture2DRef::Create(bsize w, bsize h, bsize mip, BearTexturePixelFormat format, bool dynamic)
 {
 	if (!RHIFactoty)return;
-	clear();
+	Clear();
 	m_data.create();
-	m_data.get()->resource = RHIFactoty->createTexture2D(w, h, mip,format, dynamic,0);
+	m_data.get()->resource = RHIFactoty->CreateTexture2D(w, h, mip,format, dynamic,0);
+	m_data.get()->size.x = static_cast<float>(w);
+	m_data.get()->size.y = static_cast<float>(h);
 }
 
-void BearGraphics::BearTexture2DRef::clear()
+void BearGraphics::BearTexture2DRef::Clear()
 {
 	m_data.clear();
 }
 
-void * BearGraphics::BearTexture2DRef::lock(bsize mip)
+void * BearGraphics::BearTexture2DRef::Lock(bsize mip)
 {
-	if(empty())
+	if(Empty())
 	return nullptr;
-	return m_data.get()->resource->lock(mip);
+	return m_data.get()->resource->Lock(mip);
 }
 
-void BearGraphics::BearTexture2DRef::unlock()
+void BearGraphics::BearTexture2DRef::Unlock()
 {
-	if (empty())return;
-	return m_data.get()->resource->unlock();
+	if (Empty())return;
+	return m_data.get()->resource->Unlock();
 }
 
-
-bool BearGraphics::BearTexture2DRef::empty() const
+BearCore::BearFVector2 BearGraphics::BearTexture2DRef::GetSize() const
 {
-	return m_data.empty();
+	if (Empty())
+		return BearCore::BearFVector2();
+	return  m_data.get()->size;
 }
 
-void BearGraphics::BearTexture2DRef::copy(const BearTexture2DRef & right)
+
+void BearGraphics::BearTexture2DRef::Copy(const BearTexture2DRef & right)
 {
 	m_data = right.m_data;
 }
 
-void BearGraphics::BearTexture2DRef::swap(BearTexture2DRef & right)
+void BearGraphics::BearTexture2DRef::Swap(BearTexture2DRef & right)
 {
 	m_data.swap(right.m_data);
 }
 
 BearGraphics::BearTexture2DRef::BearTexture2DRef(const BearTexture2DRef & right)
 {
-	copy(right);
+	Copy(right);
 }
 
 BearGraphics::BearTexture2DRef & BearGraphics::BearTexture2DRef::operator=(const BearTexture2DRef & right)
 {
-	copy(right);
+	Copy(right);
 	return*this;
 }
 BearGraphics::BearTexture2DRef::data::data() :resource(0) {}
-BearGraphics::BearTexture2DRef::data::~data() { if (resource)RHIFactoty->destroyTexture2D(resource); }
+BearGraphics::BearTexture2DRef::data::~data() { if (resource)RHIFactoty->DestroyTexture2D(resource); }

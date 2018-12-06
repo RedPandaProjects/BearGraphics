@@ -4,8 +4,8 @@ namespace BearRHI
 	class BearRHIPixelShaderCompiler
 	{
 	public:
-		virtual bool compileFromText(const bchar*text,BearCore::BearString&out_error)=0;
-		virtual void*getPointerBuffer()=0;
-		virtual bsize getSizeBuffer()=0;
+		virtual bool CompileFromText(const bchar*text,BearCore::BearString&out_error)=0;
+		virtual void*GetPointerBuffer()=0;
+		virtual bsize GetSizeBuffer()=0;
 	};
 }

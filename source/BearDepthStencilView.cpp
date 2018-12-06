@@ -6,77 +6,73 @@ BearGraphics::BearDepthStencilViewRef::BearDepthStencilViewRef()
 
 BearGraphics::BearDepthStencilViewRef::~BearDepthStencilViewRef()
 {
-	clear();
+	Clear();
 }
 
-void BearGraphics::BearDepthStencilViewRef::copy(const BearDepthStencilViewRef & right)
+void BearGraphics::BearDepthStencilViewRef::Copy(const BearDepthStencilViewRef & right)
 {
 	m_data = right.m_data;
 }
 
-void BearGraphics::BearDepthStencilViewRef::swap(BearDepthStencilViewRef & right)
+void BearGraphics::BearDepthStencilViewRef::Swap(BearDepthStencilViewRef & right)
 {
 	m_data.swap(right.m_data);
 }
 
 BearGraphics::BearDepthStencilViewRef & BearGraphics::BearDepthStencilViewRef::operator=(const BearDepthStencilViewRef & right)
 {
-	copy(right);
+	Copy(right);
 	return*this;
 	// TODO: вставьте здесь оператор return
 }
 
 BearGraphics::BearDepthStencilViewRef::BearDepthStencilViewRef(const BearDepthStencilViewRef & right)
 {
-	copy(right);
+	Copy(right);
 }
 
-void BearGraphics::BearDepthStencilViewRef::create(bsize w, bsize h, BearDepthStencilFormat format)
+void BearGraphics::BearDepthStencilViewRef::Create(bsize w, bsize h, BearDepthStencilFormat format)
 {
 	if (!RHIFactoty)return;
-	clear();
+	Clear();
 	m_data.create();
-	m_data.get()->resource = RHIFactoty->createDepthStencilView(w, h, format);
+	m_data.get()->resource = RHIFactoty->CreateDepthStencilView(w, h, format);
 }
-
-void BearGraphics::BearDepthStencilViewRef::generateMips()
+/*
+void BearGraphics::BearDepthStencilViewRef::GenerateMips()
 {
-	if (!empty())return;
-	m_data.get()->resource->generateMips();
-}
+	if (!Empty())return;
+	m_data.get()->resource->GenerateMips();
+}*/
 
-void BearGraphics::BearDepthStencilViewRef::clearDepth(float debpt)
+void BearGraphics::BearDepthStencilViewRef::ClearDepth(float debpt)
 {
-	if (!empty())return;
-	m_data.get()->resource->clearDepth(debpt);
+	if (!Empty())return;
+	m_data.get()->resource->ClearDepth(debpt);
 }
 
-void BearGraphics::BearDepthStencilViewRef::clearStencill(uint8 mask)
+void BearGraphics::BearDepthStencilViewRef::ClearStencill(uint8 mask)
 {
-	if (!empty())return;
-	m_data.get()->resource->clearStencil(mask);
+	if (!Empty())return;
+	m_data.get()->resource->ClearStencil(mask);
 }
 
-void BearGraphics::BearDepthStencilViewRef::resize(bsize w, bsize h)
+void BearGraphics::BearDepthStencilViewRef::Resize(bsize w, bsize h)
 {
-	if (!empty())return;
-	m_data.get()->resource->resize(w, h);
+	if (!Empty())return;
+	m_data.get()->resource->Resize(w, h);
 }
 
-void BearGraphics::BearDepthStencilViewRef::clear()
+void BearGraphics::BearDepthStencilViewRef::Clear()
 {
 	m_data.clear();
 }
 
-bool BearGraphics::BearDepthStencilViewRef::empty() const
-{
-	return m_data.empty();
-}
 BearGraphics::BearDepthStencilViewRef::data::data()
 {
 	resource = 0;
 }
 BearGraphics::BearDepthStencilViewRef::data::~data()
 {
-	if (resource)RHIFactoty->destroyDepthStencilView(resource);
+	if (resource)RHIFactoty->DestroyDepthStencilView(resource);
 }

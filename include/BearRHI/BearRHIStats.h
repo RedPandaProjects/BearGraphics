@@ -4,33 +4,34 @@ namespace BearRHI
 	class BearRHIStats
 	{
 	public:
-		virtual uint16 getCountIndexBuffer()=0;
-		virtual uint16 getCountVertexBuffer()=0;		
+		virtual uint16 GetCountIndexBuffer()=0;
+		virtual uint16 GetCountVertexBuffer()=0;		
 			
-		virtual uint16 getCountPixelShader()=0;
-		virtual uint16 getCountPixelShaderCompiler()=0;	
+		virtual uint16 GetCountPixelShader()=0;
+		virtual uint16 GetCountPixelShaderCompiler()=0;	
 		
-		virtual uint16 getCountVertexShader()=0;
-		virtual uint16 getCountVertexShaderCompiler()=0;	
+		virtual uint16 GetCountVertexShader()=0;
+		virtual uint16 GetCountVertexShaderCompiler()=0;	
 		
-		virtual uint16 getCountRenderTargetView()=0;
-		virtual uint16 getCountViewPort()=0;
-		virtual uint16 getCountDepthStencilView()=0;
+		virtual uint16 GetCountRenderTargetView()=0;
+		virtual uint16 GetCountViewPort()=0;
+		virtual uint16 GetCountDepthStencilView()=0;
 		
-		virtual uint16 getCountVertexInputLayout()=0;
+		virtual uint16 GetCountShaderConstants() = 0;
 		
-		virtual uint16 getCountTexture1D()=0;
-		virtual uint16 getCountTexture1DArray()=0;
-		virtual uint16 getCountTexture2D()=0;
-		virtual uint16 getCountTexture2DArray()=0;
-		virtual uint16 getCountTexture3D()=0;
-		virtual uint16 getCountTextureCubeMap()=0;
-		virtual uint16 getCountTextureCubeMapArray()=0;
+		virtual uint16 GetCountTexture1D()=0;
+		virtual uint16 GetCountTexture1DArray()=0;
+		virtual uint16 GetCountTexture2D()=0;
+		virtual uint16 GetCountTexture2DArray()=0;
+		virtual uint16 GetCountTexture3D()=0;
+		virtual uint16 GetCountTextureCubeMap()=0;
+		virtual uint16 GetCountTextureCubeMapArray()=0;
 		
-		virtual uint16 getCountBlendState()=0;
-		virtual uint16 getCountSamplerState()=0;
-		virtual uint16 getCountDepthStencilState()=0;
-		virtual uint16 getCountRasterizerState()=0;
+		virtual uint16 GetCountVertexState() = 0;
+		virtual uint16 GetCountBlendState()=0;
+		virtual uint16 GetCountSamplerState()=0;
+		virtual uint16 GetCountDepthStencilState()=0;
+		virtual uint16 GetCountRasterizerState()=0;
 		
 	};
 	class BearRHIBlendState
@@ -43,6 +44,9 @@ namespace BearRHI
 	{
 	};
 	class BearRHIRasterizerState
+	{
+	};
+	class BearRHIVertexState
 	{
 	};
 }

@@ -39,20 +39,20 @@ static uint32 Òonvert—olor(uint32 c, uint32 inbits, uint32 outbits)
 		return (c << (outbits - inbits)) | Òonvert—olor(c, inbits, outbits - inbits);
 	}
 }
-bool BearGraphics::BearImage::loadDDSFromInput(const BearCore::BearInputStream & stream)
+bool BearGraphics::BearImage::LoadDDSFromStream(const BearCore::BearInputStream & stream)
 {
-	clear();
+	Clear();
 
-	if (stream.readUint32() == MAKEFOURCC('D', 'D', 'S', ' '))
+	if (stream.ReadUint32() == MAKEFOURCC('D', 'D', 'S', ' '))
 	{
-		bsize size = stream.readUint32();
+		bsize size = stream.ReadUint32();
 		DDS_HEADER header;
 		BearCore::bear_fill(header);
-		stream.seek(4);
+		stream.Seek(4);
 		if (size > sizeof(header) || size < 4)
 			return false;
 
-		stream.read(&header, size);
+		stream.Read(&header, size);
 		if (!(header.dwHeaderFlags&DDSD_WIDTH) || !(header.dwHeaderFlags&DDSD_HEIGHT) || !(header.dwHeaderFlags&DDSD_PIXELFORMAT))
 			return false;
 		m_depth = header.dwHeaderFlags&DDSD_DEPTH ? header.dwDepth : 1;
@@ -61,7 +61,7 @@ bool BearGraphics::BearImage::loadDDSFromInput(const BearCore::BearInputStream &
 		m_w = header.dwWidth;
 		if (m_mips != BearRHI::BearRHITextureUtils::GetCountMips(m_w, m_h)&& m_mips!=1)
 		{
-			clear();
+			Clear();
 			return false;
 		}
 		if (header.ddspf.dwFlags == DDS_RGB || header.ddspf.dwFlags == DDS_RGBA)
@@ -69,7 +69,7 @@ bool BearGraphics::BearImage::loadDDSFromInput(const BearCore::BearInputStream &
 			bool alpha = header.ddspf.dwFlags&(DDS_RGBA&(~DDS_RGB));
 			if (header.ddspf.dwRGBBitCount % 8 || header.ddspf.dwRGBBitCount > 64)
 			{
-				clear();
+				Clear();
 				return false;
 			}
 			bsize byte_size_pixel = header.ddspf.dwRGBBitCount / 8;
@@ -84,7 +84,7 @@ bool BearGraphics::BearImage::loadDDSFromInput(const BearCore::BearInputStream &
 				m_px = TPF_R8;
 			uint8 coutComp = BearRHI::BearRHITextureUtils::GetCountComp(m_px);
 			uint32 pixel = 0;
-			create(m_w, m_h, m_mips > 1, m_depth, m_px);
+			Create(m_w, m_h, m_mips > 1, m_depth, m_px);
 			for (bsize d = 0; d < m_depth; d++)
 			{
 				for (bsize m = 0; m < m_mips; m++)
@@ -94,7 +94,7 @@ bool BearGraphics::BearImage::loadDDSFromInput(const BearCore::BearInputStream &
 					uint8*data = BearRHI::BearRHITextureUtils::GetImage(m_images, m_w, m_h, m_mips, d, m, m_px);
 					for (bsize x = 0; x < w*h; x++)
 					{
-						stream.read(&pixel, byte_size_pixel);
+						stream.Read(&pixel, byte_size_pixel);
 						for (bsize a = 0; a < coutComp; a++)
 						{
 							*BearRHI::BearRHITextureUtils::GetPixelUint8(x, 0, 0, coutComp, a, data)= static_cast<uint8>(Òonvert—olor((pixel & header.ddspf.dwBitsMask[a]) >> shift_bit[a], size_bit[a], 8));;
@@ -153,7 +153,7 @@ bool BearGraphics::BearImage::loadDDSFromInput(const BearCore::BearInputStream &
 					m_px = TPF_BC7;
 					break;
 				default:
-					clear();
+					Clear();
 					return false;
 				}
 			}
@@ -179,35 +179,37 @@ bool BearGraphics::BearImage::loadDDSFromInput(const BearCore::BearInputStream &
 					m_px = TPF_BC5;
 					break;
 				default:
-					clear();
+					Clear();
 					return false;
 				}
 			}
-			create(m_w, m_h, m_mips > 1, m_depth, m_px);
-			stream.read(m_images, getSizeInMemory());
+			Create(m_w, m_h, m_mips > 1, m_depth, m_px);
+			stream.Read(m_images, GetSizeInMemory());
 			return true;
 		}
 		
 	}
 	return false;
 }
-bool BearGraphics::BearImage::loadDDSFromFile(const bchar * str)
+bool BearGraphics::BearImage::LoadDDSFromFile(const bchar * str)
 {
 	BearCore::BearFileStream stream;
-	if (!stream.open(str))
+	if (!stream.Open(str))
 		return false;
-	return loadDDSFromInput(stream);
+	return LoadDDSFromStream(stream);
 }
-bool BearGraphics::BearImage::loadDDSFromBuffer(const BearCore::BearBufferedReader & stream)
+bool BearGraphics::BearImage::LoadDDSFromBuffer(const BearCore::BearBufferedReader & stream)
 {
-	return loadDDSFromInput(stream);
+	return LoadDDSFromStream(stream);
 }
 
 
-bool BearGraphics::BearImage::saveToDds(const bchar * name)
+bool BearGraphics::BearImage::SaveToDds(const bchar * name)
 {
-	BearCore::BearFileStream dds(name, BearCore::BearFileStream::Write);
-	dds.seek(0);
+	BearCore::BearFileStream dds;
+	if (!dds.Open(name, BearCore::BearFileStream::M_Write))
+		return false;
+	dds.Seek(0);
 	DDS_HEADER ddsh;
 	BearCore::bear_fill(ddsh);
 	ddsh.dwSize = sizeof(ddsh) - sizeof(ddsh.Header10);
@@ -217,7 +219,7 @@ bool BearGraphics::BearImage::saveToDds(const bchar * name)
 	ddsh.dwMipMapCount = static_cast<DWORD>(m_mips);
 	ddsh.dwDepth = static_cast<DWORD>(m_depth);
 	char*ddst = "DDS ";
-	dds.write(ddst, 4);
+	dds.Write(ddst, 4);
 	switch (m_px)
 	{
 	case BearGraphics::TPF_R8:
@@ -305,8 +307,8 @@ bool BearGraphics::BearImage::saveToDds(const bchar * name)
 		return false;
 	}
 	
-	dds.write(&ddsh, ddsh.dwSize + (ddsh.ddspf.dwFourCC == MAKEFOURCC('D', 'X', '1', '0') ? sizeof(ddsh.Header10) : 0));
-	dds.write(m_images, BearRHI::BearRHITexture2D::GetSizeInMemory(m_w, m_h, m_mips, m_px)*m_depth);
-	dds.close();
-	return false;
+	dds.Write(&ddsh, ddsh.dwSize + (ddsh.ddspf.dwFourCC == MAKEFOURCC('D', 'X', '1', '0') ? sizeof(ddsh.Header10) : 0));
+	dds.Write(m_images, BearRHI::BearRHITexture2D::GetSizeInMemory(m_w, m_h, m_mips, m_px)*m_depth);
+	dds.Close();
+	return true;
 }

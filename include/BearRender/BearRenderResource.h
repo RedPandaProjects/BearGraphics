@@ -9,12 +9,13 @@ friend class BearRenderInterface;\
 	Bear##name##Ref();\
 	Bear##name##Ref(const Bear##name##Initializer&Initializer CREATE_RENDERRESOURCE_ARGUMENTS1);\
 	~Bear##name##Ref();\
-	void copy(const Bear##name##Ref&right);\
-	void swap(Bear##name##Ref&right);\
+	void Copy(const Bear##name##Ref&right);\
+	void Swap(Bear##name##Ref&right);\
 	Bear##name##Ref&operator=(const Bear##name##Ref&right);\
 	Bear##name##Ref(const Bear##name##Ref&right);\
-	bool empty()const;\
-	void clear();\
+	inline bool Empty()const { return m_data.empty(); }\
+	inline bool IsOne()const { return m_data.is_one(); }\
+	void Clear();\
 private:\
 	struct data\
 	{\
@@ -32,38 +33,34 @@ BearGraphics::Bear##name##Ref::Bear##name##Ref(const Bear##name##Initializer & I
 {\
 	if (!RHIFactoty)return;\
 	m_data.create();\
-	m_data.get()->reosurce = RHIFactoty->create##name##(Initializer CREATE_RENDERRESOURCE_ARGUMENTS2);\
+	m_data.get()->reosurce = RHIFactoty->Create##name##(Initializer CREATE_RENDERRESOURCE_ARGUMENTS2);\
 	if (!m_data.get()->reosurce)\
 	{\
-		clear();\
+		Clear();\
 	}\
 }\
 BearGraphics::Bear##name##Ref::~Bear##name##Ref()\
 {\
-	clear();\
+	Clear();\
 }\
-void BearGraphics::Bear##name##Ref::copy(const Bear##name##Ref & right)\
+void BearGraphics::Bear##name##Ref::Copy(const Bear##name##Ref & right)\
 {\
 	m_data = right.m_data;\
 }\
-void BearGraphics::Bear##name##Ref::swap(Bear##name##Ref & right)\
+void BearGraphics::Bear##name##Ref::Swap(Bear##name##Ref & right)\
 {\
 	right.m_data.swap(right.m_data);\
 }\
 BearGraphics::Bear##name##Ref & BearGraphics::Bear##name##Ref::operator=(const Bear##name##Ref & right)\
 {\
-	copy(right);\
+	Copy(right);\
 	return*this;\
 }\
 BearGraphics::Bear##name##Ref::Bear##name##Ref(const Bear##name##Ref & right)\
 {\
-	copy(right);\
+	Copy(right);\
 }\
-bool BearGraphics::Bear##name##Ref::empty() const\
-{\
-	return m_data.empty();\
-}\
-void BearGraphics::Bear##name##Ref::clear()\
+void BearGraphics::Bear##name##Ref::Clear()\
 {\
 	m_data.clear();\
 }\
@@ -73,5 +70,5 @@ BearGraphics::Bear##name##Ref::data::data() :reosurce(0)\
 BearGraphics::Bear##name##Ref::data::~data()\
 {\
 	if (reosurce)\
-		RHIFactoty->destroy##name##(reosurce);\
+		RHIFactoty->Destroy##name##(reosurce);\
 }

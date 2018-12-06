@@ -1,12 +1,12 @@
 #pragma once 
 namespace BearRHI
 {
-	class BEARGRAPHICS_API BearRHIViewPort:public BearRHIRenderTargetView
+	class BEARGRAPHICS_API BearRHIViewport:public BearRHIRenderTargetView
 	{
 	public:
-		virtual void swap()=0;
-		virtual void setFullScreen(bool fullscreen) = 0;
-		virtual void setVsync(bool vsync)=0;
-		virtual void generateMips() override;
+		virtual void Swap()=0;
+		virtual void SetFullScreen(bool fullscreen) = 0;
+		virtual void SetVsync(bool vsync)=0;
+		virtual void GenerateMips() override;
 	};
 };

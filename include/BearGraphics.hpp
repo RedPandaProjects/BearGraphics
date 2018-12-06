@@ -7,10 +7,11 @@
 #define BEARGRAPHICS_API  BEARPROJECT_IMPORT
 #endif
 
-#include "BearGraphicsEnum.h"
+#include "BearGraphicsEnums.h"
 
 #include "BearRHI/BearRHITextureUtils.h"
 #include "BearRHI/BearRHITexture2D.h"
+#include "BearRHI/BearRHITexture2DArray.h"
 
 #include "BearRHI/BearRHIView.h"
 #include "BearRHI/BearRHIViewPort.h"
@@ -20,10 +21,11 @@
 
 #include "BearRHI/BearRHIVertexShader.h"
 #include "BearRHI/BearRHIVertexShaderCompiler.h"
-#include "BearRHI/BearRHIVertexInputLayout.h"
 
 #include "BearRHI/BearRHIPixelShader.h"
 #include "BearRHI/BearRHIPixelShaderCompiler.h"
+
+#include "BearRHI/BearRHIShaderConstants.h"
 
 #include "BearRHI/BearRHIStats.h"
 
@@ -32,13 +34,14 @@
 
 #include "BearRender/BearRenderResource.h"
 
-#include "BearRender/BearVertexInputLayout.h"
 
 #include "BearRender/BearShader.h"
+#include "BearRender/BearShaderConstants.h"
 #include "BearRender/BearBuffer.h"
 
 #include "BearResource/BearImage.h"
 #include "BearRender/BearTexture2D.h"
+#include "BearRender/BearTexture2DArray.h"
 
 #include "BearRender/BearDepthStencilView.h"
 #include "BearRender/BearRenderTargetView.h"
@@ -50,3 +53,5 @@
 #include "BearRender/BearRenderInterface.h"
 
 #include "BearRHI/BearRHIFactory.h"
+
+# define PI           3.14159265358979323846f

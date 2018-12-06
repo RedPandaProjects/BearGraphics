@@ -20,7 +20,7 @@ namespace BearGraphics
 		 static uint16 GetCountViewPort() ;
 		 static uint16 GetCountDepthStencilView() ;
 
-		 static uint16 GetCountVertexInputLayout() ;
+		 static uint16 GetCountShaderConstants();
 
 		 static uint16 GetCountTexture1D() ;
 		 static uint16 GetCountTexture1DArray() ;
@@ -30,6 +30,7 @@ namespace BearGraphics
 		 static uint16 GetCountTextureCubeMap() ;
 		 static uint16 GetCountTextureCubeMapArray() ;
 
+		 static uint16 GetCountVertexState();
 		 static uint16 GetCountBlendState() ;
 		 static uint16 GetCountSamplerState() ;
 		 static uint16 GetCountDepthStencilState() ;
@@ -46,6 +47,12 @@ namespace BearGraphics
 	CREATE_RENDERRESOURCE_CLASS1(SamplerState);
 	CREATE_RENDERRESOURCE_CLASS1(RasterizerState);
 
+#undef   CREATE_RENDERRESOURCE_ARGUMENTS1 
+#undef   CREATE_RENDERRESOURCE_ARGUMENTS2 
+
+#define  CREATE_RENDERRESOURCE_ARGUMENTS1 ,void*shader,bsize size
+#define  CREATE_RENDERRESOURCE_ARGUMENTS2 ,data,size
+	CREATE_RENDERRESOURCE_CLASS1(VertexState);
 #undef   CREATE_RENDERRESOURCE_ARGUMENTS1 
 #undef   CREATE_RENDERRESOURCE_ARGUMENTS2 
 }

@@ -1,87 +1,55 @@
 #include "BearGraphics.hpp"
 extern BEARGRAPHICS_API BearRHI::BearRHIFactory*RHIFactoty ;
-BearGraphics::BearViewPortRef::BearViewPortRef()
+
+void BearGraphics::BearViewport::Create(void * win, bsize width, bsize height, bool fullscreen, bool vsync)
 {
+	BEAR_ASSERT(Empty());
+	viewport=RHIFactoty->CreateViewport((void*)win, width, height, fullscreen, vsync);
 }
 
-BearGraphics::BearViewPortRef::~BearViewPortRef()
+BearGraphics::BearViewport::BearViewport()
 {
-	close();
+	viewport = 0;
 }
 
-void BearGraphics::BearViewPortRef::create(BearCore::BearWindow & window, bool vsync)
+BearGraphics::BearViewport::~BearViewport()
 {
-	create((bptr)window.getRef(), window.getSize().x, window.getSize().y, window.getFullScreen(),vsync);
+	if (viewport)
+	RHIFactoty->DestroyViewport(viewport);
 }
 
-void BearGraphics::BearViewPortRef::create(bptr win, bsize wigth, bsize height, bool fullscreen, bool vsync)
+
+void BearGraphics::BearViewport::Resize(bsize wigth, bsize height)
 {
-	close();
-	if (!RHIFactoty)return; 
-	m_data.create();
-	m_data.get()->viewport= RHIFactoty->createViewPort((void*)win,wigth,height,fullscreen,vsync);
+	if (viewport)
+	viewport->Reisze(wigth, height);
 }
 
-void BearGraphics::BearViewPortRef::close()
+void BearGraphics::BearViewport::SetFullScreen(bool fullscreen)
 {
-	m_data.clear();
+	if (viewport)
+	viewport->SetFullScreen(fullscreen);
 }
 
-void BearGraphics::BearViewPortRef::resize(bsize wigth, bsize height)
+void BearGraphics::BearViewport::SetVsync(bool vsync)
 {
-	if (empty())return;
-	m_data.get()->viewport->reisze(wigth, height);
+	if (viewport)
+	viewport->SetVsync(vsync);
 }
 
-void BearGraphics::BearViewPortRef::setFullScreen(bool fullscreen)
+void BearGraphics::BearViewport::Swap()
 {
-	m_data.get()->viewport->setFullScreen(fullscreen);
+	if (viewport)
+	viewport->Swap();
 }
 
-void BearGraphics::BearViewPortRef::setVsync(bool vsync)
+void BearGraphics::BearViewport::ClearColor(const BearCore::BearColor & color)
 {
+	if (viewport)
+	viewport->ClearColor(color);
 }
 
-void BearGraphics::BearViewPortRef::swap()
+bool BearGraphics::BearViewport::Empty() const
 {
-	m_data.get()->viewport->swap();
-}
-
-void BearGraphics::BearViewPortRef::clearColor(const BearCore::BearColor & color)
-{
-	m_data.get()->viewport->clearColor(color);
-}
-
-bool BearGraphics::BearViewPortRef::empty() const
-{
-	return m_data.empty();
-}
-
-void BearGraphics::BearViewPortRef::copy(const BearViewPortRef & viewport)
-{
-	m_data = viewport.m_data;
-}
-
-void BearGraphics::BearViewPortRef::swap(BearViewPortRef & viewport)
-{
-	m_data.swap(viewport.m_data);
-}
-
-BearGraphics::BearViewPortRef::BearViewPortRef(const BearViewPortRef & viewport)
-{
-	copy(viewport);
-}
-
-BearGraphics::BearViewPortRef & BearGraphics::BearViewPortRef::operator=(const BearViewPortRef & viewport)
-{
-	copy(viewport);
-	return*this;
-}
-BearGraphics::BearViewPortRef::data::data():viewport(0)
-{
-
-}
-BearGraphics::BearViewPortRef::data::~data()
-{
-	RHIFactoty->destroyViewPort(viewport);
+	return !viewport;
 }

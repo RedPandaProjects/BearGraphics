@@ -7,12 +7,12 @@ BearGraphics::BearImage::BearImage() :m_px(TPF_R8), m_images(0), m_w(0), m_h(0),
 
 BearGraphics::BearImage::BearImage(bsize w, bsize h, bool mip, bsize depth, BearTexturePixelFormat px) : m_px(TPF_R8), m_images(0), m_w(0), m_h(0), m_depth(0), m_mips(0)
 {
-	create(w, h, mip, depth, px);
+	Create(w, h, mip, depth, px);
 }
 
-void BearGraphics::BearImage::fill(const BearCore::BearColor & color)
+void BearGraphics::BearImage::Fill(const BearCore::BearColor & color)
 {
-	if (empty())return;
+	if (Empty())return;
 	BEAR_FATALERROR(!BearRHI::BearRHITextureUtils::isCompressor(m_px), TEXT("BlockCompressor нередактируеться"));
 	bsize size = BearRHI::BearRHITextureUtils::GetSizeInMemory(m_w, m_h, m_mips, m_px);
 	for (bsize i = 0; i < m_depth; i++)
@@ -21,9 +21,9 @@ void BearGraphics::BearImage::fill(const BearCore::BearColor & color)
 	}
 }
 
-void BearGraphics::BearImage::create(bsize w, bsize h, bool mip, bsize depth, BearTexturePixelFormat px)
+void BearGraphics::BearImage::Create(bsize w, bsize h, bool mip, bsize depth, BearTexturePixelFormat px)
 {
-	clear();
+	Clear();
 	m_mips = 1;
 	m_depth = depth;
 	m_w = w;
@@ -35,12 +35,12 @@ void BearGraphics::BearImage::create(bsize w, bsize h, bool mip, bsize depth, Be
 		m_mips = BearRHI::BearRHITextureUtils::GetCountMips(w, h);
 	}
 
-	m_images = BearCore::bear_alloc<uint8>(getSizeInMemory());
+	m_images = BearCore::bear_alloc<uint8>(GetSizeInMemory());
 }
 
-void BearGraphics::BearImage::append(bsize x, bsize y, const BearImage & img, bsize x_src, bsize y_src, bsize w_src, bsize h_src, bsize dst_depth, bsize src_depth)
+void BearGraphics::BearImage::Append(bsize x, bsize y, const BearImage & img, bsize x_src, bsize y_src, bsize w_src, bsize h_src, bsize dst_depth, bsize src_depth)
 {
-	if (empty() || img.empty())
+	if (Empty() || img.Empty())
 		return;
 	BEAR_FATALERROR(!BearRHI::BearRHITextureUtils::isCompressor(m_px), TEXT("BlockCompressor нередактируеться"));
 	BEAR_FATALERROR(!BearRHI::BearRHITextureUtils::isCompressor(img.m_px), TEXT("BlockCompressor нередактируеться"));
@@ -55,21 +55,21 @@ void BearGraphics::BearImage::append(bsize x, bsize y, const BearImage & img, bs
 	BearRHI::BearRHITextureUtils::Append(dst_data, m_w, m_h, x, y, src_data, img.m_w, img.m_h, BearCore::BearVector4<bsize>(x_src, y_src, w_src, h_src), m_px, img.m_px);
 }
 
-void BearGraphics::BearImage::append(bsize x, bsize y, const BearImage & img, bsize dst_depth, bsize src_depth)
+void BearGraphics::BearImage::Append(bsize x, bsize y, const BearImage & img, bsize dst_depth, bsize src_depth)
 {
-	if (empty() || img.empty())
+	if (Empty() || img.Empty())
 		return;
 	BEAR_FATALERROR(!BearRHI::BearRHITextureUtils::isCompressor(m_px), TEXT("BlockCompressor нередактируеться"));
-	append(x, y, img, 0, 0, img.m_w, img.m_h, dst_depth, src_depth);
+	Append(x, y, img, 0, 0, img.m_w, img.m_h, dst_depth, src_depth);
 }
 
-void BearGraphics::BearImage::scale(bsize w, bsize h)
+void BearGraphics::BearImage::Scale(bsize w, bsize h)
 {
-	if (empty())
+	if (Empty())
 		return;
 	BEAR_FATALERROR(!BearRHI::BearRHITextureUtils::isCompressor(m_px), TEXT("BlockCompressor нередактируеться"));
 	BearImage img;
-	img.create(w, h, m_mips > 1, m_depth, m_px);
+	img.Create(w, h, m_mips > 1, m_depth, m_px);
 	bsize src_size = BearRHI::BearRHITextureUtils::GetSizeInMemory(m_w, m_h, m_mips, m_px);
 	bsize dst_size = BearRHI::BearRHITextureUtils::GetSizeInMemory(img.m_w, img.m_h, img.m_mips, img.m_px);
 	for (bsize i = 0; i < m_depth; i++)
@@ -79,33 +79,33 @@ void BearGraphics::BearImage::scale(bsize w, bsize h)
 		uint8*src_data = m_images + src_size * i;
 		BearRHI::BearRHITexture2D::Scale(dst_data, img.m_w, img.m_h, src_data, m_w, m_h, m_px);
 	}
-	swap(img);
+	Swap(img);
 }
 
-void BearGraphics::BearImage::scaleCanvas(bsize w, bsize h)
+void BearGraphics::BearImage::ScaleCanvas(bsize w, bsize h)
 {
-	if (empty())
+	if (Empty())
 		return;
 	BEAR_FATALERROR(!BearRHI::BearRHITextureUtils::isCompressor(m_px), TEXT("BlockCompressor нередактируеться"));
 	BearImage img;
 
-	img.create(w, h, m_mips > 1, m_depth, m_px);
+	img.Create(w, h, m_mips > 1, m_depth, m_px);
 	for (bsize i = 0; i < m_depth; i++)
 	{
-		img.append(0, 0, *this, 0, 0, BearCore::bear_min(m_w, w), BearCore::bear_min(m_h, h), i, i);
+		img.Append(0, 0, *this, 0, 0, BearCore::bear_min(m_w, w), BearCore::bear_min(m_h, h), i, i);
 	}
-	swap(img);
+	Swap(img);
 }
 
 
-void BearGraphics::BearImage::generateMipmap(bsize depth)
+void BearGraphics::BearImage::GenerateMipmap(bsize depth)
 {
-	if (empty())
+	if (Empty())
 		return;
 	BEAR_FATALERROR(!BearRHI::BearRHITextureUtils::isCompressor(m_px), TEXT("BlockCompressor нередактируеться"));
 	if (m_mips == 1)
 	{
-		generateMipmap();
+		GenerateMipmap();
 	}
 	else
 	{
@@ -120,9 +120,9 @@ void BearGraphics::BearImage::generateMipmap(bsize depth)
 	}
 }
 
-void BearGraphics::BearImage::generateMipmap()
+void BearGraphics::BearImage::GenerateMipmap()
 {
-	if (empty())
+	if (Empty())
 		return;
 	BEAR_FATALERROR(!BearRHI::BearRHITextureUtils::isCompressor(m_px), TEXT("BlockCompressor нередактируеться"));
 	m_mips = BearRHI::BearRHITexture2D::GetCountMips(m_w, m_h);
@@ -136,14 +136,14 @@ void BearGraphics::BearImage::generateMipmap()
 	}
 	for (bsize i = 0; m_depth>i; i++)
 	{
-		generateMipmap(i);
+		GenerateMipmap(i);
 	}
 }
 
 
-void BearGraphics::BearImage::clearMipLevels()
+void BearGraphics::BearImage::ClearMipLevels()
 {
-	if (empty() || m_mips == 1)return;
+	if (Empty() || m_mips == 1)return;
 	BEAR_FATALERROR(!BearRHI::BearRHITextureUtils::isCompressor(m_px), TEXT("BlockCompressor нередактируеться"));
 	bsize size = BearRHI::BearRHITexture2D::GetSizeInMemory(m_w, m_h, 1, m_px);
 	for (bsize i = m_depth; i > 1; i--)
@@ -156,22 +156,22 @@ void BearGraphics::BearImage::clearMipLevels()
 	m_images = BearCore::bear_realloc(m_images, BearRHI::BearRHITexture2D::GetSizeInMemory(m_w, m_h, m_mips, m_px)*m_depth);
 }
 
-void BearGraphics::BearImage::normalizedSizeNotScale()
+void BearGraphics::BearImage::NormalizedSizeNotScale()
 {
 	bsize size = BearCore::bear_max(BearCore::bear_recommended_size(m_w), BearCore::bear_recommended_size(m_h));
-	scaleCanvas(size, size);
+	ScaleCanvas(size, size);
 }
 
-void BearGraphics::BearImage::normalizedSize()
+void BearGraphics::BearImage::NormalizedSize()
 {
 	bsize size = BearCore::bear_max(BearCore::bear_recommended_size(m_w), BearCore::bear_recommended_size(m_h));
-	scale(size, size);
+	Scale(size, size);
 }
 
-BearCore::BearColor BearGraphics::BearImage::getPixel(bsize x, bsize y, bsize d) const
+BearCore::BearColor BearGraphics::BearImage::GetPixel(bsize x, bsize y, bsize d) const
 {
 	BEAR_FATALERROR(!BearRHI::BearRHITextureUtils::isCompressor(m_px), TEXT("BlockCompressor нередактируеться"));
-	if (empty())
+	if (Empty())
 		return BearCore::BearColor();
 
 	//	bsize count_comp = BearRHI::BearRHITextureUtils::GetCountComp(m_px);;
@@ -182,13 +182,13 @@ BearCore::BearColor BearGraphics::BearImage::getPixel(bsize x, bsize y, bsize d)
 
 }
 
-void BearGraphics::BearImage::setPixel(const BearCore::BearColor & color, bsize x, bsize y, bsize d)
+void BearGraphics::BearImage::SetPixel(const BearCore::BearColor & color, bsize x, bsize y, bsize d)
 {
 }
 
 
 
-void BearGraphics::BearImage::clear()
+void BearGraphics::BearImage::Clear()
 {
 	if (m_images)BearCore::bear_free(m_images);
 	m_h = 0;
@@ -200,33 +200,33 @@ void BearGraphics::BearImage::clear()
 
 BearGraphics::BearImage::~BearImage()
 {
-	clear();
+	Clear();
 }
 
-bool BearGraphics::BearImage::empty() const
+bool BearGraphics::BearImage::Empty() const
 {
 	return false;
 }
 
 BearGraphics::BearImage::BearImage(const BearImage & img) :m_px(TPF_R8), m_images(0), m_w(0), m_h(0), m_depth(0), m_mips(0)
 {
-	copy(img);
+	Copy(img);
 }
 
-void BearGraphics::BearImage::copy(const BearImage & img)
+void BearGraphics::BearImage::Copy(const BearImage & img)
 {
-	if (empty())return;
-	clear();
+	if (Empty())return;
+	Clear();
 	m_h = img.m_h;
 	m_w = img.m_w;
 	m_mips = img.m_mips;
 	m_depth = img.m_depth;
 	m_px = img.m_px;
-	m_images = BearCore::bear_alloc<uint8>(getSizeInMemory());
-	BearCore::bear_copy(m_images, img.m_images, getSizeInMemory());
+	m_images = BearCore::bear_alloc<uint8>(GetSizeInMemory());
+	BearCore::bear_copy(m_images, img.m_images, GetSizeInMemory());
 }
 
-void BearGraphics::BearImage::swap(BearImage & img)
+void BearGraphics::BearImage::Swap(BearImage & img)
 {
 	BearCore::bear_swap(m_h , img.m_h);
 	BearCore::bear_swap(m_w , img.m_w);
@@ -238,13 +238,13 @@ void BearGraphics::BearImage::swap(BearImage & img)
 
 BearGraphics::BearImage & BearGraphics::BearImage::operator=(const BearImage & img)
 {
-	copy(img);
+	Copy(img);
 	return*this;
 }
 
-void BearGraphics::BearImage::convert(BearTexturePixelFormat format)
+void BearGraphics::BearImage::Convert(BearTexturePixelFormat format)
 {
-	if (empty())return;
+	if (Empty())return;
 	BearImage img(m_w, m_h, m_mips >1, m_depth, format);
 	uint8*src= (uint8*)**this;
 	uint8*dst = (uint8*)*img;
@@ -260,20 +260,20 @@ void BearGraphics::BearImage::convert(BearTexturePixelFormat format)
 			dst += BearRHI::BearRHITextureUtils::GetSizeDepth(w, h, format);
 		}
 	}
-	swap(img);
+	Swap(img);
 }
 
-BearGraphics::BearTexturePixelFormat BearGraphics::BearImage::getFormat() const
+BearGraphics::BearTexturePixelFormat BearGraphics::BearImage::GetFormat() const
 {
 	return m_px;
 }
 
-bsize BearGraphics::BearImage::getDepth() const
+bsize BearGraphics::BearImage::GetDepth() const
 {
 	return m_depth;
 }
 
-bsize BearGraphics::BearImage::getMips()const
+bsize BearGraphics::BearImage::GetMips()const
 {
 	return m_mips;
 }
@@ -288,22 +288,22 @@ const void * BearGraphics::BearImage::operator*() const
 	return m_images;
 }
 
-bsize BearGraphics::BearImage::getSizeInMemory() const
+bsize BearGraphics::BearImage::GetSizeInMemory() const
 {
 	return BearRHI::BearRHITextureUtils::GetSizeInMemory(m_w, m_h, m_mips, m_px)*m_depth;
 }
 
-BearCore::BearVector2<bsize> BearGraphics::BearImage::getSize() const
+BearCore::BearVector2<bsize> BearGraphics::BearImage::GetSize() const
 {
 	return BearCore::BearVector2<bsize>(m_w,m_h);
 }
 
 
-void BearGraphics::BearImage::resize(bsize w, bsize h,bsize depth,BearTexturePixelFormat px)
+void BearGraphics::BearImage::Resize(bsize w, bsize h,bsize depth,BearTexturePixelFormat px)
 {
 	if (m_w != w || m_h != h || m_px != px)
 	{
-		create(w, h, m_mips > 1, depth + 1, px);
+		Create(w, h, m_mips > 1, depth + 1, px);
 	}
 	else
 	{

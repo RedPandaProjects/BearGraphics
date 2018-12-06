@@ -10,16 +10,17 @@ namespace BearGraphics
 		friend class BearRenderInterface;
 		BearRenderTargetViewRef();
 		~BearRenderTargetViewRef();
-		void copy(const BearRenderTargetViewRef&right);
-		void swap(BearRenderTargetViewRef&right);
+		void Copy(const BearRenderTargetViewRef&right);
+		void Swap(BearRenderTargetViewRef&right);
 		BearRenderTargetViewRef&operator=(const BearRenderTargetViewRef&right);
 		BearRenderTargetViewRef(const BearRenderTargetViewRef&right);
-		void create(bsize w, bsize h, BearRenderTargetFormat format);
-		void clearColor(const BearCore::BearColor&color);
-		void resize(bsize w, bsize h);
-		void genetateMips();
-		void clear();
-		bool empty()const;
+		void Create(bsize w, bsize h, BearRenderTargetFormat format);
+		void ClearColor(const BearCore::BearColor&color);
+		void Resize(bsize w, bsize h);
+		void GenetateMips();
+		void Clear();
+		inline bool Empty()const { return m_data.empty(); }
+		inline bool IsOne()const { return m_data.is_one(); }
 	private:
 		struct data
 		{

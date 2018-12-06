@@ -6,63 +6,59 @@ BearGraphics::BearRenderTargetViewRef::BearRenderTargetViewRef()
 
 BearGraphics::BearRenderTargetViewRef::~BearRenderTargetViewRef()
 {
-	clear();
+	Clear();
 }
 
-void BearGraphics::BearRenderTargetViewRef::copy(const BearRenderTargetViewRef & right)
+void BearGraphics::BearRenderTargetViewRef::Copy(const BearRenderTargetViewRef & right)
 {
 	m_data = right.m_data;
 }
 
-void BearGraphics::BearRenderTargetViewRef::swap(BearRenderTargetViewRef & right)
+void BearGraphics::BearRenderTargetViewRef::Swap(BearRenderTargetViewRef & right)
 {
 	m_data.swap(right.m_data);
 }
 
 BearGraphics::BearRenderTargetViewRef & BearGraphics::BearRenderTargetViewRef::operator=(const BearRenderTargetViewRef & right)
 {
-	copy(right);
+	Copy(right);
 	return*this;
 }
 
 BearGraphics::BearRenderTargetViewRef::BearRenderTargetViewRef(const BearRenderTargetViewRef & right)
 {
-	copy(right);
+	Copy(right);
 }
 
-void BearGraphics::BearRenderTargetViewRef::create(bsize w, bsize h, BearRenderTargetFormat format)
+void BearGraphics::BearRenderTargetViewRef::Create(bsize w, bsize h, BearRenderTargetFormat format)
 {
 	if (!RHIFactoty)return;
-	clear();
+	Clear();
 	m_data.create();
-	m_data.get()->resource = RHIFactoty->createRenderTargetView(w,h,format);
+	m_data.get()->resource = RHIFactoty->CreateRenderTargetView(w,h,format);
 }
 
-void BearGraphics::BearRenderTargetViewRef::clearColor(const BearCore::BearColor & color)
+void BearGraphics::BearRenderTargetViewRef::ClearColor(const BearCore::BearColor & color)
 {
-	if (empty())return;
-	m_data.get()->resource->clearColor(color);
+	if (Empty())return;
+	m_data.get()->resource->ClearColor(color);
 }
 
-void BearGraphics::BearRenderTargetViewRef::resize(bsize w, bsize h)
+void BearGraphics::BearRenderTargetViewRef::Resize(bsize w, bsize h)
 {
-	if (empty())return;
-	m_data.get()->resource->reisze(w, h);
+	if (Empty())return;
+	m_data.get()->resource->Reisze(w, h);
 }
 
-void BearGraphics::BearRenderTargetViewRef::genetateMips()
+void BearGraphics::BearRenderTargetViewRef::GenetateMips()
 {
-	if (empty())return;
-	m_data.get()->resource->generateMips();
+	if (Empty())return;
+	m_data.get()->resource->GenerateMips();
 }
 
-void BearGraphics::BearRenderTargetViewRef::clear()
+void BearGraphics::BearRenderTargetViewRef::Clear()
 {
 	m_data.clear();
-}
-bool BearGraphics::BearRenderTargetViewRef::empty() const
-{
-	return m_data.empty();
 }
  BearGraphics::BearRenderTargetViewRef::data::data():resource(0)
 {
@@ -72,5 +68,5 @@ bool BearGraphics::BearRenderTargetViewRef::empty() const
  BearGraphics::BearRenderTargetViewRef::data::~data()
  {
 	 if (resource)
-		 RHIFactoty->destroyRenderTargetView(resource);
+		 RHIFactoty->DestroyRenderTargetView(resource);
  }

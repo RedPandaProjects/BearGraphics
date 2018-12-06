@@ -351,7 +351,7 @@ uint8 BearRHI::BearRHITextureUtils::GetCountComp(BearGraphics::BearTexturePixelF
 	case BearGraphics::TPF_R32G32B32A32F:
 		return 4;
 	default:
-		BEAR_ASSERT(false)
+		BEAR_ASSERT(false);
 	}
 	return 0;
 }
@@ -562,7 +562,7 @@ void BearRHI::BearRHITextureUtils::SwapRB(uint32 & color)
 
 void BearRHI::BearRHITextureUtils::FillUint8(uint8 * data, bsize x, bsize y, const BearCore::BearColor & color, BearGraphics::BearTexturePixelFormat format)
 {
-	auto vector_color = color.getUint8();
+	auto vector_color = color.GetUint8();
 	bsize size_pixel = GetSizePixel(format);
 	for (bsize i = 0; i < x*y; i++)
 	{
@@ -572,7 +572,7 @@ void BearRHI::BearRHITextureUtils::FillUint8(uint8 * data, bsize x, bsize y, con
 
 void BearRHI::BearRHITextureUtils::FillFloat(uint8 * data, bsize x, bsize y, const BearCore::BearColor & color, BearGraphics::BearTexturePixelFormat format)
 {
-	auto vector_color = color.getFloat();
+	auto vector_color = color.GetFloat();
 	bsize size_pixel = GetSizePixel(format);
 	for (bsize i = 0; i < x*y; i++)
 	{
@@ -1004,7 +1004,7 @@ void BearRHI::BearRHITextureUtils::EndCompressor(BearGraphics::BearTexturePixelF
 					for (uint x = 0; x < BearCore::bear_min(bsize(4), w - 4 * bx); x++)
 					{
 						auto&color = block.color(x, y);
-						color.r = *GetPixelUint8(bx * 4 + x, by * 4 + y, w, 1, 0, (uint8*)in);
+						color.b = *GetPixelUint8(bx * 4 + x, by * 4 + y, w, 1, 0, (uint8*)in);
 					}
 				}
 				alpha1.init(block, 2);
@@ -1031,9 +1031,9 @@ void BearRHI::BearRHITextureUtils::EndCompressor(BearGraphics::BearTexturePixelF
 					for (uint x = 0; x < BearCore::bear_min(bsize(4), w - 4 * bx); x++)
 					{
 						auto&color = block.color(x, y);
-						color.r = *GetPixelUint8(bx * 4 + x, by * 4 + y, w, 2, 0, (uint8*)in);
+						color.b = *GetPixelUint8(bx * 4 + x, by * 4 + y, w, 2, 0, (uint8*)in);
 						color.g = *GetPixelUint8(bx * 4 + x, by * 4 + y, w, 2,1, (uint8*)in);
-						in = (uint8*)in + 2;
+						//in = (uint8*)in + 2;
 					}
 				}
 				alpha1.init(block, 2);

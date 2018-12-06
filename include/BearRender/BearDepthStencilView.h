@@ -10,17 +10,18 @@ namespace BearGraphics
 		friend class BearRenderInterface;
 		BearDepthStencilViewRef();
 		~BearDepthStencilViewRef();
-		void copy(const BearDepthStencilViewRef&right);
-		void swap(BearDepthStencilViewRef&right);
+		void Copy(const BearDepthStencilViewRef&right);
+		void Swap(BearDepthStencilViewRef&right);
 		BearDepthStencilViewRef&operator=(const BearDepthStencilViewRef&right);
 		BearDepthStencilViewRef(const BearDepthStencilViewRef&right);
-		void create(bsize w, bsize h, BearDepthStencilFormat format);
-		void generateMips();
-		void clearDepth(float debpt=1.f);
-		void clearStencill(uint8 mask=255);
-		void resize(bsize w, bsize h);
-		void clear();
-		bool empty()const;
+		void Create(bsize w, bsize h, BearDepthStencilFormat format);
+	//	void GenerateMips();
+		void ClearDepth(float debpt=1.f);
+		void ClearStencill(uint8 mask=255);
+		void Resize(bsize w, bsize h);
+		void Clear();
+		inline bool Empty()const { return m_data.empty(); }
+		inline bool IsOne()const { return m_data.is_one(); }
 	private:
 		struct data
 		{
