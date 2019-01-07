@@ -26,8 +26,10 @@
 #include "BearRender/BearStatsInitializers.h"
 #include "BearRender/BearShaderConstants.h"
 
+#include "BearRHI/BearRHIDefaultManager.h"
 #include "BearRHI/BearRHIInterface.h"
 #include "BearRHI/BearRHIFactory.h"
+
 
 
 

@@ -13,7 +13,8 @@ namespace BearRHI
 		virtual void DetachRenderTargetView(uint32 id) = 0;
 		virtual void DetachDepthStencilView() = 0;
 
-		virtual void SetViewport(uint32 id, float x, float y, float width, float height, float minDepth = 0.f, float maxDepth = 1.f) = 0;
+		virtual void SetViewport( float x, float y, float width, float height, float minDepth = 0.f, float maxDepth = 1.f) = 0;
+		virtual void SetScissor( float x, float y, float x1, float y1)=0;
 
 		virtual void SetPixelShader(BearRHIPixelShader*shader) = 0;
 		virtual void SetVertexShader(BearRHIVertexShader*shader) = 0;

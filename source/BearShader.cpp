@@ -12,7 +12,7 @@ BearGraphics::BearShader##name##CompilerRef::~BearShader##name##CompilerRef()\
 \
 bool BearGraphics::BearShader##name##CompilerRef::CompileText(const bchar * text, BearCore::BearString & out_error)\
 {\
-	Clear();\
+	/*Clear();*/\
 	if (!RHIFactoty)return false;\
 	if (!m_data.get()->shader_compiler)\
 	{\
@@ -181,9 +181,10 @@ bool BearGraphics::Bear##name##ShaderRef::LoadFromStream(BearCore::BearInputStre
 \
 bool BearGraphics::Bear##name##ShaderRef::LoadFromBuffer(BearCore::BearBufferedReader & stream)\
 {\
-	Clear();\
+	/*Clear();*/\
 	if (!RHIFactoty)return false;\
-	m_data.create();\
+	/*m_data.create();*/\
+	m_data.get()->~data();\
 	m_data.get()->shader = RHIFactoty->Create##name##Shader(stream.Begin(), (uint8*)stream.End() - (uint8*)stream.Begin());\
 	if (!m_data.get()->shader)\
 	{\

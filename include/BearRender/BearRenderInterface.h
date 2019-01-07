@@ -22,8 +22,8 @@ namespace BearGraphics
 
 		static void Draw(bsize size, bsize possition = 0, BearGraphics::BearDrawType mode = BearGraphics::DT_TRIANGLE);
 
-		static void SetViewport(uint32 id, float x, float y, float width, float height, float minDepth = 0.0f, float maxDepth = 1.f);
-
+		static void SetViewport(float x, float y, float width, float height, float minDepth = 0.0f, float maxDepth = 1.f);
+		static void SetScissor(float x, float y, float x1, float y1);
 		static void SetBlendState(const BearBlendStateRef&State,const BearCore::BearColor&color);
 		static void SetDepthStencilState(const BearDepthStencilStateRef&State,uint32 StencilRef);
 		static void SetRasterizerState(const BearRasterizerStateRef&State);
@@ -35,6 +35,5 @@ namespace BearGraphics
 
 
 		static void Destroy();
-
 	};
 }

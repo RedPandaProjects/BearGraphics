@@ -30,7 +30,7 @@
 #include "BearRHI/BearRHIStats.h"
 
 #include "BearRHI/BearRHIInterface.h"
-
+#include "BearRHI/BearRHIDefaultManager.h"
 
 #include "BearRender/BearRenderResource.h"
 
@@ -53,5 +53,8 @@
 #include "BearRender/BearRenderInterface.h"
 
 #include "BearRHI/BearRHIFactory.h"
+
+#include "BearResource/BearDefualtManager.h"
+
 
 # define PI           3.14159265358979323846f

@@ -16,8 +16,7 @@ void BearGraphics::BearTexture2DArrayRef::Create(const BearImage & image)
 	if (BearRHI::BearRHITextureUtils::isCompressor(image.GetFormat()))
 		BEAR_FATALERROR(image.GetSize().x % 4 == 0 && image.GetSize().y % 4 == 0, TEXT("Некоректный размер[%dx%d] картики типа BC"), uint32(image.GetSize().x), uint32(image.GetSize().y));
 	
-	Clear();
-	m_data.create();
+	m_data.get()->~data();
 	m_data.get()->resource = RHIFactoty->CreateTexture2DArray(image.GetSize().x, image.GetSize().y, image.GetDepth() , image.GetMips(), image.GetFormat(), (uint8*)*image);
 	m_data.get()->size.x = static_cast<float>(image.GetSize().x);
 	m_data.get()->size.y = static_cast<float>(image.GetSize().y);
@@ -26,8 +25,7 @@ void BearGraphics::BearTexture2DArrayRef::Create(const BearImage & image)
 void BearGraphics::BearTexture2DArrayRef::Create(bsize w, bsize h, bsize depth, bsize mip, BearTexturePixelFormat format)
 {
 	if (!RHIFactoty)return;
-	Clear();
-	m_data.create();
+	m_data.get()->~data();
 	m_data.get()->resource = RHIFactoty->CreateTexture2DArray(w, h, depth, mip,format,0);
 	m_data.get()->size.x = static_cast<float>(w);
 	m_data.get()->size.y = static_cast<float>(h);

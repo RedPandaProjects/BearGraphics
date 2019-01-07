@@ -12,6 +12,7 @@ BearGraphics::BearViewport::BearViewport()
 	viewport = 0;
 }
 
+
 BearGraphics::BearViewport::~BearViewport()
 {
 	if (viewport)

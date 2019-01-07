@@ -7,9 +7,9 @@ namespace BearGraphics
 		BEAR_CLASS_NO_COPY(BearViewport);
 	public:
 		friend class BearRenderInterface;
-		virtual void Resize(bsize wigth, bsize height);
+		virtual void Resize(bsize width, bsize height);
 		virtual void SetFullScreen(bool fullscreen);
-		void SetVsync(bool vsync);
+		virtual void SetVsync(bool vsync);
 		void Swap();
 		void ClearColor(const BearCore::BearColor&color);
 		virtual bool Empty()const;

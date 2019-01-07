@@ -16,6 +16,7 @@ namespace BearGraphics
 		BearCore::BearFVector2 GetSize()const;
 		inline bool Empty()const { return m_data.empty(); }
 		inline bool IsOne()const { return m_data.is_one(); }
+		void Unload();
 		void Copy(const BearTexture2DRef&right);
 		void Swap(BearTexture2DRef&right);
 		BearTexture2DRef(const BearTexture2DRef&right);

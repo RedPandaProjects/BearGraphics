@@ -1,12 +1,16 @@
 #include "BearGraphics.hpp"
 BEARGRAPHICS_API BearRHI::BearRHIFactory*RHIFactoty = NULL;
 BearRHI::BearRHIInterface*Interface = NULL;
+BearRHI::BearRHIDefaultManager*DefualtManager = NULL;
 
+extern BearGraphics::BearVertexShaderRef* GDVertexShaders[BearGraphics::DVS_COUNT];
+extern BearGraphics::BearPixelShaderRef* GDPixelShaders[BearGraphics::DPS_COUNT];
  void (*RHIInitialize)(void);
  void(*RHIDestroy)(void);
 
 bool BearGraphics::BearRenderInterface::Initialize(const bchar * name)
 {
+	Destroy();
 	if (!BearCore::BearProjectTool::CheckProject(name) )
 	{
 		Destroy();
@@ -16,6 +20,9 @@ bool BearGraphics::BearRenderInterface::Initialize(const bchar * name)
 	RHIDestroy = BearCore::BearProjectTool::GetFunctionInProject<void(*)(void)>(name, TEXT("RHIDestroy"));
 	RHIInitialize();
 	Interface = RHIFactoty->CreateInterface();
+	DefualtManager = RHIFactoty->CreateDefaultManager();
+	BearCore::bear_fill(GDVertexShaders);
+	BearCore::bear_fill(GDPixelShaders);
 	BearCore::BearLog::Printf(TEXT("BearGraphics build %s"), *BearCore::BearLog::GetBuild(2016, 11, 27));
 	return true;
 	
@@ -76,9 +83,14 @@ void BearGraphics::BearRenderInterface::Draw(bsize size, bsize possition, BearGr
 	if (Interface)Interface->Draw(size, possition, mode);
 }
 
-void BearGraphics::BearRenderInterface::SetViewport(uint32 id, float x, float y, float width, float height, float minDepth, float maxDepth)
+void BearGraphics::BearRenderInterface::SetViewport( float x, float y, float width, float height, float minDepth, float maxDepth)
 {
-	if (Interface)Interface->SetViewport(id, x, y, width, height, minDepth, maxDepth);
+	if (Interface)Interface->SetViewport(x, y, width, height, minDepth, maxDepth);
+}
+
+void BearGraphics::BearRenderInterface::SetScissor( float x, float y, float x1, float y1)
+{
+	if (Interface)Interface->SetScissor( x, y, x1, y1);
 }
 
 
@@ -117,9 +129,13 @@ void BearGraphics::BearRenderInterface::SetVertexShaderConstants(bsize slot, con
 
 void BearGraphics::BearRenderInterface::Destroy()
 {
+	if (!RHIFactoty)return;
+	BearDefaultManager::Clear();
 	BearStats::TestForDestroy();
-	if(RHIFactoty&&Interface)
+
 	RHIFactoty->DestroyInterface(Interface);
+	RHIFactoty->DestroyDefaultManager(DefualtManager);
+
 	if (RHIDestroy)RHIDestroy();
 	RHIDestroy = 0;
 	RHIInitialize = 0;

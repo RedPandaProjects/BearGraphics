@@ -9,6 +9,7 @@ namespace BearRHI
 	{
 	public:
 		RHI_FACTORY_DECLARE(Interface);
+		RHI_FACTORY_DECLARE(DefaultManager);
 
 		RHI_FACTORY_DECLARE(RenderTargetView, bsize w, bsize h, BearGraphics::BearRenderTargetFormat format);
 		RHI_FACTORY_DECLARE(Viewport, void*win, bsize w, bsize h, bool fullscreen, bool vsync);

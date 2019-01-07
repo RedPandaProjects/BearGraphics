@@ -17,8 +17,7 @@ void BearGraphics::BearTexture2DRef::Create(const BearImage & image, bsize depth
 		BEAR_FATALERROR(image.GetSize().x % 4 == 0 && image.GetSize().y % 4 == 0, TEXT("Ќекоректный размер[%dx%d] картики типа BC"), uint32(image.GetSize().x), uint32(image.GetSize().y));
 	
 	BEAR_FATALERROR(image.GetDepth() > depth, TEXT("«начение глубены [%llu] вышло за пределы [%llu] масива"), depth, image.GetDepth());
-	Clear();
-	m_data.create();
+	m_data.get()->~data();
 	m_data.get()->resource = RHIFactoty->CreateTexture2D(image.GetSize().x, image.GetSize().y, image.GetMips(), image.GetFormat(), dynamic, (uint8*)*image+BearRHI::BearRHITextureUtils::GetSizeInMemory(image.GetSize().x, image.GetSize().y,image.GetMips(),image.GetFormat())*depth);
 	m_data.get()->size.x = static_cast<float>(image.GetSize().x);
 	m_data.get()->size.y = static_cast<float>(image.GetSize().y);
@@ -27,8 +26,7 @@ void BearGraphics::BearTexture2DRef::Create(const BearImage & image, bsize depth
 void BearGraphics::BearTexture2DRef::Create(bsize w, bsize h, bsize mip, BearTexturePixelFormat format, bool dynamic)
 {
 	if (!RHIFactoty)return;
-	Clear();
-	m_data.create();
+	m_data.get()->~data();
 	m_data.get()->resource = RHIFactoty->CreateTexture2D(w, h, mip,format, dynamic,0);
 	m_data.get()->size.x = static_cast<float>(w);
 	m_data.get()->size.y = static_cast<float>(h);
@@ -59,6 +57,11 @@ BearCore::BearFVector2 BearGraphics::BearTexture2DRef::GetSize() const
 	return  m_data.get()->size;
 }
 
+
+void BearGraphics::BearTexture2DRef::Unload()
+{
+	m_data.get()->~data();
+}
 
 void BearGraphics::BearTexture2DRef::Copy(const BearTexture2DRef & right)
 {

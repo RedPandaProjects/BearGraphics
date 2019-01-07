@@ -153,4 +153,23 @@ namespace BearGraphics
 		SO_INCR,
 		SO_DECR
 	};
+	enum BearDefaultPixelShader
+	{
+		/*DefaultVertex*/
+		/*return Texture_0[slot:0].rgba*/
+		DPS_Default,
+		/*DefaultVertex*/
+		/*return white;*/
+		DPS_White,
+		DPS_UITexture,
+		DPS_UIText,
+		DPS_COUNT,
+	};
+	enum BearDefaultVertexShader
+	{
+		/*DefaultVertex*/
+		/*return Matrix_0[slot:0]*in;*/
+		DVS_Default,
+		DVS_COUNT,
+	};
 }
