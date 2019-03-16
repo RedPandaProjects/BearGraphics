@@ -33,9 +33,9 @@ void BearGraphics::BearRenderInterface::AttachRenderTargetView(uint32 id, BearRe
 	if (Interface && !viewport.Empty())Interface->AttachRenderTargetView(id, viewport.m_data.get()->resource);
 }
 
-void BearGraphics::BearRenderInterface::AttachRenderTargetView(uint32 id, BearViewport & viewport)
+void BearGraphics::BearRenderInterface::AttachRenderTargetView( BearViewport & viewport)
 {
-	if (Interface && !viewport.Empty())Interface->AttachRenderTargetView(id, viewport.viewport);
+	if (Interface && !viewport.Empty())Interface->AttachViewport( viewport.viewport);
 }
 
 void BearGraphics::BearRenderInterface::DetachRenderTargetView(uint32 id)
@@ -88,11 +88,14 @@ void BearGraphics::BearRenderInterface::SetViewport( float x, float y, float wid
 	if (Interface)Interface->SetViewport(x, y, width, height, minDepth, maxDepth);
 }
 
-void BearGraphics::BearRenderInterface::SetScissor( float x, float y, float x1, float y1)
+void BearGraphics::BearRenderInterface::SetScissor(float x, float y, float x1, float y1)
 {
-	if (Interface)Interface->SetScissor( x, y, x1, y1);
+	if (Interface)Interface->SetScissor(true, x, y, x1, y1);
 }
-
+void BearGraphics::BearRenderInterface::DisableScissor()
+{
+	if (Interface)Interface->SetScissor(false,0,0,0,0);
+}
 
 
 void BearGraphics::BearRenderInterface::SetBlendState(const BearBlendStateRef & State, const BearCore::BearColor & color)

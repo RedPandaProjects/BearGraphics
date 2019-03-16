@@ -7,7 +7,7 @@ namespace BearGraphics
 		static bool Initialize(const bchar*name);
 
 		static void AttachRenderTargetView(uint32 id, BearRenderTargetViewRef&viewport);
-		static void AttachRenderTargetView(uint32 id, BearViewport&viewport);
+		static void AttachRenderTargetView(BearViewport&viewport);
 		static void DetachRenderTargetView(uint32 id);
 		static void AttachDepthStencilView(BearDepthStencilViewRef&viewport);
 		static void DetachDepthStencilView();
@@ -24,6 +24,7 @@ namespace BearGraphics
 
 		static void SetViewport(float x, float y, float width, float height, float minDepth = 0.0f, float maxDepth = 1.f);
 		static void SetScissor(float x, float y, float x1, float y1);
+		static void DisableScissor();
 		static void SetBlendState(const BearBlendStateRef&State,const BearCore::BearColor&color);
 		static void SetDepthStencilState(const BearDepthStencilStateRef&State,uint32 StencilRef);
 		static void SetRasterizerState(const BearRasterizerStateRef&State);

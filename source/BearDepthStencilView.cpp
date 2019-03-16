@@ -41,25 +41,25 @@ void BearGraphics::BearDepthStencilViewRef::Create(bsize w, bsize h, BearDepthSt
 /*
 void BearGraphics::BearDepthStencilViewRef::GenerateMips()
 {
-	if (!Empty())return;
+	if (Empty())return;
 	m_data.get()->resource->GenerateMips();
 }*/
 
 void BearGraphics::BearDepthStencilViewRef::ClearDepth(float debpt)
 {
-	if (!Empty())return;
+	if (Empty())return;
 	m_data.get()->resource->ClearDepth(debpt);
 }
 
-void BearGraphics::BearDepthStencilViewRef::ClearStencill(uint8 mask)
+void BearGraphics::BearDepthStencilViewRef::ClearStencil(uint8 mask)
 {
-	if (!Empty())return;
+	if (Empty())return;
 	m_data.get()->resource->ClearStencil(mask);
 }
 
 void BearGraphics::BearDepthStencilViewRef::Resize(bsize w, bsize h)
 {
-	if (!Empty())return;
+	if (Empty())return;
 	m_data.get()->resource->Resize(w, h);
 }
 

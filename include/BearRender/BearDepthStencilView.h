@@ -17,7 +17,7 @@ namespace BearGraphics
 		void Create(bsize w, bsize h, BearDepthStencilFormat format);
 	//	void GenerateMips();
 		void ClearDepth(float debpt=1.f);
-		void ClearStencill(uint8 mask=255);
+		void ClearStencil(uint8 mask=255);
 		void Resize(bsize w, bsize h);
 		void Clear();
 		inline bool Empty()const { return m_data.empty(); }

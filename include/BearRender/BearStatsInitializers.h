@@ -36,11 +36,13 @@ namespace BearGraphics
 			bool depthEnable=true,
 			BearCompareFunction depthTest= CF_LESSEQUAL,
 			bool stencillEnable=false,
+			bool backStencillEnable = false,
 			uint8 stencilReadMask=0xFF,
 			uint8 stencilWriteMask=0xFF) 
 			:DepthEnable(depthEnable), 
 			DepthTest(depthTest), 
 			StencillEnable(stencillEnable), 
+			BackStencillEnable(stencillEnable),
 			StencilReadMask(stencilReadMask), 
 			StencilWriteMask(stencilWriteMask)
 		{
@@ -61,6 +63,7 @@ namespace BearGraphics
 		bool DepthEnable;
 		BearCompareFunction DepthTest;
 		bool StencillEnable;
+		bool BackStencillEnable;
 		uint8 StencilReadMask;
 		uint8 StencilWriteMask;
 		Stencill FrontFace;

@@ -10,9 +10,13 @@ namespace BearGraphics
 		virtual void Resize(bsize width, bsize height);
 		virtual void SetFullScreen(bool fullscreen);
 		virtual void SetVsync(bool vsync);
+
 		void Swap();
 		void ClearColor(const BearCore::BearColor&color);
+		void ClearDepth(float debpt = 1.f);
+		void ClearStencil(uint8 mask = 255);
 		virtual bool Empty()const;
+	
 	protected:
 		void Create(void* win, bsize width, bsize height, bool fullscreen, bool vsync);
 		BearViewport();

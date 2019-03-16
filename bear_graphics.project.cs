@@ -14,6 +14,7 @@ public class bear_graphics : Project
         Projects.Private.Add("intelcompressor");
         Projects.Private.Add("nvtt");
 		Projects.Private.Add("directx");
+		IncludeAutonomousProjects.Add("bear_opengl");
 		IncludeAutonomousProjects.Add("bear_directx11");
 		IncludeAutonomousProjects.Add("bear_directx10");
     }

@@ -4,6 +4,7 @@ extern BEARGRAPHICS_API BearRHI::BearRHIFactory*RHIFactoty ;
 void BearGraphics::BearViewport::Create(void * win, bsize width, bsize height, bool fullscreen, bool vsync)
 {
 	BEAR_ASSERT(Empty());
+	if(RHIFactoty)
 	viewport=RHIFactoty->CreateViewport((void*)win, width, height, fullscreen, vsync);
 }
 
@@ -23,7 +24,7 @@ BearGraphics::BearViewport::~BearViewport()
 void BearGraphics::BearViewport::Resize(bsize wigth, bsize height)
 {
 	if (viewport)
-	viewport->Reisze(wigth, height);
+	viewport->Resize(wigth, height);
 }
 
 void BearGraphics::BearViewport::SetFullScreen(bool fullscreen)
@@ -48,6 +49,18 @@ void BearGraphics::BearViewport::ClearColor(const BearCore::BearColor & color)
 {
 	if (viewport)
 	viewport->ClearColor(color);
+}
+
+void BearGraphics::BearViewport::ClearDepth(float debpt)
+{
+	if (viewport)
+		viewport->ClearDepth(debpt);
+}
+
+void BearGraphics::BearViewport::ClearStencil(uint8 mask)
+{
+	if (viewport)
+		viewport->ClearStencil(mask);
 }
 
 bool BearGraphics::BearViewport::Empty() const

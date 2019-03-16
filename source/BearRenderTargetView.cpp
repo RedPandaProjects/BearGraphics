@@ -47,7 +47,7 @@ void BearGraphics::BearRenderTargetViewRef::ClearColor(const BearCore::BearColor
 void BearGraphics::BearRenderTargetViewRef::Resize(bsize w, bsize h)
 {
 	if (Empty())return;
-	m_data.get()->resource->Reisze(w, h);
+	m_data.get()->resource->Resize(w, h);
 }
 
 void BearGraphics::BearRenderTargetViewRef::GenetateMips()
