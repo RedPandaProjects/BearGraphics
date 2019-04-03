@@ -184,13 +184,14 @@ BearCore::BearColor BearGraphics::BearImage::GetPixel(bsize x, bsize y, bsize d)
 
 void BearGraphics::BearImage::SetPixel(const BearCore::BearColor & color, bsize x, bsize y, bsize d)
 {
+
 }
 
 
 
 void BearGraphics::BearImage::Clear()
 {
-	if (m_images)BearCore::bear_free(m_images);
+	if (m_images)BearCore::bear_free(m_images); m_images = 0;
 	m_h = 0;
 	m_w = 0;
 	m_mips = 0;
