@@ -3,7 +3,7 @@
 extern BearRHI::BearRHIDefaultManager*DefualtManager;
 BearGraphics::BearVertexShaderRef* GDVertexShaders[BearGraphics::DVS_COUNT];
 BearGraphics::BearPixelShaderRef* GDPixelShaders[BearGraphics::DPS_COUNT];
-BearGraphics::BearVertexStateRef* GDVertexState=0;
+BearGraphics::BearVertexStateRef* GDVertexState[BearGraphics::DVS_COUNT];
 BearGraphics::BearSamplerStateRef* GDSamplerState = 0;
 BearGraphics::BearTexture2DRef* GDTexture2D = 0;
 BearGraphics::BearBlendStateRef* GDBlendAlpha = 0;
@@ -31,26 +31,37 @@ const BearGraphics::BearPixelShaderRef & BearGraphics::BearDefaultManager::GetPi
 	return *GDPixelShaders[type];
 }
 
-const BearGraphics::BearVertexStateRef & BearGraphics::BearDefaultManager::GetVertexState()
+const  BearGraphics::BearVertexStateRef & BearGraphics::BearDefaultManager::GetVertexState(BearDefaultVertexShader type)
 {
-	if (!GDVertexState)
+	if (!GDVertexState[type] && DefualtManager)
 	{
 		BearShaderVertexCompilerRef compiler;
 		BearCore::BearString out_text;
-		BEAR_ASSERT(compiler.CompileText(DefualtManager->GetVertexShader(DVS_Default), out_text));
+		BEAR_ASSERT(compiler.CompileText(DefualtManager->GetVertexShader(type), out_text));
 
 		BearVertexStateInitializer initializer;
 		initializer.Elements[0].Name = "POSITION";
 		initializer.Elements[0].Offset = 0;
-		initializer.Elements[0].Type = VF_R32G32B32_FLOAT;
+		switch (type)
+		{
+		case BearGraphics::DVS_UI:
+			initializer.Elements[0].Type = VF_R32G32_FLOAT;
+			initializer.Elements[1].Offset = sizeof(float) * 2;
+			break;
+		default:
+			initializer.Elements[0].Type = VF_R32G32B32_FLOAT;
+			initializer.Elements[1].Offset = sizeof(float) * 3;
+			break;
+		}
+	
 		initializer.Elements[1].Name = "TEXTUREUV";
-		initializer.Elements[1].Offset = sizeof(float)*3;
 		initializer.Elements[1].Type = VF_R32G32_FLOAT;
 
-		GDVertexState = BearCore::bear_new< BearVertexStateRef>(BearVertexStateRef(initializer,compiler.Begin(), compiler.GetSize()));
+		GDVertexState[type] = BearCore::bear_new< BearVertexStateRef>(BearVertexStateRef(initializer, compiler.Begin(), compiler.GetSize()));
 	}
-	return *GDVertexState;
+	return *GDVertexState[type];
 }
+
 
 const BearGraphics::BearSamplerStateRef & BearGraphics::BearDefaultManager::GetSamplerState()
 {
@@ -95,6 +106,7 @@ const BearGraphics::BearRasterizerStateRef & BearGraphics::BearDefaultManager::G
 	if (!GDRasterizerState)
 	{
 		BearGraphics::BearRasterizerStateInitializer r_intialize;
+		//r_intialize.CullMode = RCM_FRONT;
 		GDRasterizerState = BearCore::bear_new< BearRasterizerStateRef>(r_intialize);
 	}
 	return *GDRasterizerState;
@@ -107,15 +119,19 @@ void BearGraphics::BearDefaultManager::Clear()
 		if (GDVertexShaders[i])BearCore::bear_delete(GDVertexShaders[i]);
 	}
 	BearCore::bear_fill(GDVertexShaders);
+	for (bsize i = 0; i < DVS_COUNT; i++)
+	{
+		if (GDVertexState[i])BearCore::bear_delete(GDVertexState[i]);
+	}
+	BearCore::bear_fill(GDVertexState);
 	for (bsize i = 0; i < DPS_COUNT; i++)
 	{
 		if (GDPixelShaders[i])BearCore::bear_delete(GDPixelShaders[i]);
 	}
 	BearCore::bear_fill(GDPixelShaders);
-	if(GDVertexState)BearCore::bear_delete(GDVertexState);
 	if(GDSamplerState)BearCore::bear_delete(GDSamplerState);
 	if(GDTexture2D)BearCore::bear_delete(GDTexture2D);
 	if (GDBlendAlpha)BearCore::bear_delete(GDBlendAlpha);
 	if(GDRasterizerState)BearCore::bear_delete(GDRasterizerState);
-	GDBlendAlpha = 0; GDVertexState = 0; GDSamplerState = 0; GDTexture2D = 0; GDRasterizerState = 0;
+	GDBlendAlpha = 0;  GDSamplerState = 0; GDTexture2D = 0; GDRasterizerState = 0;
 }

@@ -165,11 +165,12 @@ namespace BearGraphics
 		DPS_UIText,
 		DPS_COUNT,
 	};
-	enum BearDefaultVertexShader
+	enum BearDefaultVertexShader	
 	{
 		/*DefaultVertex*/
 		/*return Matrix_0[slot:0]*in;*/
 		DVS_Default,
+		DVS_UI,
 		DVS_COUNT,
 	};
 }
