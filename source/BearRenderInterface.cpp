@@ -78,6 +78,11 @@ void BearGraphics::BearRenderInterface::SetVertexBuffer(const BearVertexBufferRe
 	if (Interface && !shader.Empty())Interface->SetVertexBuffer(shader.m_data.get()->buffer);
 }
 
+void BearGraphics::BearRenderInterface::DrawIndexed(bsize size, bsize possition, BearGraphics::BearDrawType mode)
+{
+	if (Interface)Interface->DrawIndexed(size, possition, mode);
+}
+
 void BearGraphics::BearRenderInterface::Draw(bsize size, bsize possition, BearGraphics::BearDrawType mode)
 {
 	if (Interface)Interface->Draw(size, possition, mode);

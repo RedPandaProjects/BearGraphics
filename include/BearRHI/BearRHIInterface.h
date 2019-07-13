@@ -35,6 +35,7 @@ namespace BearRHI
 		virtual void SetPixelShaderConstants(bsize slot, BearRHIShaderConstants*constants) = 0;
 		virtual void SetPixelShaderResource(bsize slot, BearRHITexture2D*texture2d, BearRHI::BearRHISamplerState*sampler) = 0;
 
+		virtual void DrawIndexed(bsize size, bsize possition, BearGraphics::BearDrawType mode) = 0;
 		virtual void Draw(bsize size, bsize possition, BearGraphics::BearDrawType mode) = 0;
 	};
 }

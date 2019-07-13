@@ -20,6 +20,7 @@ namespace BearGraphics
 		static void SetIndexBuffer(const BearIndexBufferRef&shader);
 		static void SetVertexBuffer(const BearVertexBufferRef&shader);
 
+		static void DrawIndexed(bsize size, bsize possition = 0, BearGraphics::BearDrawType mode = BearGraphics::DT_TRIANGLE);
 		static void Draw(bsize size, bsize possition = 0, BearGraphics::BearDrawType mode = BearGraphics::DT_TRIANGLE);
 
 		static void SetViewport(float x, float y, float width, float height, float minDepth = 0.0f, float maxDepth = 1.f);
