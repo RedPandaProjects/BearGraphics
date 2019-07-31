@@ -8,7 +8,7 @@ BearGraphics::BearSamplerStateRef* GDSamplerState = 0;
 BearGraphics::BearTexture2DRef* GDTexture2D = 0;
 BearGraphics::BearBlendStateRef* GDBlendAlpha = 0;
 BearGraphics::BearRasterizerStateRef* GDRasterizerState = 0;
-
+BearGraphics::BearDepthStencilStateRef* GDDepthStencilState = 0;
 const BearGraphics::BearVertexShaderRef & BearGraphics::BearDefaultManager::GetVertexShader(BearDefaultVertexShader type)
 {
 	if (!GDVertexShaders[type]&& DefualtManager)
@@ -112,6 +112,19 @@ const BearGraphics::BearRasterizerStateRef & BearGraphics::BearDefaultManager::G
 	return *GDRasterizerState;
 }
 
+const BearGraphics::BearDepthStencilStateRef & BearGraphics::BearDefaultManager::GetBearDepthStencilState()
+{
+	if (!GDDepthStencilState)
+	{
+		BearGraphics::BearDepthStencilStateInitializer r_intialize;
+		r_intialize.DepthEnable = false;
+		//r_intialize.CullMode = RCM_FRONT;
+		GDDepthStencilState = BearCore::bear_new< BearDepthStencilStateRef>(r_intialize);
+	}
+	return *GDDepthStencilState;
+	// TODO: вставьте здесь оператор return
+}
+
 void BearGraphics::BearDefaultManager::Clear()
 {
 	for (bsize i = 0; i < DVS_COUNT; i++)
@@ -133,5 +146,6 @@ void BearGraphics::BearDefaultManager::Clear()
 	if(GDTexture2D)BearCore::bear_delete(GDTexture2D);
 	if (GDBlendAlpha)BearCore::bear_delete(GDBlendAlpha);
 	if(GDRasterizerState)BearCore::bear_delete(GDRasterizerState);
-	GDBlendAlpha = 0;  GDSamplerState = 0; GDTexture2D = 0; GDRasterizerState = 0;
+	if (GDDepthStencilState)BearCore::bear_delete(GDDepthStencilState);
+	GDBlendAlpha = 0;  GDSamplerState = 0; GDTexture2D = 0; GDRasterizerState = 0; GDDepthStencilState = 0;
 }

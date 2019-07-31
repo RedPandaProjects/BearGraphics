@@ -6,9 +6,9 @@ namespace BearGraphics
 	public:
 		BearImage();
 
-		BearImage(bsize w, bsize h,bool mip=false,bsize depth = 1, BearTexturePixelFormat px = TPF_R8G8B8A8);
+		BearImage(bsize w, bsize h,bsize mip=1,bsize depth = 1, BearTexturePixelFormat px = TPF_R8G8B8A8);
 		void Fill(const BearCore::BearColor &color = BearCore::BearColor::Brown);
-		void Create(bsize w, bsize h, bool mip = false, bsize depth = 1, BearTexturePixelFormat px = TPF_R8G8B8A8);
+		void Create(bsize w, bsize h, bsize mip = 1, bsize depth = 1, BearTexturePixelFormat px = TPF_R8G8B8A8);
 		void Append(bsize x, bsize y, const BearImage&img,bsize x_src,bsize y_src,bsize w_src,bsize h_src, bsize dst_depth, bsize src_depth);
 		void Append(bsize x, bsize y, const BearImage&img,bsize dst_depth,bsize src_depth);
 

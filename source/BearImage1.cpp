@@ -5,7 +5,7 @@ BearGraphics::BearImage::BearImage() :m_px(TPF_R8), m_images(0), m_w(0), m_h(0),
 {
 }
 
-BearGraphics::BearImage::BearImage(bsize w, bsize h, bool mip, bsize depth, BearTexturePixelFormat px) : m_px(TPF_R8), m_images(0), m_w(0), m_h(0), m_depth(0), m_mips(0)
+BearGraphics::BearImage::BearImage(bsize w, bsize h, bsize mip, bsize depth, BearTexturePixelFormat px) : m_px(TPF_R8), m_images(0), m_w(0), m_h(0), m_depth(0), m_mips(0)
 {
 	Create(w, h, mip, depth, px);
 }
@@ -21,7 +21,7 @@ void BearGraphics::BearImage::Fill(const BearCore::BearColor & color)
 	}
 }
 
-void BearGraphics::BearImage::Create(bsize w, bsize h, bool mip, bsize depth, BearTexturePixelFormat px)
+void BearGraphics::BearImage::Create(bsize w, bsize h, bsize mip, bsize depth, BearTexturePixelFormat px)
 {
 	Clear();
 	m_mips = 1;
@@ -30,10 +30,8 @@ void BearGraphics::BearImage::Create(bsize w, bsize h, bool mip, bsize depth, Be
 	m_h = h;
 	m_px = px;
 	BEAR_FATALERROR(m_depth, TEXT("√лубина неможет равн€тьс€ нулю!"));
-	if (mip)
-	{
-		m_mips = BearRHI::BearRHITextureUtils::GetCountMips(w, h);
-	}
+
+	m_mips = mip;
 
 	m_images = BearCore::bear_alloc<uint8>(GetSizeInMemory());
 }
@@ -89,7 +87,7 @@ void BearGraphics::BearImage::ScaleCanvas(bsize w, bsize h)
 	BEAR_FATALERROR(!BearRHI::BearRHITextureUtils::isCompressor(m_px), TEXT("BlockCompressor нередактируетьс€"));
 	BearImage img;
 
-	img.Create(w, h, m_mips > 1, m_depth, m_px);
+	img.Create(w, h, m_mips, m_depth, m_px);
 	for (bsize i = 0; i < m_depth; i++)
 	{
 		img.Append(0, 0, *this, 0, 0, BearCore::bear_min(m_w, w), BearCore::bear_min(m_h, h), i, i);
@@ -246,7 +244,7 @@ BearGraphics::BearImage & BearGraphics::BearImage::operator=(const BearImage & i
 void BearGraphics::BearImage::Convert(BearTexturePixelFormat format)
 {
 	if (Empty())return;
-	BearImage img(m_w, m_h, m_mips >1, m_depth, format);
+	BearImage img(m_w, m_h, m_mips , m_depth, format);
 	uint8*src= (uint8*)**this;
 	uint8*dst = (uint8*)*img;
 	for (bsize i = 0; i < m_depth; i++)
@@ -304,7 +302,7 @@ void BearGraphics::BearImage::Resize(bsize w, bsize h,bsize depth,BearTexturePix
 {
 	if (m_w != w || m_h != h || m_px != px)
 	{
-		Create(w, h, m_mips > 1, depth + 1, px);
+		Create(w, h, m_mips , depth + 1, px);
 	}
 	else
 	{

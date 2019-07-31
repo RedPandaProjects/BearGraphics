@@ -49,7 +49,7 @@ bool BearGraphics::BearImage::LoadDDSFromStream(const BearCore::BearInputStream 
 		DDS_HEADER header;
 		BearCore::bear_fill(header);
 		stream.Seek(4);
-		if (size > sizeof(header) || size < 4)
+		if (size > sizeof(DDS_HEADER) || size < 4)
 			return false;
 
 		stream.Read(&header, size);
@@ -59,12 +59,12 @@ bool BearGraphics::BearImage::LoadDDSFromStream(const BearCore::BearInputStream 
 		m_mips = header.dwHeaderFlags&DDSD_MIPMAPCOUNT ? header.dwMipMapCount : 1;
 		m_h = header.dwHeight;
 		m_w = header.dwWidth;
-		if (m_mips != BearRHI::BearRHITextureUtils::GetCountMips(m_w, m_h)&& m_mips!=1)
+		if (m_mips==0)
 		{
 			Clear();
 			return false;
 		}
-		if (header.ddspf.dwFlags == DDS_RGB || header.ddspf.dwFlags == DDS_RGBA)
+		if (header.ddspf.dwFlags != DDS_FOURCC)
 		{
 			bool alpha = header.ddspf.dwFlags&(DDS_RGBA&(~DDS_RGB));
 			if (header.ddspf.dwRGBBitCount % 8 || header.ddspf.dwRGBBitCount > 64)
@@ -84,7 +84,7 @@ bool BearGraphics::BearImage::LoadDDSFromStream(const BearCore::BearInputStream 
 				m_px = TPF_R8;
 			uint8 coutComp = BearRHI::BearRHITextureUtils::GetCountComp(m_px);
 			uint32 pixel = 0;
-			Create(m_w, m_h, m_mips > 1, m_depth, m_px);
+			Create(m_w, m_h, m_mips, m_depth, m_px);
 			for (bsize d = 0; d < m_depth; d++)
 			{
 				for (bsize m = 0; m < m_mips; m++)
@@ -104,10 +104,17 @@ bool BearGraphics::BearImage::LoadDDSFromStream(const BearCore::BearInputStream 
 			}
 			return true;
 		}
-		else if (header.ddspf.dwFlags == DDS_FOURCC)
+		else
 		{
+
+			
 			if (header.ddspf.dwFourCC == MAKEFOURCC('D', 'X', '1', '0'))
 			{
+				if (size + sizeof(DDSHeader10) == sizeof(DDS_HEADER))
+				{
+					stream.Seek(4);
+					stream.Read(&header, size += sizeof(DDSHeader10));
+				}
 				switch (header.Header10.dxgiFormat)
 				{
 				case DXGI_FORMAT_R32G32B32A32_FLOAT:
@@ -183,7 +190,7 @@ bool BearGraphics::BearImage::LoadDDSFromStream(const BearCore::BearInputStream 
 					return false;
 				}
 			}
-			Create(m_w, m_h, m_mips > 1, m_depth, m_px);
+			Create(m_w, m_h, m_mips , m_depth, m_px);
 			stream.Read(m_images, GetSizeInMemory());
 			return true;
 		}

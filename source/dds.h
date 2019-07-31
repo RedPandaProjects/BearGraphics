@@ -92,6 +92,7 @@ const DDS_PIXELFORMAT DDSPF_R5G6B5 =
                                DDS_CUBEMAP_POSITIVEZ | DDS_CUBEMAP_NEGATIVEZ )
 
 #define DDS_FLAGS_VOLUME 0x00200000 // DDSCAPS2_VOLUME
+#pragma pack(push,4)
 struct DDSHeader10
 {
 	DWORD dxgiFormat;
@@ -116,7 +117,7 @@ struct DDS_HEADER
     DWORD dwReserved2[3];
 	DDSHeader10 Header10;
 };
-
+#pragma pack(pop)
 enum DDS_HEADER_FLAGS
 {
 	DDSD_CAPS = 1 << 0,

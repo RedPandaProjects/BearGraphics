@@ -17,6 +17,7 @@ namespace BearGraphics
 		static const BearTexture2DRef&GetTexture2D();
 		static const BearBlendStateRef&GetBlendAlpha();
 		static const BearRasterizerStateRef&GetRasterizerState();
+		static const BearDepthStencilStateRef&GetBearDepthStencilState();
 		static void Clear();
 
 	};
