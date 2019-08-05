@@ -153,3 +153,13 @@ void BearGraphics::BearRenderInterface::SetVertexShaderResource(bsize slot, cons
 {
 	if (Interface && !texture2d.Empty() && !sampler.Empty()) Interface->SetVertexShaderResource(slot, texture2d.m_data.get()->resource, sampler.m_data.get()->reosurce);
 }
+
+void BearGraphics::BearRenderInterface::SetPixelShaderResource(bsize slot, const BearRenderTargetViewRef & texture2d, const BearSamplerStateRef & sampler)
+{
+	if (Interface && !texture2d.Empty() && !sampler.Empty()) Interface->SetPixelShaderResource(slot, texture2d.m_data.get()->resource, sampler.m_data.get()->reosurce);
+}
+
+void BearGraphics::BearRenderInterface::SetVertexShaderResource(bsize slot, const BearRenderTargetViewRef & texture2d, const BearSamplerStateRef & sampler)
+{
+	if (Interface && !texture2d.Empty() && !sampler.Empty()) Interface->SetVertexShaderResource(slot, texture2d.m_data.get()->resource, sampler.m_data.get()->reosurce);
+}

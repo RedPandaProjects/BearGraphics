@@ -34,7 +34,8 @@ namespace BearGraphics
 		static void SetPixelShaderResource(bsize slot, const BearTexture2DRef&texture2d, const BearSamplerStateRef&sampler);
 		static void SetVertexShaderConstants(bsize slot, const BearShaderConstantsRef&consts);
 		static void SetVertexShaderResource(bsize slot, const BearTexture2DRef&texture2d, const BearSamplerStateRef&sampler);
-
+		static void SetPixelShaderResource(bsize slot, const BearRenderTargetViewRef&texture2d, const BearSamplerStateRef&sampler);
+		static void SetVertexShaderResource(bsize slot, const BearRenderTargetViewRef&texture2d, const BearSamplerStateRef&sampler);
 
 		static void Destroy();
 	};
