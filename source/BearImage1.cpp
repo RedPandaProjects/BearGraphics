@@ -204,7 +204,7 @@ BearGraphics::BearImage::~BearImage()
 
 bool BearGraphics::BearImage::Empty() const
 {
-	return false;
+	return m_depth==0||m_mips==0||m_w==0||m_h==0;
 }
 
 BearGraphics::BearImage::BearImage(const BearImage & img) :m_px(TPF_R8), m_images(0), m_w(0), m_h(0), m_depth(0), m_mips(0)

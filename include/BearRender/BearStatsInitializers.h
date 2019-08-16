@@ -4,7 +4,7 @@ namespace BearGraphics
 {
 	struct BearBlendStateInitializer
 	{
-		BearBlendStateInitializer() { RenderTarget[0].Enable = true; }
+		BearBlendStateInitializer() { RenderTarget[0].Enable = true; AlphaToCoverageEnable = false; }
 		struct RenderTarget
 		{
 			RenderTarget(
@@ -27,6 +27,7 @@ namespace BearGraphics
 			BearBlendFactor AlphaDst;
 			BearColorWriteMask ColorWriteMask;
 		};
+		bool AlphaToCoverageEnable;
 		RenderTarget RenderTarget[8];
 	
 	};
@@ -34,12 +35,14 @@ namespace BearGraphics
 	{
 		BearDepthStencilStateInitializer(
 			bool depthEnable=true,
+			bool enableDepthWrite=true,
 			BearCompareFunction depthTest= CF_LESSEQUAL,
 			bool stencillEnable=false,
 			bool backStencillEnable = false,
 			uint8 stencilReadMask=0xFF,
 			uint8 stencilWriteMask=0xFF) 
 			:DepthEnable(depthEnable), 
+			EnableDepthWrite(enableDepthWrite),
 			DepthTest(depthTest), 
 			StencillEnable(stencillEnable), 
 			BackStencillEnable(stencillEnable),
@@ -60,6 +63,7 @@ namespace BearGraphics
 			BearStencilOp StencilPassOp;
 			BearCompareFunction StencilTest;
 		};
+		bool EnableDepthWrite;
 		bool DepthEnable;
 		BearCompareFunction DepthTest;
 		bool StencillEnable;
