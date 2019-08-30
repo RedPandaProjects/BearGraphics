@@ -1,5 +1,6 @@
 #include "BearGraphics.hpp"
 #include "dds.h"
+#include "BearTextureUtils.h"
 #pragma warning(disable:4005)
 #include "directx/DXGI.h"
 static void maskShiftAndSize(bsize mask, uint32 * shift, uint32 * size)
@@ -82,22 +83,22 @@ bool BearGraphics::BearImage::LoadDDSFromStream(const BearCore::BearInputStream 
 				m_px = TPF_R8G8;
 			else
 				m_px = TPF_R8;
-			uint8 coutComp = BearRHI::BearRHITextureUtils::GetCountComp(m_px);
+			uint8 coutComp =BearTextureUtils::GetCountComp(m_px);
 			uint32 pixel = 0;
 			Create(m_w, m_h, m_mips, m_depth, m_px);
 			for (bsize d = 0; d < m_depth; d++)
 			{
 				for (bsize m = 0; m < m_mips; m++)
 				{
-					bsize h = BearRHI::BearRHITextureUtils::GetMip(m_h, m);
-					bsize w = BearRHI::BearRHITextureUtils::GetMip(m_w, m);
-					uint8*data = BearRHI::BearRHITextureUtils::GetImage(m_images, m_w, m_h, m_mips, d, m, m_px);
+					bsize h =BearTextureUtils::GetMip(m_h, m);
+					bsize w =BearTextureUtils::GetMip(m_w, m);
+					uint8*data =BearTextureUtils::GetImage(m_images, m_w, m_h, m_mips, d, m, m_px);
 					for (bsize x = 0; x < w*h; x++)
 					{
 						stream.Read(&pixel, byte_size_pixel);
 						for (bsize a = 0; a < coutComp; a++)
 						{
-							*BearRHI::BearRHITextureUtils::GetPixelUint8(x, 0, 0, coutComp, a, data)= static_cast<uint8>(ñonvertÑolor((pixel & header.ddspf.dwBitsMask[a]) >> shift_bit[a], size_bit[a], 8));;
+							*BearTextureUtils::GetPixelUint8(x, 0, 0, coutComp, a, data)= static_cast<uint8>(ñonvertÑolor((pixel & header.ddspf.dwBitsMask[a]) >> shift_bit[a], size_bit[a], 8));;
 						}
 					}
 				}
@@ -315,7 +316,7 @@ bool BearGraphics::BearImage::SaveToDds(const bchar * name)
 	}
 	
 	dds.Write(&ddsh, ddsh.dwSize + (ddsh.ddspf.dwFourCC == MAKEFOURCC('D', 'X', '1', '0') ? sizeof(ddsh.Header10) : 0));
-	dds.Write(m_images, BearRHI::BearRHITexture2D::GetSizeInMemory(m_w, m_h, m_mips, m_px)*m_depth);
+	dds.Write(m_images, BearTextureUtils::GetSizeInMemory(m_w, m_h, m_mips, m_px)*m_depth);
 	dds.Close();
 	return true;
 }
