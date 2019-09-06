@@ -3,9 +3,9 @@ namespace BearGraphics
 {
 	namespace Impl
 	{
-		class BearGraphicsTypeManager
+		class BearTypeManager
 		{
-			BEAR_CLASS_STATIC(BearGraphicsTypeManager);
+			BEAR_CLASS_STATIC(BearTypeManager);
 		public:
 			template<typename C>
 			static	BearGraphicsObjectType GetType()

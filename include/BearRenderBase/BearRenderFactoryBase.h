@@ -3,8 +3,7 @@ namespace BearRenderBase
 {
 
 #define RHI_FACTORY_DECLARE(Class,...) \
-	virtual BearRender##Class##Base* Create##Class(__VA_ARGS__)=0; \
-	virtual void Destroy##Class(BearRender##Class##Base *pObject)=0;
+	virtual BearRender##Class##Base* Create##Class(__VA_ARGS__)=0; 
 	class BearRenderFactoryBase
 	{
 		BEAR_CLASS_NO_COPY(BearRenderFactoryBase)
@@ -12,7 +11,7 @@ namespace BearRenderBase
 		BearRenderFactoryBase() {}
 		RHI_FACTORY_DECLARE(Interface);
 		RHI_FACTORY_DECLARE(Context);
-		RHI_FACTORY_DECLARE(Viewport, void*handle, bsize w, bsize h, bool fullscreen, bool vsync);
+		RHI_FACTORY_DECLARE(Viewport, void*Handle, bsize Width, bsize Height, bool Fullscreen, bool VSync);
 	/*	RHI_FACTORY_DECLARE(DefaultManager);
 
 		RHI_FACTORY_DECLARE(RenderTargetView, bsize w, bsize h, BearGraphics::BearRenderTargetFormat format);

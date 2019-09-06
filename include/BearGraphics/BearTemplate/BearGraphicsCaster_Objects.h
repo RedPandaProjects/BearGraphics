@@ -1,0 +1,8 @@
+#ifndef REGISTER_OBJECT
+#define REGISTER_OBJECT(EType,Class,Parent)
+#endif
+REGISTER_OBJECT(BearGraphics::GOT_ShaderResource,BearRenderShaderResource,BearRenderObject)
+REGISTER_OBJECT(BearGraphics::GOT_Texture2D,BearRenderTexture2DBase,BearRenderShaderResource)
+REGISTER_OBJECT(BearGraphics::GOT_RenderTargetView,BearRenderTargetViewBase,BearRenderTexture2DBase)
+REGISTER_OBJECT(BearGraphics::GOT_Viewport,BearRenderViewportBase,BearRenderTargetViewBase)
+#undef REGISTER_OBJECT

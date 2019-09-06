@@ -1,6 +1,20 @@
 #pragma once
 namespace BearGraphics
 {
+	enum BearWindowEventType
+	{
+		WET_KeyDouble,
+		WET_KeyDown,
+		WET_KeyUp,
+		WET_Char,
+		WET_Resize,
+		WET_Deactive,
+		WET_Active,
+		WET_MouseMove,
+		WET_MouseEnter,
+		WET_MouseLevae,
+		WET_None,
+	};
 	enum BearTexturePixelFormat
 	{
 		TPF_R8 = 0,

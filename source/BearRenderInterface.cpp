@@ -23,6 +23,20 @@ bool BearGraphics::BearRenderInterface::Initialize(const bchar * name)
 	return true;
 }
 
+BearGraphics::BearFactoryPointer<BearRenderBase::BearRenderContextBase> BearGraphics::BearRenderInterface::CreateContext()
+{
+	if(Empty())
+		return BearFactoryPointer<BearRenderBase::BearRenderContextBase>();
+	return BearFactoryPointer<BearRenderBase::BearRenderContextBase>(GRenderFactoty->CreateContext());
+}
+
+BearGraphics::BearFactoryPointer<BearRenderBase::BearRenderViewportBase> BearGraphics::BearRenderInterface::CreateViewport(const BearWindow&Window)
+{
+	if (Empty()|| Window.Empty())
+		return BearFactoryPointer<BearRenderBase::BearRenderViewportBase>();
+	return BearFactoryPointer<BearRenderBase::BearRenderViewportBase>(GRenderFactoty->CreateViewport(Window.GetWindowHandle(), Window.GetSize().x, Window.GetSize().y, Window.IsFullScreen(),false));
+}
+
 void BearGraphics::BearRenderInterface::Destroy()
 {
 	if (FDestroy)
@@ -31,4 +45,9 @@ void BearGraphics::BearRenderInterface::Destroy()
 		FDestroy = 0;
 		FInitialize = 0;
 	}
+}
+
+bool BearGraphics::BearRenderInterface::Empty()
+{
+	return GRenderFactoty==0;
 }

@@ -8,7 +8,7 @@ public class bear_graphics : Project
 		PCHFile=Path.Combine(ProjectPath,"source", "BearGraphics.PCH.cpp");
 		PCHIncludeFile= "BearGraphics.hpp";
 		AddSourceFiles(Path.Combine(ProjectPath,"source"),true);
-		Include.Private.Add(Path.Combine(ProjectPath,"include","BearRenderBase"));
+		Include.Public.Add(Path.Combine(ProjectPath,"include","BearRenderBase"));
 		Include.Public.Add(Path.Combine(ProjectPath,"include","BearGraphics"));
         Projects.Public.Add("bear_core");
         Projects.Private.Add("stb_image");
@@ -16,6 +16,6 @@ public class bear_graphics : Project
         Projects.Private.Add("nvtt");
 		Projects.Private.Add("directx");
 		IncludeAutonomousProjects.Add("bear_render_null");
-		IncludeAutonomousProjects.Add("bear_render_dx12_1");
+		IncludeAutonomousProjects.Add("bear_render_dx12");
     }
 } 

@@ -9,6 +9,9 @@
 
 #include "BearGraphicsEnums.h"
 #include "BearResource/BearImage.h"
-#include "BearRender/BearRenderInterface.h"
 #include "BearRenderBase.h"
-#include "BearTemplate/BearGraphicsTypeManager.h"
+
+#include "BearRender/BearRenderContext.h"
+#include "BearResource/BearFactoryPointer.h"
+#include "BearSystem/BearWindow.h"
+#include "BearRender/BearRenderInterface.h"
