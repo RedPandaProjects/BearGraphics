@@ -15,3 +15,4 @@
 #include "BearResource/BearFactoryPointer.h"
 #include "BearSystem/BearWindow.h"
 #include "BearRender/BearRenderInterface.h"
+#include "BearRender/BearRenderPipelineDescription.h"
