@@ -13,7 +13,6 @@ BearGraphics::BearImage::BearImage(bsize w, bsize h, bsize mip, bsize depth, Bea
 void BearGraphics::BearImage::Fill(const BearCore::BearColor & color)
 {
 	if (Empty())return;
-	BEAR_FATALERROR(!BearTextureUtils::isCompressor(m_px), TEXT("BlockCompressor нередактируетьс€"));
 	bsize size = BearTextureUtils::GetSizeInMemory(m_w, m_h, m_mips, m_px);
 	for (bsize i = 0; i < m_depth; i++)
 	{
@@ -26,6 +25,10 @@ void BearGraphics::BearImage::Create(bsize w, bsize h, bsize mip, bsize depth, B
 	Clear();
 	m_mips = 1;
 	m_depth = depth;
+	if (BearTextureUtils::isCompressor(px))
+	{
+		BEAR_FATALERROR(m_w%4==0&&m_h%4==0, TEXT("Ќекоректный размер дл€ формата компресси!"));
+	}
 	m_w = w;
 	m_h = h;
 	m_px = px;
@@ -40,8 +43,6 @@ void BearGraphics::BearImage::Append(bsize x, bsize y, const BearImage & img, bs
 {
 	if (Empty() || img.Empty())
 		return;
-	BEAR_FATALERROR(!BearTextureUtils::isCompressor(m_px), TEXT("BlockCompressor нередактируетьс€"));
-	BEAR_FATALERROR(!BearTextureUtils::isCompressor(img.m_px), TEXT("BlockCompressor нередактируетьс€"));
 	BEAR_FATALERROR(m_w >= x + w_src && m_h >= y + h_src, TEXT("Ќезвохможно склеить текстуру из-за маленького размера полотна."));
 	BEAR_FATALERROR(img.m_w >= x_src + w_src && img.m_h >= y_src + h_src, TEXT("Ќезвохможно склеить текстуру из-за маленького размера полотна."));
 	BEAR_FATALERROR(m_depth > dst_depth, TEXT("«начение глубены [%llu] вышло за пределы [%llu] масива"), dst_depth, m_depth);
@@ -57,7 +58,6 @@ void BearGraphics::BearImage::Append(bsize x, bsize y, const BearImage & img, bs
 {
 	if (Empty() || img.Empty())
 		return;
-	BEAR_FATALERROR(!BearTextureUtils::isCompressor(m_px), TEXT("BlockCompressor нередактируетьс€"));
 	Append(x, y, img, 0, 0, img.m_w, img.m_h, dst_depth, src_depth);
 }
 
@@ -65,9 +65,10 @@ void BearGraphics::BearImage::Scale(bsize w, bsize h)
 {
 	if (Empty())
 		return;
-	BEAR_FATALERROR(!BearTextureUtils::isCompressor(m_px), TEXT("BlockCompressor нередактируетьс€"));
 	BearImage img;
-	img.Create(w, h, m_mips > 1, m_depth, m_px);
+	bsize mips = m_mips;
+	ClearMipLevels();
+	img.Create(w, h, 1 , m_depth, m_px);
 	bsize src_size = BearTextureUtils::GetSizeInMemory(m_w, m_h, m_mips, m_px);
 	bsize dst_size = BearTextureUtils::GetSizeInMemory(img.m_w, img.m_h, img.m_mips, img.m_px);
 	for (bsize i = 0; i < m_depth; i++)
@@ -77,22 +78,27 @@ void BearGraphics::BearImage::Scale(bsize w, bsize h)
 		uint8*src_data = m_images + src_size * i;
 		BearTextureUtils::Scale(dst_data, img.m_w, img.m_h, src_data, m_w, m_h, m_px);
 	}
+
 	Swap(img);
+	if (mips > 1) GenerateMipmap();
 }
 
 void BearGraphics::BearImage::ScaleCanvas(bsize w, bsize h)
 {
 	if (Empty())
 		return;
-	BEAR_FATALERROR(!BearTextureUtils::isCompressor(m_px), TEXT("BlockCompressor нередактируетьс€"));
+	bsize mips = m_mips;
 	BearImage img;
-
+	ClearMipLevels();
 	img.Create(w, h, m_mips, m_depth, m_px);
+	img.Fill(BearCore::BearColor::Black);
 	for (bsize i = 0; i < m_depth; i++)
 	{
 		img.Append(0, 0, *this, 0, 0, BearCore::bear_min(m_w, w), BearCore::bear_min(m_h, h), i, i);
 	}
 	Swap(img);
+	if (mips > 1) GenerateMipmap();
+
 }
 
 
@@ -100,7 +106,6 @@ void BearGraphics::BearImage::GenerateMipmap(bsize depth)
 {
 	if (Empty())
 		return;
-	BEAR_FATALERROR(!BearTextureUtils::isCompressor(m_px), TEXT("BlockCompressor нередактируетьс€"));
 	if (m_mips == 1)
 	{
 		GenerateMipmap();
@@ -122,7 +127,6 @@ void BearGraphics::BearImage::GenerateMipmap()
 {
 	if (Empty())
 		return;
-	BEAR_FATALERROR(!BearTextureUtils::isCompressor(m_px), TEXT("BlockCompressor нередактируетьс€"));
 	m_mips = BearTextureUtils::GetCountMips(m_w, m_h);
 	m_images = BearCore::bear_realloc(m_images, BearTextureUtils::GetSizeInMemory(m_w, m_h, m_mips, m_px)*m_depth);
 	bsize size = BearTextureUtils::GetSizeInMemory(m_w, m_h, 1, m_px);
@@ -142,7 +146,6 @@ void BearGraphics::BearImage::GenerateMipmap()
 void BearGraphics::BearImage::ClearMipLevels()
 {
 	if (Empty() || m_mips == 1)return;
-	BEAR_FATALERROR(!BearTextureUtils::isCompressor(m_px), TEXT("BlockCompressor нередактируетьс€"));
 	bsize size = BearTextureUtils::GetSizeInMemory(m_w, m_h, 1, m_px);
 	for (bsize i = m_depth; i > 1; i--)
 	{
@@ -168,21 +171,20 @@ void BearGraphics::BearImage::NormalizedSize()
 
 BearCore::BearColor BearGraphics::BearImage::GetPixel(bsize x, bsize y, bsize d) const
 {
-	BEAR_FATALERROR(!BearTextureUtils::isCompressor(m_px), TEXT("BlockCompressor нередактируетьс€"));
 	if (Empty())
 		return BearCore::BearColor();
-
-	//	bsize count_comp = BearTextureUtils::GetCountComp(m_px);;
+	
 	BearCore::BearColor color;
-	/*if(BearTextureUtils::is)
-	 BearTextureUtils::GetPixelFloat(x, y, m_w, count_comp, 0, data);*/
-	return BearCore::BearColor();
+	BearTextureUtils::GetPixel(color,m_images,x,y,d,m_w,m_h,m_mips,m_px);
+	return color;
 
 }
 
 void BearGraphics::BearImage::SetPixel(const BearCore::BearColor & color, bsize x, bsize y, bsize d)
 {
-
+	if (Empty())
+		return;
+	BearTextureUtils::SetPixel(color, m_images, x, y, d, m_w, m_h, m_mips, m_px);
 }
 
 

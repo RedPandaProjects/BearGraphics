@@ -69,7 +69,22 @@ bsize BearGraphics::BearTextureUtils::GetSizePixel(BearGraphics::BearTexturePixe
 
 void BearGraphics::BearTextureUtils::Append(uint8*dst, bsize w_dst, bsize h_dst, bsize x_dst, bsize y_dst, uint8*src, bsize w_src, bsize h_src, BearCore::BearVector4<bsize> squard_src, BearGraphics::BearTexturePixelFormat dst_format, BearGraphics::BearTexturePixelFormat src_format)
 {
-	BEAR_ASSERT(!isCompressor(dst_format) || !isCompressor(src_format));
+	if (isCompressor(dst_format))
+	{
+		BearGraphics::BearTexturePixelFormat px_out;
+		uint8*dst_temp = TempUncompressor(dst, w_dst, h_dst, dst_format, px_out);
+		Append(dst_temp, w_dst, h_dst, x_dst, y_dst, src, w_src, h_src, squard_src, px_out, src_format);
+		TempCompress(dst_temp, dst, w_dst, h_dst, dst_format);
+		return;
+	}
+	if (isCompressor(src_format))
+	{
+		BearGraphics::BearTexturePixelFormat px_out;
+		uint8*src_temp = TempUncompressor(src, w_src, h_src, src_format, px_out);
+		Append(dst, w_dst, h_dst, x_dst, y_dst, src_temp, w_src, h_src, squard_src, dst_format, px_out );
+		TempCompress(src_temp, 0, w_src, h_src, src_format);
+		return;
+	}
 	BEAR_ASSERT(w_dst >= squard_src.x1+x_dst);
 	BEAR_ASSERT(h_dst >=  squard_src.y1+ y_dst);
 	BEAR_ASSERT(w_src >= squard_src.x	+ squard_src.x1);
@@ -84,7 +99,7 @@ void BearGraphics::BearTextureUtils::Append(uint8*dst, bsize w_dst, bsize h_dst,
 				FloatPixelToFloat(GetPixelFloat(ix + x_dst, iy + y_dst, w_dst, dst_comp, 0, dst), GetPixelFloat(ix+squard_src.x , iy + squard_src.y, w_src, src_comp, 0, src), dst_comp, src_comp);
 			}
 	}
-	else if (isFloatPixel(src_format) )
+	else if (isFloatPixel(dst_format) )
 	{
 		for (bsize iy = 0; iy<squard_src.y1; iy++)
 			for (bsize ix = 0; ix < squard_src.x1; ix++)
@@ -92,7 +107,7 @@ void BearGraphics::BearTextureUtils::Append(uint8*dst, bsize w_dst, bsize h_dst,
 				Uint8PixelToFloat(GetPixelFloat(ix + x_dst, iy + y_dst, w_dst, dst_comp, 0, dst), GetPixelUint8(ix + squard_src.x, iy + squard_src.y, w_src, src_comp, 0, src), dst_comp, src_comp);
 			}
 	}
-	else if (isFloatPixel(dst_format))
+	else if (isFloatPixel(src_format))
 	{
 		for (bsize iy = 0; iy<squard_src.y1; iy++)
 			for (bsize ix = 0; ix < squard_src.x1; ix++)
@@ -195,9 +210,34 @@ bool BearGraphics::BearTextureUtils::isCompressor(BearGraphics::BearTexturePixel
 }
 
 void BearGraphics::BearTextureUtils::Fill(uint8 * data, bsize w, bsize h, bsize mip, const BearCore::BearColor & color, BearGraphics::BearTexturePixelFormat format)
-{
-	BEAR_ASSERT(!isCompressor(format));
-	if (isFloatPixel(format))
+{	
+	if (isCompressor(format))
+	{
+		BearGraphics::BearTexturePixelFormat  px_out;
+		bsize pixel_size = GetSizeBlock(format);
+		for (bsize i = 0; i < mip; i++) 
+		{
+
+			bsize mip_w = GetMip(w, i);
+			bsize mip_h = GetMip(h, i);
+			uint8*temp = TempUncompressor(0, mip_w, mip_h, format, px_out);
+
+			if (isFloatPixel(px_out))
+			{
+				FillFloat(temp, mip_w, mip_h, color, px_out);
+			}
+			else
+			{
+				FillUint8(temp, mip_w, mip_h, color, px_out);
+			}
+		
+			TempCompress(temp, data, mip_w, mip_h, format);
+			data += pixel_size * GetCountBlock(mip_w)*GetCountBlock(mip_h);
+		}
+
+	}
+	
+	else if (isFloatPixel(format))
 	{
 		bsize pixel_size = GetSizePixel(format);
 		for (bsize i = 0; i < mip; i++) {
@@ -358,26 +398,42 @@ uint8 BearGraphics::BearTextureUtils::GetCountComp(BearGraphics::BearTexturePixe
 
 void BearGraphics::BearTextureUtils::GenerateMip(uint8 * dst, uint8 * src, bsize w_src, bsize h_src, BearGraphics::BearTexturePixelFormat format)
 {
-	if (isFloatPixel(format))
+	if (isCompressor(format))
+	{
+		BearGraphics::BearTexturePixelFormat px_out;
+		uint8*scr_temp = TempUncompressor(src, w_src, h_src, format, px_out);
+		uint8*dst_temp = TempUncompressor(0, w_src/2, h_src/2, format, px_out);
+		GenerateMip(dst_temp, scr_temp, w_src, h_src, px_out);
+		TempCompress(scr_temp, 0, w_src, h_src, format);
+		TempCompress(dst_temp, dst, w_src / 2, h_src / 2, format);
+	}
+	else if (isFloatPixel(format))
 	{
 		GenerateMipFloat(dst, src, w_src, h_src,GetCountComp(format));
 	}
 	else
 	{
-		BEAR_ASSERT(!isCompressor(format));
 		GenerateMipUint8(dst, src, w_src, h_src, GetCountComp(format));
 	}
 }
 
 void BearGraphics::BearTextureUtils::Scale(uint8 * dst, bsize w_dst, bsize h_dst, uint8 * src, bsize w_src, bsize h_src, BearGraphics::BearTexturePixelFormat format)
 {
-	if (isFloatPixel(format))
+	if (isCompressor(format))
+	{
+		BearGraphics::BearTexturePixelFormat px_out;
+		uint8*scr_temp = TempUncompressor(src, w_src, h_src, format, px_out);
+		uint8*dst_temp = TempUncompressor(0, w_dst, h_dst, format, px_out);
+		Scale(dst_temp, w_dst, h_dst, scr_temp, w_src, h_src, px_out);
+		TempCompress(scr_temp, 0, w_src, h_src, format);
+		TempCompress(dst_temp, dst, w_dst, h_dst, format);
+	}
+	else if (isFloatPixel(format))
 	{
 		ScaleFloat(dst, w_dst, h_dst, src, w_src, h_src, GetCountComp(format));
 	}
 	else
 	{
-		BEAR_ASSERT(!isCompressor(format));
 		ScaleUint8(dst, w_dst, h_dst, src, w_src, h_src, GetCountComp(format));
 	}
 }
@@ -385,6 +441,122 @@ void BearGraphics::BearTextureUtils::Scale(uint8 * dst, bsize w_dst, bsize h_dst
 uint8 * BearGraphics::BearTextureUtils::GetImage(uint8 * data, bsize w, bsize h, bsize mips, bsize depth, bsize mip, BearGraphics::BearTexturePixelFormat format)
 {
 	return data + BearGraphics::BearTextureUtils::GetSizeInMemory(w, h, mips, format)*depth + BearGraphics::BearTextureUtils::GetSizeInMemory(w, h, mip, format);
+}
+
+void BearGraphics::BearTextureUtils::GetPixel(BearCore::BearColor & color,  uint8*data, bsize x, bsize y, bsize depth, bsize w, bsize h, bsize mips, BearGraphics::BearTexturePixelFormat format)
+{
+	color = BearCore::BearColor::Black;
+	uint8*img = data + BearGraphics::BearTextureUtils::GetSizeInMemory(w, h, mips, format)*depth;
+	if (isCompressor(format))
+	{
+		BearCore::BearColor colors[16];
+		GetBlock(colors, img, w, h, x, y, format);
+		color = colors[x % 4 +( 4 * (y % 4))];
+	}
+	else if (isFloatPixel(format))
+	{
+		float* pixels = GetPixelFloat(x, y, w, GetCountComp(format), 0, data);
+		switch ( GetCountComp(format))
+		{
+		case 1:
+			color.Set(  pixels[0],0,0);
+			break;
+		case 2:
+			color.Set(pixels[0], pixels[1], 0);
+			break;
+		case 3:
+			color.Set(pixels[0], pixels[1], pixels[2]);
+			break;
+		case 4:
+			color.Set(pixels[0], pixels[1], pixels[2], pixels[3]);
+			break;
+		default:
+			BEAR_RASSERT(false);
+			break;
+		}
+	}
+	else 
+	{
+		uint8* pixels = GetPixelUint8(x, y, w, GetCountComp(format), 0, data);
+		switch (GetCountComp(format))
+		{
+		case 1:
+			color.Set(pixels[0], 0, 0);
+			break;
+		case 2:
+			color.Set(pixels[0], pixels[1], 0);
+			break;
+		case 3:
+			color.Set(pixels[0], pixels[1], pixels[2]);
+			break;
+		case 4:
+			color.Set(pixels[0], pixels[1], pixels[2], pixels[3]);
+			break;
+		default:
+			BEAR_RASSERT(false);
+			break;
+		}
+	}
+
+	return;
+}
+
+void BearGraphics::BearTextureUtils::SetPixel(const BearCore::BearColor & color, uint8 * data, bsize x, bsize y,bsize depth, bsize w, bsize h, bsize mips, BearGraphics::BearTexturePixelFormat format)
+{
+	uint8*img = data + BearGraphics::BearTextureUtils::GetSizeInMemory(w, h, mips, format)*depth;
+	if (isCompressor(format))
+	{
+		BearCore::BearColor colors[16];
+		GetBlock(colors, img, w, h, x, y, format);
+		colors[x % 4 + (4 * (y % 4))] = color;
+		SetBlock(colors, img, w, h, x, y, format);
+	}
+	else if (isFloatPixel(format))
+	{
+		float* pixels = GetPixelFloat(x, y, w, GetCountComp(format), 0, data);
+		switch (GetCountComp(format))
+		{
+		case 1:
+			BearCore::bear_copy(pixels, color.GetFloat().array, 1);
+			break;
+		case 2:
+			BearCore::bear_copy(pixels, color.GetFloat().array,2);
+			break;
+		case 3:
+			BearCore::bear_copy(pixels, color.GetFloat().array, 3);
+			break;
+		case 4:
+			BearCore::bear_copy(pixels, color.GetFloat().array, 4);
+			break;
+		default:
+			BEAR_RASSERT(false);
+			break;
+		}
+	}
+	else
+	{
+		uint8* pixels = GetPixelUint8(x, y, w, GetCountComp(format), 0, data);
+		switch (GetCountComp(format))
+		{
+		case 1:
+			BearCore::bear_copy(pixels, color.GetUint8().array, 1);
+			break;
+		case 2:
+			BearCore::bear_copy(pixels, color.GetUint8().array, 2);
+			break;
+		case 3:
+			BearCore::bear_copy(pixels, color.GetUint8().array,3);
+			break;
+		case 4:
+			BearCore::bear_copy(pixels, color.GetUint8().array, 4);
+			break;
+		default:
+			BEAR_RASSERT(false);
+			break;
+		}
+	}
+
+	return;
 }
 
 void BearGraphics::BearTextureUtils::ScaleFloat(uint8 * dst, bsize w_dst, bsize h_dst, uint8 * src, bsize w_src, bsize h_src, uint8 comp)
@@ -794,8 +966,6 @@ void BearGraphics::BearTextureUtils::CompressorToFloat(uint8 * dst, uint8 * src,
 	switch (compressor)
 	{
 	case BearGraphics::TPF_DXT_1:
-		FloatToFloat(dst, in, w, h, comp_dst, 4);
-		break;
 	case BearGraphics::TPF_DXT_1_alpha:
 		Uint8ToFloat(dst, in, w, h, comp_dst, 4);
 		break;
@@ -851,6 +1021,7 @@ void * BearGraphics::BearTextureUtils::StartCompressor(BearGraphics::BearTexture
 
 void BearGraphics::BearTextureUtils::EndCompressor(BearGraphics::BearTexturePixelFormat compressor, bsize w, bsize h, void*in, void*out)
 {
+
 	switch (compressor)
 	{
 	case BearGraphics::TPF_DXT_1:
@@ -1094,8 +1265,9 @@ void * BearGraphics::BearTextureUtils::StartDecompressor(BearGraphics::BearTextu
 			{
 				nv::BlockDXT1 dx1;
 				nv::ColorBlock cl;
-				BearCore::bear_copy(&dx1.col0, (uint8*)in + 8 * (bx + (by*bw)), 4);
-				BearCore::bear_copy(&dx1.col1, (uint8*)in + 8 * (bx + (by*bw)) + 4, 4);
+				BearCore::bear_copy(&dx1.col0.u, (uint8*)in + 8 * (bx + (by*bw)), 2);
+				BearCore::bear_copy(&dx1.col1.u, (uint8*)in + 8 * (bx + (by*bw)) + 2, 2);
+				BearCore::bear_copy(&dx1.indices, (uint8*)in + 8 * (bx + (by*bw)) + 4, 4);
 				dx1.decodeBlock(&cl);
 
 				for (uint32 y = 0; y < BearCore::bear_min(bsize(4), h - 4 * by); y++)
@@ -1126,9 +1298,10 @@ void * BearGraphics::BearTextureUtils::StartDecompressor(BearGraphics::BearTextu
 			{
 				nv::BlockDXT3 dx1;
 				nv::ColorBlock cl;
-				BearCore::bear_copy(&dx1.color.col0, (uint8*)in + 16 * (bx + (by*bw)), 4);
-				BearCore::bear_copy(&dx1.color.col1, (uint8*)in + 16 * (bx + (by*bw)) + 4, 4);
-				BearCore::bear_copy(&dx1.alpha.row, (uint8*)in + 16 * (bx + (by*bw)) + 8, 16);
+				BearCore::bear_copy(&dx1.color.col0.u, (uint8*)in + 16 * (bx + (by*bw)) + 8, 2);
+				BearCore::bear_copy(&dx1.color.col1.u, (uint8*)in + 16 * (bx + (by*bw)) + 2 + 8, 2);
+				BearCore::bear_copy(&dx1.color.indices, (uint8*)in + 16 * (bx + (by*bw)) + 4 + 8, 4);
+				BearCore::bear_copy(&dx1.alpha.row, (uint8*)in + 16 * (bx + (by*bw)) , 8);
 				dx1.decodeBlock(&cl);
 
 				for (uint32 y = 0; y < BearCore::bear_min(bsize(4), h - 4 * by); y++)
@@ -1159,9 +1332,10 @@ void * BearGraphics::BearTextureUtils::StartDecompressor(BearGraphics::BearTextu
 			{
 				nv::BlockDXT5 dx1;
 				nv::ColorBlock cl;
-				BearCore::bear_copy(&dx1.color.col0, (uint8*)in + 16 * (bx + (by*bw)), 4);
-				BearCore::bear_copy(&dx1.color.col1, (uint8*)in + 16 * (bx + (by*bw)) + 4, 4);
-				BearCore::bear_copy(&dx1.alpha.u, (uint8*)in + 16 * (bx + (by*bw)) + 8, 16);
+				BearCore::bear_copy(&dx1.color.col0.u, (uint8*)in + 16 * (bx + (by*bw)) + 8, 2);
+				BearCore::bear_copy(&dx1.color.col1.u, (uint8*)in + 16 * (bx + (by*bw)) + 2 + 8, 2);
+				BearCore::bear_copy(&dx1.color.indices, (uint8*)in + 16 * (bx + (by*bw)) + 4+ 8, 4);
+				BearCore::bear_copy(&dx1.alpha.u, (uint8*)in + 16 * (bx + (by*bw)) , 8);
 				dx1.decodeBlock(&cl);
 
 				for (uint32 y = 0; y < BearCore::bear_min(bsize(4), h - 4 * by); y++)
@@ -1301,6 +1475,362 @@ void * BearGraphics::BearTextureUtils::StartDecompressor(BearGraphics::BearTextu
 
 void BearGraphics::BearTextureUtils::EndDecompressor(void * in)
 {
+	BearCore::bear_free(in);
+}
+
+void BearGraphics::BearTextureUtils::GetBlock(BearCore::BearColor(&color)[16], uint8 * data, bsize w, bsize h, bsize x, bsize y, BearGraphics::BearTexturePixelFormat px)
+{
+	uint8*block = data + ((x / 4) + ((w + 3) / 4)*(y / 4))*(px == BearGraphics::BearTexturePixelFormat::TPF_BC1 || px == BearGraphics::BearTexturePixelFormat::TPF_BC1a || px == BearGraphics::BearTexturePixelFormat::TPF_BC4 ? 8 : 16);
+	nv::ColorBlock cl;
+	switch (px)
+	{
+
+	case BearGraphics::BearTexturePixelFormat::TPF_BC1:
+	{
+		nv::BlockDXT1 dxt1;
+
+		BearCore::bear_copy(&dxt1.col0, block, 8);
+		dxt1.decodeBlock(&cl);
+
+		for (uint x = 0; x < 16; x++)
+		{
+			color[x].Set(cl.color(x).r, cl.color(x).g, cl.color(x).b, cl.color(x).a);
+		}
+	}
+	break;
+	case BearGraphics::BearTexturePixelFormat::TPF_BC1a:
+	{
+		nv::BlockDXT1 dxt1;
+
+		BearCore::bear_copy(&dxt1.col0, block, 8);
+		dxt1.decodeBlock(&cl);
+		for (uint x = 0; x < 16; x++)
+		{
+			color[x].Set(cl.color(x).r, cl.color(x).g, cl.color(x).b, cl.color(x).a);
+		}
+	}
+	break;
+	case BearGraphics::BearTexturePixelFormat::TPF_BC2:
+	{
+		nv::BlockDXT3 dxt3;
+
+		BearCore::bear_copy(&dxt3.alpha, block, 16);
+		dxt3.decodeBlock(&cl);
+		for (uint x = 0; x < 16; x++)
+		{
+			color[x].Set(cl.color(x).r, cl.color(x).g, cl.color(x).b, cl.color(x).a);
+		}
+	}
+	break;
+	case BearGraphics::BearTexturePixelFormat::TPF_BC3:
+	{
+		nv::BlockDXT5 dxt5;
+
+		BearCore::bear_copy(&dxt5.alpha, block, 16);
+		dxt5.decodeBlock(&cl);
+		for (uint x = 0; x < 16; x++)
+		{
+			color[x].Set(cl.color(x).r, cl.color(x).g, cl.color(x).b, cl.color(x).a);
+		}
+	}
+	break;
+	case BearGraphics::BearTexturePixelFormat::TPF_BC4:
+	{
+		nv::BlockATI1 at1;
+
+		BearCore::bear_copy(&at1.alpha, block, 8);
+		at1.decodeBlock(&cl);
+		for (uint x = 0; x < 16; x++)
+		{
+			color[x].Set(cl.color(x).r, cl.color(x).g, cl.color(x).b, cl.color(x).a);
+		}
+	}
+	break;
+	case BearGraphics::BearTexturePixelFormat::TPF_BC5:
+	{
+		nv::BlockATI1 at2;
+
+		BearCore::bear_copy(&at2.alpha, block, 16);
+		at2.decodeBlock(&cl);
+		for (uint x = 0; x < 16; x++)
+		{
+			color[x].Set(cl.color(x).r, cl.color(x).g, cl.color(x).b, cl.color(x).a);
+		}
+	}
+	break;
+	case BearGraphics::BearTexturePixelFormat::TPF_BC6:
+	{
+		nv::BlockBC6 bc6;
+		nv::Vector3 color_float[16];
+
+		BearCore::bear_copy(&bc6.data, block, 16);
+		bc6.decodeBlock(color_float);
+		for (bsize x = 0; x < 16; x++)
+		{
+			color[x].Set(color_float[x].x, color_float[x].y, color_float[x].z, 1.f);
+		}
+		return;
+	}
+	break;
+	case BearGraphics::BearTexturePixelFormat::TPF_BC7:
+	{
+		nv::BlockBC7 bc7;
+
+		BearCore::bear_copy(&bc7.data, block, 16);
+		bc7.decodeBlock(&cl);
+
+		for (uint x = 0; x < 16; x++)
+		{
+			color[x].Set(cl.color(x).r, cl.color(x).g, cl.color(x).b, cl.color(x).a);
+		}
+	}
+	break;
+	default:
+		break;
+	}
+	
+}
+
+void BearGraphics::BearTextureUtils::SetBlock(BearCore::BearColor(&color)[16], uint8 * data, bsize w, bsize h, bsize x, bsize y, BearGraphics::BearTexturePixelFormat px)
+{
+	uint8*block = data + ((x / 4) + ((w + 3) / 4)*(y / 4))*(px == BearGraphics::BearTexturePixelFormat::TPF_BC1 || px == BearGraphics::BearTexturePixelFormat::TPF_BC1a || px == BearGraphics::BearTexturePixelFormat::TPF_BC4 ? 8 : 16);
+	uint8 imagePixel16UInt8[16 * 4];
+//	float imagePixel16Float[16 * 4];
+	uint16 imagePixel16UInt16[16 * 4];
+	switch (px)
+	{
+	case BearGraphics::BearTexturePixelFormat::TPF_BC1:
+	{
+		nv::CompressorDXT1 compressor;
+		nvtt::CompressionOptions compOpt;
+		compOpt.setQuality(nvtt::Quality_Highest);
+		compOpt.setQuantization(false, false, false);
+
+		compOpt.setFormat(nvtt::Format_DXT1);
+
+		float wa[16];
+		nv::Vector4 blockColor[16];
+		for (bsize x = 0; x < 16; x++)
+		{
+			wa[x] = 1.f;
+			blockColor[x].x = color[x].GetFloat().x;
+			blockColor[x].y = color[x].GetFloat().y;
+			blockColor[x].z = color[x].GetFloat().x1;
+			blockColor[x].w = color[x].GetFloat().y1;
+		}
+		compressor.compressBlock(blockColor, wa, compOpt.m, block);
+	}
+
+	break;
+	case BearGraphics::BearTexturePixelFormat::TPF_BC1a:
+	{
+		nv::CompressorDXT1a compressor;
+		nvtt::CompressionOptions compOpt;
+		compOpt.setQuality(nvtt::Quality_Highest);
+		compOpt.setQuantization(false, false, false);
+
+		compOpt.setFormat(nvtt::Format_DXT1a);
+
+		nv::ColorBlock blockColor;
+		for (uint x = 0; x < 16; x++)
+		{
+			blockColor.color(x).setRGBA(color[x].GetUint8().x, color[x].GetUint8().y, color[x].GetUint8().x1, color[x].GetUint8().y1);
+		}
+		compressor.compressBlock(blockColor, nvtt::AlphaMode_Transparency, compOpt.m, block);
+	}
+	break;
+	case BearGraphics::BearTexturePixelFormat::TPF_BC2:
+	{
+		nv::CompressorDXT3 compressor;
+		nvtt::CompressionOptions compOpt;
+		compOpt.setQuality(nvtt::Quality_Highest);
+		compOpt.setQuantization(false, false, false);
+
+		compOpt.setFormat(nvtt::Format_DXT1a);
+
+		nv::ColorBlock blockColor;
+		for (uint x = 0; x < 16; x++)
+		{
+			blockColor.color(x).setRGBA(color[x].GetUint8().x, color[x].GetUint8().y, color[x].GetUint8().x1, color[x].GetUint8().y1);
+		}
+		compressor.compressBlock(blockColor, nvtt::AlphaMode_Transparency, compOpt.m, block);
+	}
+	break;
+	case BearGraphics::BearTexturePixelFormat::TPF_BC3:
+	{
+		nv::CompressorDXT5 compressor;
+		nvtt::CompressionOptions compOpt;
+		compOpt.setQuality(nvtt::Quality_Highest);
+		compOpt.setQuantization(false, false, false);
+
+		compOpt.setFormat(nvtt::Format_DXT1a);
+
+		nv::ColorBlock blockColor;
+		for (uint x = 0; x < 16; x++)
+		{
+			blockColor.color(x).setRGBA(color[x].GetUint8().x, color[x].GetUint8().y, color[x].GetUint8().x1, color[x].GetUint8().y1);
+		}
+		compressor.compressBlock(blockColor, nvtt::AlphaMode_Transparency, compOpt.m, block);
+	}
+	break;
+	case BearGraphics::BearTexturePixelFormat::TPF_BC4:
+	{
+		nv::ColorBlock blockColor;
+		nv::AlphaBlock4x4 alpha1;
+		nv::AlphaBlockDXT5 alphaBlock1;
+		for (uint x = 0; x < 16; x++)
+		{
+			blockColor.color(x).setRGBA(color[x].GetUint8().x, color[x].GetUint8().y, color[x].GetUint8().x1, color[x].GetUint8().y1);
+		}
+		alpha1.init(blockColor, 2);
+		nv::QuickCompress::compressDXT5A(alpha1, &alphaBlock1, 8);
+		BearCore::bear_copy(block, &alphaBlock1.u, 8);
+
+	}
+	break;
+	case BearGraphics::BearTexturePixelFormat::TPF_BC5:
+	{
+		nv::ColorBlock blockColor;
+		nv::AlphaBlock4x4 alpha1, alpha2;
+		nv::AlphaBlockDXT5 alphaBlock1, alphaBlock2;
+		for (uint x = 0; x < 16; x++)
+		{
+			blockColor.color(x).setRGBA(color[x].GetUint8().x, color[x].GetUint8().y, color[x].GetUint8().x1, color[x].GetUint8().y1);
+		}
+		alpha1.init(blockColor, 2);
+		alpha2.init(blockColor, 1);
+		nv::QuickCompress::compressDXT5A(alpha1, &alphaBlock1, 8);
+		nv::QuickCompress::compressDXT5A(alpha2, &alphaBlock2, 8);
+		BearCore::bear_copy(block, &alphaBlock1.u, 8);
+		BearCore::bear_copy(block + 8, &alphaBlock2.u, 8);
+	}
+	break;
+	case BearGraphics::BearTexturePixelFormat::TPF_BC6:
+		for (bsize x = 0; x < 16; x++)
+		{
+			imagePixel16UInt16[x * 4] = floatToHalf(color[x].GetFloat().x);
+			imagePixel16UInt16[x * 4 + 1] = floatToHalf(color[x].GetFloat().y);
+			imagePixel16UInt16[x * 4 + 2] = floatToHalf(color[x].GetFloat().x1);
+			imagePixel16UInt16[x * 4 + 3] = floatToHalf(color[x].GetFloat().y1);
+
+		}
+		{
+
+			rgba_surface surface;
+			surface.height = static_cast<int32>(h);
+			surface.width = static_cast<int32>(w);
+			surface.ptr = (uint8*)imagePixel16UInt16;
+			/*for (bsize i = 0; i < w*h; i++)
+			*(img + i * 4) = 0;*/
+			surface.stride = static_cast<int32>(w) * 2 * 4;
+			bc6h_enc_settings str;
+			GetProfile_bc6h_veryslow(&str);
+			CompressBlocksBC6H(&surface, (uint8*)block, &str);
+		}
+		break;
+	case BearGraphics::BearTexturePixelFormat::TPF_BC7:
+		for (bsize x = 0; x < 16; x++)
+		{
+			imagePixel16UInt8[x * 4] = color[x].GetUint8().x;
+			imagePixel16UInt8[x * 4 + 1] = color[x].GetUint8().y;
+			imagePixel16UInt8[x * 4 + 2] = color[x].GetUint8().x1;
+			imagePixel16UInt8[x * 4 + 3] = color[x].GetUint8().y1;
+
+		}
+		{
+			rgba_surface surface;
+			surface.height = static_cast<int32>(h);
+			surface.width = static_cast<int32>(w);
+			surface.ptr = imagePixel16UInt8;
+			surface.stride = static_cast<int32>(w) * 4;
+			bc7_enc_settings str;
+			if (GetCountComp(px) == 4)
+				GetProfile_alpha_slow(&str);
+			else
+				GetProfile_slow(&str);
+			CompressBlocksBC7(&surface, (uint8*)block, &str);
+		}
+		break;
+	default:
+		break;
+	}
+}
+
+bool BearGraphics::BearTextureUtils::CompressorAsFloat(BearGraphics::BearTexturePixelFormat px)
+{
+	switch (px)
+	{
+	case BearGraphics::TPF_BC6:
+		return true;
+		break;
+	}
+	return false;
+}
+
+uint8 * BearGraphics::BearTextureUtils::TempUncompressor(uint8 * data, bsize w, bsize h, BearGraphics::BearTexturePixelFormat px, BearGraphics::BearTexturePixelFormat & out_px)
+{
+	switch (px)
+	{
+	case BearGraphics::TPF_BC1:
+		out_px = BearGraphics::BearTexturePixelFormat::TPF_R32G32B32F;
+		break;
+	case BearGraphics::TPF_BC1a:
+	case BearGraphics::TPF_BC2:
+	case BearGraphics::TPF_BC3:
+		out_px = BearGraphics::BearTexturePixelFormat::TPF_R8G8B8A8;
+		break;
+	case BearGraphics::TPF_BC4:
+		out_px = BearGraphics::BearTexturePixelFormat::TPF_R8;
+		break;
+	case BearGraphics::TPF_BC5:
+		out_px = BearGraphics::BearTexturePixelFormat::TPF_R8G8;
+		break;
+	case BearGraphics::TPF_BC6:
+		out_px = BearGraphics::BearTexturePixelFormat::TPF_R32G32B32F;
+		break;
+	case BearGraphics::TPF_BC7:
+		out_px = BearGraphics::BearTexturePixelFormat::TPF_R8G8B8A8;
+		break;
+	default:
+		break;
+	}
+
+	uint8*data_out = BearCore::bear_alloc<uint8>(GetSizeWidth(w, out_px)*h);
+	if(data!=0)
+	Convert(out_px, px, data_out,data , w, h);
+	return data_out;
+}
+
+void BearGraphics::BearTextureUtils::TempCompress(uint8 * in, uint8 * out, bsize w, bsize h, BearGraphics::BearTexturePixelFormat px)
+{
+	BearGraphics::BearTexturePixelFormat in_px;
+	switch (px)
+	{
+	case BearGraphics::TPF_BC1:
+		in_px = BearGraphics::BearTexturePixelFormat::TPF_R32G32B32F;
+		break;
+	case BearGraphics::TPF_BC1a:
+	case BearGraphics::TPF_BC2:
+	case BearGraphics::TPF_BC3:
+		in_px = BearGraphics::BearTexturePixelFormat::TPF_R8G8B8A8;
+		break;
+	case BearGraphics::TPF_BC4:
+		in_px = BearGraphics::BearTexturePixelFormat::TPF_R8;
+		break;
+	case BearGraphics::TPF_BC5:
+		in_px = BearGraphics::BearTexturePixelFormat::TPF_R8G8;
+		break;
+	case BearGraphics::TPF_BC6:
+		in_px = BearGraphics::BearTexturePixelFormat::TPF_R32G32B32F;
+		break;
+	case BearGraphics::TPF_BC7:
+		in_px = BearGraphics::BearTexturePixelFormat::TPF_R8G8B8A8;
+		break;
+	default:
+		break;
+	}
+	if(out!=0)
+		Convert(px, in_px,out, in, w, h);
 	BearCore::bear_free(in);
 }
 
