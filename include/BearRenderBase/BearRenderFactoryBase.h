@@ -4,7 +4,7 @@ namespace BearRenderBase
 
 #define RHI_FACTORY_DECLARE(Class,...) \
 	virtual BearRender##Class##Base* Create##Class(__VA_ARGS__)=0; 
-	class BearRenderFactoryBase
+	class  BearRenderFactoryBase
 	{
 		BEAR_CLASS_NO_COPY(BearRenderFactoryBase)
 	public:
@@ -12,6 +12,7 @@ namespace BearRenderBase
 		RHI_FACTORY_DECLARE(Interface);
 		RHI_FACTORY_DECLARE(Context);
 		RHI_FACTORY_DECLARE(Viewport, void*Handle, bsize Width, bsize Height, bool Fullscreen, bool VSync);
+		RHI_FACTORY_DECLARE(Shader, BearGraphics::BearShaderType Type);
 	/*	RHI_FACTORY_DECLARE(DefaultManager);
 
 		RHI_FACTORY_DECLARE(RenderTargetView, bsize w, bsize h, BearGraphics::BearRenderTargetFormat format);

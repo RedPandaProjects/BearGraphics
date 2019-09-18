@@ -15,6 +15,11 @@ namespace BearGraphics
 		WET_MouseLevae,
 		WET_None,
 	};
+	enum BearShaderType
+	{
+		ST_Vertex,
+		ST_Pixel
+	};
 	enum BearTexturePixelFormat
 	{
 		TPF_R8 = 0,
@@ -42,9 +47,11 @@ namespace BearGraphics
 	{
 		GOT_None,
 		GOT_Object,
-		GOT_ShaderResource,
 		GOT_Texture2D,
 		GOT_RenderTargetView,
 		GOT_Viewport,
+		GOT_Shader,
+		GOT_Context
 	};
+
 }

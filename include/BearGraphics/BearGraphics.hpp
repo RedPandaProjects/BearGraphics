@@ -11,7 +11,6 @@
 #include "BearResource/BearImage.h"
 #include "BearRenderBase.h"
 
-#include "BearRender/BearRenderContext.h"
 #include "BearResource/BearFactoryPointer.h"
 #include "BearSystem/BearWindow.h"
 #include "BearRender/BearRenderInterface.h"

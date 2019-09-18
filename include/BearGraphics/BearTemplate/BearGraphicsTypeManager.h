@@ -19,9 +19,9 @@ namespace BearGraphics
 				return GOT_Object;
 			}
 			template<>
-			static	BearGraphicsObjectType GetType<BearRenderBase::BearRenderShaderResource>()
+			static	BearGraphicsObjectType GetType<BearRenderBase::BearRenderShaderBase>()
 			{
-				return GOT_ShaderResource;
+				return GOT_Shader;
 			}
 			template<>
 			static	BearGraphicsObjectType GetType<BearRenderBase::BearRenderTexture2DBase>()

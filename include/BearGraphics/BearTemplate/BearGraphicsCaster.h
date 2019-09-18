@@ -14,7 +14,7 @@ namespace BearGraphics
 				return 0;
 			}
 #define REGISTER_OBJECT(EType,Class,Parent)  template<>		static inline void*CastParent<BearRenderBase::Class>(BearRenderBase::Class *C,BearGraphicsObjectType OutType) { BearRenderBase::Parent*P= static_cast<BearRenderBase::Parent*>(C); if(OutType==BearTypeManager::GetType<BearRenderBase::Parent>()) return reinterpret_cast<void*>(P); return CastParent<BearRenderBase::Parent>(P,OutType); }
-#include "BearGraphicsCaster_Objects.h"
+#include "BearGraphics_Objects.h"
 		public:
 			static inline void*Cast(void*in, BearGraphicsObjectType InType, BearGraphicsObjectType OutType)
 			{
@@ -22,7 +22,7 @@ namespace BearGraphics
 				switch (InType)
 				{
 #define REGISTER_OBJECT(EType,Class,Parent) case EType: return CastParent<BearRenderBase::Class>(reinterpret_cast<BearRenderBase::Class*>(in),OutType);
-#include "BearGraphicsCaster_Objects.h"
+#include "BearGraphics_Objects.h"
 				default:
 					return 0;
 					break;
