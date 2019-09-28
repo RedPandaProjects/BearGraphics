@@ -289,7 +289,7 @@ bsize BearGraphics::BearTextureUtils::GetSizeInMemory(bsize w, bsize h, bsize mi
 
 void BearGraphics::BearTextureUtils::Convert(BearGraphics::BearTexturePixelFormat dst_format, BearGraphics::BearTexturePixelFormat src_format, uint8 * dst, uint8 * src, bsize w, bsize h)
 {
-	if (src_format == dst_format)return;
+	if (src_format == dst_format) { BearCore::bear_copy(dst, src, GetSizeInMemory(w, h, 1, dst_format)); return; }
 	if (isFloatPixel(dst_format)&& isCompressor(src_format))
 	{
 		CompressorToFloat(dst, src, w, h, GetCountComp(dst_format), src_format);
@@ -891,7 +891,7 @@ void BearGraphics::BearTextureUtils::CompressorToCompressor(uint8 * dst, uint8 *
 	switch (compressor_dst)
 	{
 	case BearGraphics::TPF_DXT_1:
-		CompressorToFloat(in_dst, src, w, h, 4, compressor_src);
+		CompressorToFloat(in_dst, src, w, h, 3, compressor_src);
 		break;
 	case BearGraphics::TPF_DXT_1_alpha:
 		CompressorToUint8(in_dst, src, w, h, 4, compressor_src);
@@ -931,8 +931,6 @@ void BearGraphics::BearTextureUtils::CompressorToUint8(uint8 * dst, uint8 * src,
 	switch (compressor)
 	{
 	case BearGraphics::TPF_DXT_1:
-		FloatToUint8(dst, in, w, h, comp_dst, 4);
-		break;
 	case BearGraphics::TPF_DXT_1_alpha:
 		Uint8ToUint8(dst, in, w, h, comp_dst, 4);
 		break;
