@@ -7,7 +7,8 @@ namespace BearGraphics
 	public:
 		static bool Initialize(const bchar*name);
 		static BearFactoryPointer<BearRenderBase::BearRenderContextBase> CreateContext();
-		static BearFactoryPointer<BearRenderBase::BearRenderViewportBase> CreateViewport(const BearWindow&Window);
+		static BearFactoryPointer<BearRenderBase::BearRenderPipelineBase> CreatePipeline(const BearRenderPipelineDescription&Descripter);
+		static BearFactoryPointer<BearRenderBase::BearRenderViewportBase> CreateViewport(const BearWindow&Window,const BearRenderViewportDescription&Description);
 		static void Destroy();
 		static bool Empty();
 	};

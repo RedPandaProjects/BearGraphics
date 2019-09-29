@@ -30,12 +30,18 @@ BearGraphics::BearFactoryPointer<BearRenderBase::BearRenderContextBase> BearGrap
 	return BearFactoryPointer<BearRenderBase::BearRenderContextBase>(GRenderFactoty->CreateContext());
 }
 
-BearGraphics::BearFactoryPointer<BearRenderBase::BearRenderViewportBase> BearGraphics::BearRenderInterface::CreateViewport(const BearWindow&Window)
+BearGraphics::BearFactoryPointer<BearRenderBase::BearRenderPipelineBase> BearGraphics::BearRenderInterface::CreatePipeline(const BearRenderPipelineDescription & Descripter)
+{
+	return BearFactoryPointer<BearRenderBase::BearRenderPipelineBase>();
+}
+
+BearGraphics::BearFactoryPointer<BearRenderBase::BearRenderViewportBase> BearGraphics::BearRenderInterface::CreateViewport(const BearWindow&Window, const BearRenderViewportDescription&Description)
 {
 	if (Empty()|| Window.Empty())
 		return BearFactoryPointer<BearRenderBase::BearRenderViewportBase>();
-	return BearFactoryPointer<BearRenderBase::BearRenderViewportBase>(GRenderFactoty->CreateViewport(Window.GetWindowHandle(), Window.GetSize().x, Window.GetSize().y, Window.IsFullScreen(),false));
+	return BearFactoryPointer<BearRenderBase::BearRenderViewportBase>(GRenderFactoty->CreateViewport(Window.GetWindowHandle(), Window.GetSize().x, Window.GetSize().y, Window.IsFullScreen(),false, Description));
 }
+
 
 void BearGraphics::BearRenderInterface::Destroy()
 {

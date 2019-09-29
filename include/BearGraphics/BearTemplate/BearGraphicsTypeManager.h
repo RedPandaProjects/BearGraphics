@@ -38,6 +38,16 @@ namespace BearGraphics
 			{
 				return GOT_Viewport;
 			}
+			/*template<>
+			static	BearGraphicsObjectType GetType<BearRenderBase::BearRenderViewportBase>()
+			{
+				return GOT_Viewport;
+			}
+			/*template<>
+			static	BearGraphicsObjectType GetType<BearRenderBase::BearRender>()
+			{
+				return GOT_Viewport;
+			}*/
 		private:
 
 		};

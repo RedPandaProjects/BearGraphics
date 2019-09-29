@@ -5,4 +5,5 @@ REGISTER_OBJECT(BearGraphics::GOT_Texture2D,BearRenderTexture2DBase, BearRenderO
 REGISTER_OBJECT(BearGraphics::GOT_RenderTargetView,BearRenderTargetViewBase,BearRenderTexture2DBase)
 REGISTER_OBJECT(BearGraphics::GOT_Viewport,BearRenderViewportBase,BearRenderTargetViewBase)
 REGISTER_OBJECT(BearGraphics::GOT_Shader, BearRenderShaderBase, BearRenderObject)
+REGISTER_OBJECT(BearGraphics::GOT_Pipeline, BearRenderPipelineBase, BearRenderObject)
 #undef REGISTER_OBJECT

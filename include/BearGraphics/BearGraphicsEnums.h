@@ -51,7 +51,30 @@ namespace BearGraphics
 		GOT_RenderTargetView,
 		GOT_Viewport,
 		GOT_Shader,
+		GOT_Pipeline,
 		GOT_Context
 	};
-
+	enum BearVertexFormat
+	{
+		VF_NONE = 0,
+		VF_R32_FLOAT,
+		VF_R32G32_FLOAT,
+		VF_R32G32B32_FLOAT,
+		VF_R32G32B32A32_FLOAT,
+		VF_R32_INT,
+		VF_R8,
+		VF_R8G8,
+		VF_R8G8B8A8,
+	};
+	enum BearRenderTargetFormat
+	{
+		RTF_NONE=0,
+		RTF_R8 ,
+		RTF_R8G8,
+		RTF_R8G8B8A8,
+		RTF_R32F,
+		RTF_R32G32F,
+		RTF_R32G32B32F,
+		RTF_R32G32B32A32F,
+	};
 }

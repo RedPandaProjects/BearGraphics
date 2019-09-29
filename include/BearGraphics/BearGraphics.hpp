@@ -6,7 +6,7 @@
 #else
 #define BEARGRAPHICS_API  BEARPROJECT_IMPORT
 #endif
-
+ 
 #include "BearGraphicsEnums.h"
 #include "BearResource/BearImage.h"
 #include "BearRenderBase.h"
@@ -14,4 +14,4 @@
 #include "BearResource/BearFactoryPointer.h"
 #include "BearSystem/BearWindow.h"
 #include "BearRender/BearRenderInterface.h"
-#include "BearRender/BearRenderPipelineDescription.h"
+
