@@ -16,7 +16,7 @@ public class bear_graphics : Project
         Projects.Private.Add("nvtt");
 		Projects.Private.Add("directx");
 		IncludeAutonomousProjects.Add("bear_render_null");
-	//	IncludeAutonomousProjects.Add("bear_render_dx12");
+		IncludeAutonomousProjects.Add("bear_render_dx12");
 		IncludeAutonomousProjects.Add("bear_render_vulkan");
     }
 } 
