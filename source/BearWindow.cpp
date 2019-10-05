@@ -71,7 +71,7 @@ static void RegisterWindowsClass(HINSTANCE hInstance,bool closed)
 	{
 		wc.lpfnWndProc = GlobalOnEventNoClosed;
 	}
-
+	wc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
 	wc.cbClsExtra = 0;
 	wc.cbWndExtra = 0;
 	wc.hInstance = hInstance;
@@ -103,21 +103,21 @@ BearGraphics::BearWindow::BearWindow(bsize width, bsize height, bool fullscreen,
 
 
 
-	DWORD Style = WS_POPUP ;
+	m_Style = WS_POPUP ;
 	if (!flags.test(TW_POPUP))  
-		if(flags.test(TW_ONLY_CLOSED)) Style = WS_OVERLAPPED | WS_SYSMENU | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_DLGFRAME;
-		else Style =  WS_OVERLAPPEDWINDOW;
+		if(flags.test(TW_ONLY_CLOSED)) m_Style = WS_OVERLAPPED | WS_SYSMENU | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_DLGFRAME;
+		else m_Style =  WS_OVERLAPPEDWINDOW;
 
 	{
 		RECT rectangle = { 0, 0, static_cast<long>(width), static_cast<long>(height) };
 
 		if (!flags.test(TW_WIHTOUT_CLOSED))
 		{
-			m_window = CreateWindowEx(0, TEXT("BEAR"), TEXT(""), Style, 0, 0, 1, 1, NULL, NULL, hInstance, this);
+			m_window = CreateWindowEx(0, TEXT("BEAR"), TEXT(""), m_Style, 0, 0, 1, 1, NULL, NULL, hInstance, this);
 		}
 		else
 		{
-			m_window = CreateWindowEx(0, TEXT("BEARNC"), TEXT(""), Style, 0, 0, 1, 1, NULL, NULL, hInstance, this);
+			m_window = CreateWindowEx(0, TEXT("BEARNC"), TEXT(""), m_Style, 0, 0, 1, 1, NULL, NULL, hInstance, this);
 		}
 
 		AdjustWindowRect(&rectangle, GetWindowLong((HWND)m_window, GWL_STYLE), false);
@@ -130,7 +130,7 @@ BearGraphics::BearWindow::BearWindow(bsize width, bsize height, bool fullscreen,
 	}
 
 	ShowWindow((HWND)m_window, SW_SHOW);
-
+	if(fullscreen)SetFullscreen(fullscreen);
 
 }
 
@@ -151,8 +151,9 @@ void BearGraphics::BearWindow::Resize(bsize width, bsize height)
 		uint32 ypos = static_cast<int32>(((uint32)GetSystemMetrics(SM_CYSCREEN) / 2) - (m_height / 2));
 
 
+		
 
-		//SetWindowLong((HWND)m_window, GWL_STYLE, WS_BORDER | WS_VISIBLE| WS_DLGFRAME | WS_SYSMENU | WS_MINIMIZEBOX);
+		SetWindowLong((HWND)m_window, GWL_STYLE, m_Style);
 		RECT rectangle = { static_cast<long>(xpos),  static_cast<long>(ypos), static_cast<long>(m_width), static_cast<long>(m_height) };
 		AdjustWindowRect(&rectangle, GetWindowLong((HWND)m_window, GWL_STYLE), false);
 
@@ -162,12 +163,12 @@ void BearGraphics::BearWindow::Resize(bsize width, bsize height)
 	}
 	else
 	{
-	/*	SetWindowPos((HWND)m_window, HWND_TOP, 0, 0, static_cast<int32>(m_width), static_cast<int32>(m_height), SWP_FRAMECHANGED);
+		SetWindowPos((HWND)m_window, HWND_TOP, 0, 0, static_cast<int32>(m_width), static_cast<int32>(m_height), SWP_FRAMECHANGED);
 		SetWindowLong((HWND)m_window, GWL_STYLE, WS_EX_TOPMOST | WS_POPUP | WS_VISIBLE);
 		ShowWindow((HWND)m_window, SW_MAXIMIZE);
 		SetWindowLong(m_window, GWL_EXSTYLE, WS_EX_TOPMOST);
 
-		SetForegroundWindow(m_window);*/
+		SetForegroundWindow(m_window);
 	}
 }
 void BearGraphics::BearWindow::SetFullscreen(bool fullscreen)
@@ -176,16 +177,19 @@ void BearGraphics::BearWindow::SetFullscreen(bool fullscreen)
 	
 	if (m_fullscreen)
 	{
-		SetWindowLong((HWND)m_window, GWL_STYLE,WS_POPUP | WS_VISIBLE);
+		SetWindowLong((HWND)m_window, GWL_STYLE,WS_POPUP |WS_VISIBLE);
 		SetWindowLong((HWND)m_window, GWL_EXSTYLE, WS_EX_TOPMOST);
+		SetFocus(m_window);
+
 	
 	}
 	else
 	{
-		//SetWindowLong((HWND)m_window, GWL_STYLE, WS_DLGFRAME | WS_SYSMENU | WS_MINIMIZEBOX);
-		Resize(m_width, m_height);
+		SetWindowLong((HWND)m_window, GWL_STYLE, WS_DLGFRAME | WS_SYSMENU | WS_MINIMIZEBOX);
+	
 
 	}
+	Resize(m_width, m_height);
 	SetForegroundWindow((HWND)m_window);
 }
 
@@ -232,10 +236,19 @@ void BearGraphics::BearWindow::SetMousePosition(const BearCore::BearVector2<floa
 
 bool BearGraphics::BearWindow::GetEvent(BearEventWindows & e)
 {
-	if (m_events_item == m_events.end())
-		return false;
-	e = *m_events_item;
-	m_events_item++;
+	/*if (m_event_resize.Type == WET_Resize && m_resize_timer.get_elapsed_time().asmiliseconds() > 100)
+	{
+		e = m_event_resize;
+		m_event_resize.Type = WET_None;
+	}
+	else
+	{*/
+		if (m_events_item == m_events.end())
+			return false;
+		while (m_events_item + 1 != m_events.end() && (m_events_item + 1)->Type == WET_Resize) { m_events_item++; }
+		e = *m_events_item;
+		m_events_item++;
+	//}
 	return true;
 }
 
@@ -268,7 +281,8 @@ void BearGraphics::BearWindow::OnEvent(HWND handle, UINT message, WPARAM wParam,
 			ev.Size.width= GetSizeFloat().x;
 			ev.Size.height = GetSizeFloat().y;
 			ev.Type = WET_Resize;
-			BearGraphics::BearWindow::Resize(m_width, m_height);
+			/*m_event_resize = ev;
+			m_resize_timer.restart();*/
 			m_events.push_back(ev);
 		}
 		break;

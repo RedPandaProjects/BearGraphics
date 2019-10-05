@@ -3,6 +3,7 @@ namespace BearGraphics
 {
 	enum BearWindowEventType
 	{
+		WET_None,
 		WET_KeyDouble,
 		WET_KeyDown,
 		WET_KeyUp,
@@ -13,7 +14,7 @@ namespace BearGraphics
 		WET_MouseMove,
 		WET_MouseEnter,
 		WET_MouseLevae,
-		WET_None,
+
 	};
 	enum BearShaderType
 	{

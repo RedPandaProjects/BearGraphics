@@ -87,6 +87,7 @@ namespace BearGraphics
 	private:
 		
 #ifdef WINDOWS
+		DWORD m_Style;
 		bool m_MouseShow;
 		HWND
 #elif LINUX
@@ -97,9 +98,10 @@ namespace BearGraphics
 
 		BearCore::BearVector<BearEventWindows>  m_events;
 		BearCore::BearVector<BearEventWindows>::iterator  m_events_item;
-
 		bsize m_width, m_height;
 		bool m_fullscreen;
 		bool m_mouse_enter;
+
+
 	};
 }
