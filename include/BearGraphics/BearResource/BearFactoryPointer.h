@@ -93,5 +93,8 @@ namespace BearGraphics
 		BearFactoryPointer(BearFactoryPointer&&right) :m_data(0) { swap(right); }
 		BearFactoryPointer&operator=(const BearFactoryPointer&right) { copy(right); return*this; }
 		BearFactoryPointer&operator=(BearFactoryPointer&&right) { swap(right); return*this; }
+		inline bool operator==(const BearFactoryPointer&right)const { return right.m_data == m_data };
+		inline bool operator!=(const BearFactoryPointer&right)const { return right.m_data != m_data };
+		inline bool operator<(const BearFactoryPointer&right)const { return right.m_data < m_data };
 	};
 }
