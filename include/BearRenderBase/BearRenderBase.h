@@ -13,6 +13,8 @@
 #include "BearRenderShaderBase.h"
 #include "BearRenderPipelineBase.h"
 #include "BearRenderFrameBufferBase.h"
+#include "BearRenderIndexBufferBase.h"
+#include "BearRenderVertexBufferBase.h"
 #include "BearTemplate/BearGraphicsTypeManager.h"
 #include "BearTemplate/BearGraphicsRemover.h"
 #include "BearTemplate/BearGraphicsCaster.h"
