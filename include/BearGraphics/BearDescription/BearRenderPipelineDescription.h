@@ -11,6 +11,10 @@ namespace BearGraphics
 		bsize Offset;
 		bsize SemanticIndex;
 		bool IsInstance;
+		inline bool empty()const 
+		{
+			return Type == VF_NONE;
+		}
 		inline bool operator ==(const BearInputLayoutElement&Right)const
 		{
 			return	Type == Right.Type&&
@@ -86,10 +90,7 @@ namespace BearGraphics
 			BearRenderTargetFormat Formats[8];
 			
 		} RenderTargets;
-
-		void ResetCheakSum();
-	private:
-		uint32 m_CRC32;
+		BearTopologyType TopologyType;
 		
 	};
 }

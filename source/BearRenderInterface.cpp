@@ -32,7 +32,38 @@ BearGraphics::BearFactoryPointer<BearRenderBase::BearRenderContextBase> BearGrap
 
 BearGraphics::BearFactoryPointer<BearRenderBase::BearRenderPipelineBase> BearGraphics::BearRenderInterface::CreatePipeline(const BearRenderPipelineDescription & Descripter)
 {
+	if (Empty())
 	return BearFactoryPointer<BearRenderBase::BearRenderPipelineBase>();
+	return BearFactoryPointer<BearRenderBase::BearRenderPipelineBase>(GRenderFactoty->CreatePipeline(Descripter));
+
+}
+
+BearGraphics::BearFactoryPointer<BearRenderBase::BearRenderShaderBase> BearGraphics::BearRenderInterface::CreatePixelShader()
+{
+	if (Empty())
+	return BearFactoryPointer<BearRenderBase::BearRenderShaderBase>();
+	return BearFactoryPointer<BearRenderBase::BearRenderShaderBase>(GRenderFactoty->CreateShader(ST_Pixel));
+}
+
+BearGraphics::BearFactoryPointer<BearRenderBase::BearRenderShaderBase> BearGraphics::BearRenderInterface::CreateVertexShader()
+{
+	if (Empty())
+	return BearFactoryPointer<BearRenderBase::BearRenderShaderBase>();
+	return BearFactoryPointer<BearRenderBase::BearRenderShaderBase>(GRenderFactoty->CreateShader(ST_Vertex));
+}
+
+BearGraphics::BearFactoryPointer<BearRenderBase::BearRenderVertexBufferBase> BearGraphics::BearRenderInterface::CreateVertexBuffer()
+{
+	if (Empty())
+	return BearFactoryPointer<BearRenderBase::BearRenderVertexBufferBase>();
+	return BearFactoryPointer<BearRenderBase::BearRenderVertexBufferBase>(GRenderFactoty->CreateVertexBuffer());
+}
+
+BearGraphics::BearFactoryPointer<BearRenderBase::BearRenderIndexBufferBase> BearGraphics::BearRenderInterface::CreateIndexBuffer()
+{
+	if (Empty())
+	return BearFactoryPointer<BearRenderBase::BearRenderIndexBufferBase>();
+	return BearFactoryPointer<BearRenderBase::BearRenderIndexBufferBase>(GRenderFactoty->CreateIndexBuffer());
 }
 
 BearGraphics::BearFactoryPointer<BearRenderBase::BearRenderViewportBase> BearGraphics::BearRenderInterface::CreateViewport(const BearWindow&Window, const BearRenderViewportDescription&Description)

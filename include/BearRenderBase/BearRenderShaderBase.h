@@ -7,6 +7,6 @@ namespace BearRenderBase
 	public:
 		BearRenderShaderBase() {}
 		virtual ~BearRenderShaderBase() = 0;
-		virtual bool CompileText(const bchar*Text,BearCore::BearString &Out) = 0;
+		virtual bool CompileText(const bchar*Text,BearCore::BearString &OutError) = 0;
 	};
 }

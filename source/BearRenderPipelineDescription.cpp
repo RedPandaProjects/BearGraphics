@@ -2,8 +2,8 @@
 
 BearGraphics::BearRenderPipelineDescription::BearRenderPipelineDescription()
 {
+	TopologyType = TT_POINT_LIST;
 	BearCore::bear_fill(RenderTargets.Formats, 16, 0);
-	m_CRC32 = 0;
 }
 
 BearGraphics::BearRenderPipelineDescription::BearRenderPipelineDescription(const BearRenderPipelineDescription & Right)
@@ -20,24 +20,22 @@ BearGraphics::BearRenderPipelineDescription::BearRenderPipelineDescription(BearR
 
 bool BearGraphics::BearRenderPipelineDescription::operator<(const BearRenderPipelineDescription & Right) const
 {
-	if (m_CRC32 == Right.m_CRC32)
+
+	for (bsize i = 0; i < 16; i++)
 	{
-		for (bsize i = 0; i < 16; i++)
-		{
-			if (InputLayout.Elements[i] == Right.InputLayout.Elements[i])
-				continue;
-			return InputLayout.Elements[i] < Right.InputLayout.Elements[i];
-		}
-		if (Shaders.Pixel != Right.Shaders.Pixel)return Shaders.Pixel < Right.Shaders.Pixel;
-		if (Shaders.Vertex != Right.Shaders.Vertex)return Shaders.Vertex < Right.Shaders.Vertex;
-		return BearCore::bear_compare(RenderTargets.Formats, Right.RenderTargets.Formats, 8) < 0;
+		if (InputLayout.Elements[i] == Right.InputLayout.Elements[i])
+			continue;
+		return InputLayout.Elements[i] < Right.InputLayout.Elements[i];
 	}
-	return m_CRC32 < Right.m_CRC32;
+	if(TopologyType!= Right.TopologyType)return  TopologyType < Right.TopologyType;
+	if (Shaders.Pixel != Right.Shaders.Pixel)return Shaders.Pixel < Right.Shaders.Pixel;
+	if (Shaders.Vertex != Right.Shaders.Vertex)return Shaders.Vertex < Right.Shaders.Vertex;
+	return BearCore::bear_compare(RenderTargets.Formats, Right.RenderTargets.Formats, 8) < 0;
+	
 }
 
 bool BearGraphics::BearRenderPipelineDescription::operator==(const BearRenderPipelineDescription & Right) const
 {
-	if (m_CRC32 != Right.m_CRC32)return false;
 	bool result = true;
 	for (bsize i = 0; i < 16; i++)
 	{
@@ -46,6 +44,7 @@ bool BearGraphics::BearRenderPipelineDescription::operator==(const BearRenderPip
 	result = result && Shaders.Pixel == Right.Shaders.Pixel;
 	result = result && Shaders.Vertex == Right.Shaders.Vertex;
 	result = result && (BearCore::bear_compare(RenderTargets.Formats, Right.RenderTargets.Formats, 8)==0);
+	result = result && (TopologyType == Right.TopologyType);
 	return result;
 }
 

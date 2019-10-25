@@ -11,7 +11,7 @@ namespace BearRenderBase
 		BearRenderFactoryBase() {}
 		RHI_FACTORY_DECLARE(Interface);
 		RHI_FACTORY_DECLARE(Context);
-		//RHI_FACTORY_DECLARE(Pipeline, const BearGraphics::BearRenderPipelineDescription&Descruotion);
+		RHI_FACTORY_DECLARE(Pipeline, const BearGraphics::BearRenderPipelineDescription&Descruotion);
 		RHI_FACTORY_DECLARE(Viewport, void*Handle, bsize Width, bsize Height, bool Fullscreen, bool VSync,const BearGraphics::BearRenderViewportDescription&Descruotion);
 
 		RHI_FACTORY_DECLARE(Shader, BearGraphics::BearShaderType Type);

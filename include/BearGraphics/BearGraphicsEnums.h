@@ -80,4 +80,11 @@ namespace BearGraphics
 		RTF_R32G32B32F,
 		RTF_R32G32B32A32F,
 	};
+	enum BearTopologyType
+	{
+		TT_POINT_LIST = 0,
+		TT_LINE_LIST,
+		TT_TRIANGLE_LIST,
+	};
+
 }
