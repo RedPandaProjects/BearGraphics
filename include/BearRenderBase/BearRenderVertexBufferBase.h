@@ -6,7 +6,7 @@ namespace BearRenderBase
 		BEAR_CLASS_NO_COPY(BearRenderVertexBufferBase)
 	public:
 		BearRenderVertexBufferBase() {}
-		virtual void Create(bsize stride , bsize count, void*data = 0) = 0;
+		virtual void Create(bsize stride , bsize count, void*data = 0,bool dynamic=false) = 0;
 		virtual void* Lock() = 0;
 		virtual void Unlock() = 0;
 		virtual void Clear() = 0;
