@@ -9,4 +9,5 @@ REGISTER_OBJECT(BearGraphics::GOT_Pipeline, BearRenderPipelineBase, BearRenderOb
 REGISTER_OBJECT(BearGraphics::GOT_IndexBuffer,BearRenderIndexBufferBase, BearRenderObject)
 REGISTER_OBJECT(BearGraphics::GOT_UniformBuffer, BearRenderUniformBufferBase, BearRenderObject)
 REGISTER_OBJECT(BearGraphics::GOT_VertexBuffer, BearRenderVertexBufferBase, BearRenderObject)
+REGISTER_OBJECT(BearGraphics::GOT_RootSignature, BearRenderRootSignatureBase, BearRenderObject)
 #undef REGISTER_OBJECT

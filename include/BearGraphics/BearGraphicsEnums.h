@@ -57,6 +57,7 @@ namespace BearGraphics
 		GOT_IndexBuffer,
 		GOT_VertexBuffer,
 		GOT_UniformBuffer,
+		GOT_RootSignature,
 	};
 	enum BearVertexFormat
 	{
