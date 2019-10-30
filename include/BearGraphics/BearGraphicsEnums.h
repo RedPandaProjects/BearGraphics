@@ -56,6 +56,7 @@ namespace BearGraphics
 		GOT_Context,
 		GOT_IndexBuffer,
 		GOT_VertexBuffer,
+		GOT_UniformBuffer,
 	};
 	enum BearVertexFormat
 	{

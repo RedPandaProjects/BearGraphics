@@ -18,7 +18,7 @@ namespace BearRenderBase
 
 		RHI_FACTORY_DECLARE(IndexBuffer);
 		RHI_FACTORY_DECLARE(VertexBuffer);
-
+		RHI_FACTORY_DECLARE(UniformBuffer);
 	/*	RHI_FACTORY_DECLARE(DefaultManager);
 
 		RHI_FACTORY_DECLARE(RenderTargetView, bsize w, bsize h, BearGraphics::BearRenderTargetFormat format);
