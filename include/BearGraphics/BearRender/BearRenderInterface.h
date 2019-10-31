@@ -12,7 +12,10 @@ namespace BearGraphics
 		static BearFactoryPointer<BearRenderBase::BearRenderShaderBase> CreateVertexShader();
 		static BearFactoryPointer<BearRenderBase::BearRenderVertexBufferBase> CreateVertexBuffer();
 		static BearFactoryPointer<BearRenderBase::BearRenderIndexBufferBase> CreateIndexBuffer();
+		static BearFactoryPointer<BearRenderBase::BearRenderUniformBufferBase> CreateUniformBuffer();
 		static BearFactoryPointer<BearRenderBase::BearRenderViewportBase> CreateViewport(const BearWindow&Window,const BearRenderViewportDescription&Description);
+
+		static BearFactoryPointer<BearRenderBase::BearRenderRootSignatureBase> CreateRootSignature(const BearRenderRootSignatureDescription&Description);
 		static void Destroy();
 		static bool Empty();
 	};

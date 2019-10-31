@@ -66,6 +66,13 @@ BearGraphics::BearFactoryPointer<BearRenderBase::BearRenderIndexBufferBase> Bear
 	return BearFactoryPointer<BearRenderBase::BearRenderIndexBufferBase>(GRenderFactoty->CreateIndexBuffer());
 }
 
+BearGraphics::BearFactoryPointer<BearRenderBase::BearRenderUniformBufferBase> BearGraphics::BearRenderInterface::CreateUniformBuffer()
+{
+	if (Empty())
+	return BearFactoryPointer<BearRenderBase::BearRenderUniformBufferBase>();
+	return BearFactoryPointer<BearRenderBase::BearRenderUniformBufferBase>(GRenderFactoty->CreateUniformBuffer());
+}
+
 BearGraphics::BearFactoryPointer<BearRenderBase::BearRenderViewportBase> BearGraphics::BearRenderInterface::CreateViewport(const BearWindow&Window, const BearRenderViewportDescription&Description)
 {
 	if (Empty()|| Window.Empty())
@@ -73,6 +80,13 @@ BearGraphics::BearFactoryPointer<BearRenderBase::BearRenderViewportBase> BearGra
 	return BearFactoryPointer<BearRenderBase::BearRenderViewportBase>(GRenderFactoty->CreateViewport(Window.GetWindowHandle(), Window.GetSize().x, Window.GetSize().y, Window.IsFullScreen(),false, Description));
 }
 
+
+BearGraphics::BearFactoryPointer<BearRenderBase::BearRenderRootSignatureBase> BearGraphics::BearRenderInterface::CreateRootSignature(const BearRenderRootSignatureDescription & Description)
+{
+	if (Empty())
+		return BearFactoryPointer<BearRenderBase::BearRenderRootSignatureBase>();
+	return BearFactoryPointer<BearRenderBase::BearRenderRootSignatureBase>(GRenderFactoty->CreateRootSignature(Description));
+}
 
 void BearGraphics::BearRenderInterface::Destroy()
 {

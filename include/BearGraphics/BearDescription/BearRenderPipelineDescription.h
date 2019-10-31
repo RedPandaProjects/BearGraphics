@@ -91,6 +91,7 @@ namespace BearGraphics
 			
 		} RenderTargets;
 		BearTopologyType TopologyType;
+		BearFactoryPointer<BearRenderBase::BearRenderRootSignatureBase> RootSignature;
 		
 	};
 }

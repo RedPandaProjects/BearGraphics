@@ -6,10 +6,12 @@ BearGraphics::BearRenderRootSignatureDescription::BearRenderRootSignatureDescrip
 
 BearGraphics::BearRenderRootSignatureDescription::BearRenderRootSignatureDescription(const BearRenderRootSignatureDescription & Right)
 {
+	Copy(Right);
 }
 
 BearGraphics::BearRenderRootSignatureDescription::BearRenderRootSignatureDescription(BearRenderRootSignatureDescription && Right)
 {
+	Swap(Right);
 }
 
 void BearGraphics::BearRenderRootSignatureDescription::Copy(const BearRenderRootSignatureDescription & Right)
