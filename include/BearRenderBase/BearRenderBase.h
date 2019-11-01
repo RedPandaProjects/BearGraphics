@@ -16,17 +16,22 @@
 #include "BearRenderIndexBufferBase.h"
 #include "BearRenderVertexBufferBase.h"
 #include "BearRenderUniformBufferBase.h"
+
 #include "BearRenderRootSignatureBase.h"
+#include "BearRenderDescriptorHeapBase.h"
+#include "BearRenderSamplerStateBase.h"
 
 #include "BearTemplate/BearGraphicsTypeManager.h"
 #include "BearTemplate/BearGraphicsRemover.h"
 #include "BearTemplate/BearGraphicsCaster.h"
 #include "BearResource/BearFactoryPointer.h"
 #include "BearRenderContextBase.h"
+#include "BearDescription/BearRenderDescriptorHeapDescription.h"
 #include "BearDescription/BearRenderRootSignatureDescription.h"
 #include "BearDescription/BearRenderFrameBufferDescription.h"
 #include "BearDescription/BearRenderPipelineDescription.h"
 #include "BearDescription/BearRenderViewportDescription.h"
+#include "BearDescription/BearRenderSamplerDescription.h"
 #include "BearRenderFactoryBase.h"
 
 

@@ -12,7 +12,7 @@ namespace BearRenderBase
 		virtual void DetachFrameBuffer() = 0;
 		virtual void ClearFrameBuffer() = 0;
 		virtual void SetPipeline(BearGraphics::BearFactoryPointer<BearRenderBase::BearRenderPipelineBase> Pipeline)=0;
-		virtual void SetRootSignature(BearGraphics::BearFactoryPointer<BearRenderBase::BearRenderRootSignatureBase> RootSignature)=0;
+		virtual void SetDescriptorHeap(BearGraphics::BearFactoryPointer<BearRenderBase::BearRenderDescriptorHeapBase> DescriptorHeap)=0;
 		virtual void SetVertexBuffer(BearGraphics::BearFactoryPointer<BearRenderBase::BearRenderVertexBufferBase> buffer)=0;
 		virtual void SetIndexBuffer(BearGraphics::BearFactoryPointer<BearRenderBase::BearRenderIndexBufferBase> buffer) = 0;
 		virtual void SetViewport(float x, float y, float width, float height, float minDepth = 0.f, float maxDepth = 1.f) = 0;

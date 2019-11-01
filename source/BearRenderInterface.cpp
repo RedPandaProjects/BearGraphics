@@ -88,6 +88,14 @@ BearGraphics::BearFactoryPointer<BearRenderBase::BearRenderRootSignatureBase> Be
 	return BearFactoryPointer<BearRenderBase::BearRenderRootSignatureBase>(GRenderFactoty->CreateRootSignature(Description));
 }
 
+BearGraphics::BearFactoryPointer<BearRenderBase::BearRenderDescriptorHeapBase> BearGraphics::BearRenderInterface::CreateDescriptorHeap(const BearRenderDescriptorHeapDescription & Description)
+{
+	if (Empty())
+	return BearFactoryPointer<BearRenderBase::BearRenderDescriptorHeapBase>();
+	return BearFactoryPointer<BearRenderBase::BearRenderDescriptorHeapBase>(GRenderFactoty->CreateDescriptorHeap(Description));
+
+}
+
 void BearGraphics::BearRenderInterface::Destroy()
 {
 	if (FDestroy)

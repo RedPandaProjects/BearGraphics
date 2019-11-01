@@ -18,8 +18,12 @@ namespace BearGraphics
 	};
 	enum BearShaderType
 	{
+		ST_Null=0,
 		ST_Vertex,
-		ST_Pixel
+		ST_Pixel,
+		ST_RayGeneration,
+		ST_Hit,
+		ST_Miss,
 	};
 	enum BearTexturePixelFormat
 	{
@@ -58,6 +62,8 @@ namespace BearGraphics
 		GOT_VertexBuffer,
 		GOT_UniformBuffer,
 		GOT_RootSignature,
+		GOT_DescriptorHeap,
+		GOT_SamplerState,
 	};
 	enum BearVertexFormat
 	{
@@ -88,5 +94,22 @@ namespace BearGraphics
 		TT_LINE_LIST,
 		TT_TRIANGLE_LIST,
 	};
-
+	enum BearSamplerAddressMode
+	{
+		SAM_WRAP = 0,
+		SAM_MIRROR,
+		SAM_CLAMP,
+		SAM_BORDER,
+	};
+	enum BearSamplerFilter
+	{
+		SF_MAG_MIP_POINT,
+		SF_MAG_LINEAR_MIP_POINT,
+		SF_MAG_MIP_LINEAR,
+		SF_ANISOTROPIC,
+		SF_COMPARISON_MAG_MIP_POINT,
+		SF_COMPARISON_MAG_LINEAR_MIP_POINT,
+		SF_COMPARISON_MAG_MIP_LINEAR,
+		SF_COMPARISON_ANISOTROPIC,
+	};
 }

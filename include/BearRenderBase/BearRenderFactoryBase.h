@@ -19,7 +19,10 @@ namespace BearRenderBase
 		RHI_FACTORY_DECLARE(IndexBuffer);
 		RHI_FACTORY_DECLARE(VertexBuffer);
 		RHI_FACTORY_DECLARE(UniformBuffer);
-		RHI_FACTORY_DECLARE(RootSignature, const BearGraphics::BearRenderRootSignatureDescription&Descruotion);
+		RHI_FACTORY_DECLARE(RootSignature, const BearGraphics::BearRenderRootSignatureDescription&Description);
+		RHI_FACTORY_DECLARE(DescriptorHeap, const BearGraphics::BearRenderDescriptorHeapDescription&Description);
+		RHI_FACTORY_DECLARE(SamplerState, const BearGraphics::BearRenderSamplerDescription&Description);
+		RHI_FACTORY_DECLARE(Texture2D);
 	/*	RHI_FACTORY_DECLARE(DefaultManager);
 
 		RHI_FACTORY_DECLARE(RenderTargetView, bsize w, bsize h, BearGraphics::BearRenderTargetFormat format);

@@ -73,17 +73,16 @@ namespace BearGraphics
 			{
 				return GOT_RootSignature;
 			}
-				
-			/*template<>
-			static	BearGraphicsObjectType GetType<BearRenderBase::BearRenderViewportBase>()
+			template<>
+			static	BearGraphicsObjectType GetType<BearRenderBase::BearRenderDescriptorHeapBase>()
 			{
-				return GOT_Viewport;
+				return GOT_DescriptorHeap;
 			}
-			/*template<>
-			static	BearGraphicsObjectType GetType<BearRenderBase::BearRender>()
+			template<>
+			static	BearGraphicsObjectType GetType<BearRenderBase::BearRenderSamplerStateBase>()
 			{
-				return GOT_Viewport;
-			}*/
+				return GOT_SamplerState;
+			}
 		private:
 
 		};
