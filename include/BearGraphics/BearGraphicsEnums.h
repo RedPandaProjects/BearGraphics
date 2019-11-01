@@ -46,7 +46,7 @@ namespace BearGraphics
 	};
 	enum BearGraphicsObjectType
 	{
-		GOT_None,
+		GOT_None=0,
 		GOT_Object,
 		GOT_Texture2D,
 		GOT_RenderTargetView,

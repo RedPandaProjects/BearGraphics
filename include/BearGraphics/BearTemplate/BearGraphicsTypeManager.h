@@ -1,4 +1,8 @@
 #pragma once
+namespace BearRenderBase
+{
+	class BearRenderContextBase;
+};
 namespace BearGraphics
 {
 	namespace Impl
@@ -38,6 +42,38 @@ namespace BearGraphics
 			{
 				return GOT_Viewport;
 			}
+			
+			template<>
+			static	BearGraphicsObjectType GetType<BearRenderBase::BearRenderPipelineBase>()
+			{
+				return GOT_Pipeline;
+			}
+			template<>
+			static	BearGraphicsObjectType GetType<BearRenderBase::BearRenderContextBase>()
+			{
+				return GOT_Context;
+			}
+			template<>
+			static	BearGraphicsObjectType GetType<BearRenderBase::BearRenderIndexBufferBase>()
+			{
+				return GOT_IndexBuffer;
+			}
+			template<>
+			static	BearGraphicsObjectType GetType<BearRenderBase::BearRenderVertexBufferBase>()
+			{
+				return GOT_VertexBuffer;
+			}
+			template<>
+			static	BearGraphicsObjectType GetType<BearRenderBase::BearRenderUniformBufferBase>()
+			{
+				return GOT_UniformBuffer;
+			}
+			template<>
+			static	BearGraphicsObjectType GetType<BearRenderBase::BearRenderRootSignatureBase>()
+			{
+				return GOT_RootSignature;
+			}
+				
 			/*template<>
 			static	BearGraphicsObjectType GetType<BearRenderBase::BearRenderViewportBase>()
 			{

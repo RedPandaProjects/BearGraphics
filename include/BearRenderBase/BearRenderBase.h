@@ -17,6 +17,7 @@
 #include "BearRenderVertexBufferBase.h"
 #include "BearRenderUniformBufferBase.h"
 #include "BearRenderRootSignatureBase.h"
+
 #include "BearTemplate/BearGraphicsTypeManager.h"
 #include "BearTemplate/BearGraphicsRemover.h"
 #include "BearTemplate/BearGraphicsCaster.h"
