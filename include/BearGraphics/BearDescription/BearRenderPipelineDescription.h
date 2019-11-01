@@ -15,48 +15,9 @@ namespace BearGraphics
 		{
 			return Type == VF_NONE;
 		}
-		inline bool operator ==(const BearInputLayoutElement&Right)const
-		{
-			return	Type == Right.Type&&
-				Offset == Right.Offset&&
-				SemanticIndex == Right.SemanticIndex&&
-				IsInstance == Right.IsInstance&&
-				Name == Right.Name;
 
-		}
-		inline bool operator <(const BearInputLayoutElement&Right)const
-		{
-			if (Type == Right.Type)
-			{
-				if (Offset == Right.Offset)
-				{
-					if (SemanticIndex == Right.SemanticIndex)
-					{
-						if (IsInstance == Right.IsInstance)
-						{
-							return Name < Right.Name;
-						}
-						else
-						{
-							return IsInstance < Right.IsInstance;
-						}
-					}
-					else
-					{
-						return SemanticIndex < Right.SemanticIndex;
-					}
-				}
-				else
-				{
-					return Offset < Right.Offset;
-				}
-			}
-			else
-			{
-				return Type < Right.Type;
-			}
+		
 
-		}
 	};
 	class BEARGRAPHICS_API BearRenderPipelineDescription
 	{
@@ -66,9 +27,6 @@ namespace BearGraphics
 		BearRenderPipelineDescription(BearRenderPipelineDescription&&Right);
 		inline ~BearRenderPipelineDescription() {}
 		
-
-		bool operator<(const BearRenderPipelineDescription&Right) const;
-		bool operator ==(const BearRenderPipelineDescription&Right)const;
 		void Copy(const BearRenderPipelineDescription&Right);
 		void Swap(BearRenderPipelineDescription&Right);
 		inline BearRenderPipelineDescription&operator=(const BearRenderPipelineDescription&Right) {			Copy(Right); return*this;		}

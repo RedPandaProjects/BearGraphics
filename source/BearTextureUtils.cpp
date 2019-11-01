@@ -1512,7 +1512,8 @@ void BearGraphics::BearTextureUtils::GetBlock(BearCore::BearColor(&color)[16], u
 	{
 		nv::BlockDXT3 dxt3;
 
-		BearCore::bear_copy(&dxt3.alpha, block, 16);
+		BearCore::bear_copy(&dxt3.alpha, block, 8);
+		BearCore::bear_copy(&dxt3.color, block + 8, 8);
 		dxt3.decodeBlock(&cl);
 		for (uint x = 0; x < 16; x++)
 		{
@@ -1524,7 +1525,8 @@ void BearGraphics::BearTextureUtils::GetBlock(BearCore::BearColor(&color)[16], u
 	{
 		nv::BlockDXT5 dxt5;
 
-		BearCore::bear_copy(&dxt5.alpha, block, 16);
+		BearCore::bear_copy(&dxt5.alpha, block, 8);
+		BearCore::bear_copy(&dxt5.color, block+8, 8);
 		dxt5.decodeBlock(&cl);
 		for (uint x = 0; x < 16; x++)
 		{
@@ -1546,9 +1548,10 @@ void BearGraphics::BearTextureUtils::GetBlock(BearCore::BearColor(&color)[16], u
 	break;
 	case BearGraphics::BearTexturePixelFormat::TPF_BC5:
 	{
-		nv::BlockATI1 at2;
+		nv::BlockATI2 at2;
 
-		BearCore::bear_copy(&at2.alpha, block, 16);
+		BearCore::bear_copy(&at2.x, block, 8);
+		BearCore::bear_copy(&at2.y, block+8, 8);
 		at2.decodeBlock(&cl);
 		for (uint x = 0; x < 16; x++)
 		{

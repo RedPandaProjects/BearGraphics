@@ -18,35 +18,6 @@ BearGraphics::BearRenderPipelineDescription::BearRenderPipelineDescription(BearR
 	Swap(Right);
 }
 
-bool BearGraphics::BearRenderPipelineDescription::operator<(const BearRenderPipelineDescription & Right) const
-{
-
-	for (bsize i = 0; i < 16; i++)
-	{
-		if (InputLayout.Elements[i] == Right.InputLayout.Elements[i])
-			continue;
-		return InputLayout.Elements[i] < Right.InputLayout.Elements[i];
-	}
-	if(TopologyType!= Right.TopologyType)return  TopologyType < Right.TopologyType;
-	if (Shaders.Pixel != Right.Shaders.Pixel)return Shaders.Pixel < Right.Shaders.Pixel;
-	if (Shaders.Vertex != Right.Shaders.Vertex)return Shaders.Vertex < Right.Shaders.Vertex;
-	return BearCore::bear_compare(RenderTargets.Formats, Right.RenderTargets.Formats, 8) < 0;
-	
-}
-
-bool BearGraphics::BearRenderPipelineDescription::operator==(const BearRenderPipelineDescription & Right) const
-{
-	bool result = true;
-	for (bsize i = 0; i < 16; i++)
-	{
-		result = result&&InputLayout.Elements[i] == Right.InputLayout.Elements[i];
-	}
-	result = result && Shaders.Pixel == Right.Shaders.Pixel;
-	result = result && Shaders.Vertex == Right.Shaders.Vertex;
-	result = result && (BearCore::bear_compare(RenderTargets.Formats, Right.RenderTargets.Formats, 8)==0);
-	result = result && (TopologyType == Right.TopologyType);
-	return result;
-}
 
 void BearGraphics::BearRenderPipelineDescription::Copy(const BearRenderPipelineDescription & Right)
 {
@@ -55,6 +26,8 @@ void BearGraphics::BearRenderPipelineDescription::Copy(const BearRenderPipelineD
 	BearCore::bear_copy(RenderTargets.Formats, Right.RenderTargets.Formats, 8);
 	Shaders.Pixel = Right.Shaders.Pixel;
 	Shaders.Vertex = Right.Shaders.Vertex;
+	TopologyType = Right.TopologyType;
+	RootSignature = Right.RootSignature;
 }
 
 void BearGraphics::BearRenderPipelineDescription::Swap(BearRenderPipelineDescription & Right)
@@ -64,4 +37,6 @@ void BearGraphics::BearRenderPipelineDescription::Swap(BearRenderPipelineDescrip
 	BearCore::bear_swap(RenderTargets.Formats, Right.RenderTargets.Formats, 8);
 	Shaders.Pixel.swap( Right.Shaders.Pixel);
 	Shaders.Pixel.swap( Right.Shaders.Vertex);
+	BearCore::bear_swap(TopologyType, Right.TopologyType);
+	RootSignature .swap( Right.RootSignature);
 }
