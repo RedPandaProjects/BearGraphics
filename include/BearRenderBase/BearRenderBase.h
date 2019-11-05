@@ -35,6 +35,7 @@
 #include "BearDescription/BearRenderSamplerDescription.h"
 #include "BearRenderFactoryBase.h"
 
+#include "BearTextureUtils.h"
 
 extern "C"  BEARPROJECT_EXPORT void RenderInitialize();
 extern "C"  BEARPROJECT_EXPORT  void RenderDestroy();

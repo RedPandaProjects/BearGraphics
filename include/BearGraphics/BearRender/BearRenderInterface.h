@@ -19,6 +19,12 @@ namespace BearGraphics
 		static BearFactoryPointer<BearRenderBase::BearRenderDescriptorHeapBase> CreateDescriptorHeap(const BearRenderDescriptorHeapDescription&Description);
 		static BearFactoryPointer<BearRenderBase::BearRenderTexture2DBase> CreateTexture2D();
 		static BearFactoryPointer<BearRenderBase::BearRenderSamplerStateBase> CreateSamplerState(const BearRenderSamplerDescription&Description);
+		/*RTX*/
+		static BearFactoryPointer<BearRenderBase::BearRenderShaderBase> CreateRayGenerationShader();
+		static BearFactoryPointer<BearRenderBase::BearRenderShaderBase> CreateMissShader();
+		static BearFactoryPointer<BearRenderBase::BearRenderShaderBase> CreateHitShader();
+
+		static bool RTXSupport();
 		static void Destroy();
 		static bool Empty();
 	};

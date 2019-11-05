@@ -110,6 +110,32 @@ BearGraphics::BearFactoryPointer<BearRenderBase::BearRenderSamplerStateBase> Bea
 	return BearFactoryPointer<BearRenderBase::BearRenderSamplerStateBase>(GRenderFactoty->CreateSamplerState(Description));
 }
 
+BearGraphics::BearFactoryPointer<BearRenderBase::BearRenderShaderBase> BearGraphics::BearRenderInterface::CreateRayGenerationShader()
+{
+	if (Empty())
+		return BearFactoryPointer<BearRenderBase::BearRenderShaderBase>();
+	return BearFactoryPointer<BearRenderBase::BearRenderShaderBase>(GRenderFactoty->CreateShader(ST_RayGeneration));
+}
+
+BearGraphics::BearFactoryPointer<BearRenderBase::BearRenderShaderBase> BearGraphics::BearRenderInterface::CreateMissShader()
+{
+	if (Empty())
+		return BearFactoryPointer<BearRenderBase::BearRenderShaderBase>();
+	return BearFactoryPointer<BearRenderBase::BearRenderShaderBase>(GRenderFactoty->CreateShader(ST_Miss));
+}
+
+BearGraphics::BearFactoryPointer<BearRenderBase::BearRenderShaderBase> BearGraphics::BearRenderInterface::CreateHitShader()
+{
+	if (Empty())
+		return BearFactoryPointer<BearRenderBase::BearRenderShaderBase>();
+	return BearFactoryPointer<BearRenderBase::BearRenderShaderBase>(GRenderFactoty->CreateShader(ST_Hit));
+}
+
+bool BearGraphics::BearRenderInterface::RTXSupport()
+{
+	return false;
+}
+
 void BearGraphics::BearRenderInterface::Destroy()
 {
 	if (FDestroy)

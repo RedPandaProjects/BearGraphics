@@ -27,7 +27,8 @@ namespace BearGraphics
 	};
 	enum BearTexturePixelFormat
 	{
-		TPF_R8 = 0,
+		TPF_NONE = 0,
+		TPF_R8 = 1,
 		TPF_R8G8,
 		TPF_R8G8B8,
 		TPF_R8G8B8A8,
