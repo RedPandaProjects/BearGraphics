@@ -17,7 +17,8 @@ namespace BearGraphics
 
 		static BearFactoryPointer<BearRenderBase::BearRenderRootSignatureBase> CreateRootSignature(const BearRenderRootSignatureDescription&Description);
 		static BearFactoryPointer<BearRenderBase::BearRenderDescriptorHeapBase> CreateDescriptorHeap(const BearRenderDescriptorHeapDescription&Description);
-
+		static BearFactoryPointer<BearRenderBase::BearRenderTexture2DBase> CreateTexture2D();
+		static BearFactoryPointer<BearRenderBase::BearRenderSamplerStateBase> CreateSamplerState(const BearRenderSamplerDescription&Description);
 		static void Destroy();
 		static bool Empty();
 	};

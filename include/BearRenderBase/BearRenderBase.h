@@ -7,6 +7,7 @@
 
 #include "BearRenderInterfaceBase.h"
 #include "BearRenderObject.h"
+#include "BearRenderShaderResourceBase.h"
 #include "BearRenderTexture2DBase.h"
 #include "BearRenderTargetViewBase.h"
 #include "BearRenderViewportBase.h"

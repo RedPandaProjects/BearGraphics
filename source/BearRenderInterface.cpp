@@ -96,6 +96,20 @@ BearGraphics::BearFactoryPointer<BearRenderBase::BearRenderDescriptorHeapBase> B
 
 }
 
+BearGraphics::BearFactoryPointer<BearRenderBase::BearRenderTexture2DBase> BearGraphics::BearRenderInterface::CreateTexture2D()
+{
+	if (Empty())
+	return BearFactoryPointer<BearRenderBase::BearRenderTexture2DBase>();
+	return BearFactoryPointer<BearRenderBase::BearRenderTexture2DBase>(GRenderFactoty->CreateTexture2D());
+}
+
+BearGraphics::BearFactoryPointer<BearRenderBase::BearRenderSamplerStateBase> BearGraphics::BearRenderInterface::CreateSamplerState(const BearRenderSamplerDescription & Description)
+{
+	if (Empty())
+	return BearFactoryPointer<BearRenderBase::BearRenderSamplerStateBase>();
+	return BearFactoryPointer<BearRenderBase::BearRenderSamplerStateBase>(GRenderFactoty->CreateSamplerState(Description));
+}
+
 void BearGraphics::BearRenderInterface::Destroy()
 {
 	if (FDestroy)

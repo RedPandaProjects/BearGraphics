@@ -1,10 +1,11 @@
 #pragma once 
 namespace BearRenderBase
 {
-	class BEARGRAPHICS_API BearRenderTexture2DBase :public BearRenderObject
+	class BEARGRAPHICS_API BearRenderTexture2DBase :public BearRenderShaderResourceBase
 	{
 		BEAR_CLASS_NO_COPY(BearRenderTexture2DBase)
 	public:
+		BearRenderTexture2DBase() {}
 		virtual void Create(bsize width, bsize height, bsize mip, BearGraphics::BearTexturePixelFormat format, void*data, bool dynamic = false) = 0;
 		virtual void* Lock()  =0;
 		virtual void  Unlock() = 0;

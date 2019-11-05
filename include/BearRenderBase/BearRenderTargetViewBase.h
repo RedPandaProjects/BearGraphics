@@ -1,7 +1,7 @@
 #pragma once 
 namespace BearRenderBase
 {
-	class BEARGRAPHICS_API BearRenderTargetViewBase:public BearRenderTexture2DBase
+	class BEARGRAPHICS_API BearRenderTargetViewBase:public BearRenderShaderResourceBase
 	{
 		BEAR_CLASS_NO_COPY(BearRenderTargetViewBase)
 	public:

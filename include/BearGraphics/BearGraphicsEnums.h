@@ -52,6 +52,7 @@ namespace BearGraphics
 	{
 		GOT_None=0,
 		GOT_Object,
+		GOT_ShaderResource,
 		GOT_Texture2D,
 		GOT_RenderTargetView,
 		GOT_Viewport,

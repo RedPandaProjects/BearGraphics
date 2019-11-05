@@ -83,6 +83,11 @@ namespace BearGraphics
 			{
 				return GOT_SamplerState;
 			}
+			template<>
+			static	BearGraphicsObjectType GetType<BearRenderBase::BearRenderShaderResourceBase>()
+			{
+				return GOT_ShaderResource;
+			}
 		private:
 
 		};
