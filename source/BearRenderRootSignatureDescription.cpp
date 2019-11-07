@@ -8,11 +8,11 @@ void BearGraphics::BearRenderRootSignatureDescription::Copy(const BearRenderRoot
 	}
 	for (bsize i = 0; i < 16; i++)
 	{
-		TextureBuffers[i].Shader = Right.TextureBuffers[i].Shader;
+		Textures[i].Shader = Right.Textures[i].Shader;
 	}
 	for (bsize i = 0; i < 16; i++)
 	{
-		SamplerStates[i].Shader = Right.SamplerStates[i].Shader;
+		Samplers[i].Shader = Right.Samplers[i].Shader;
 	}
 }
 
@@ -24,10 +24,10 @@ void BearGraphics::BearRenderRootSignatureDescription::Swap(BearRenderRootSignat
 	}
 	for (bsize i = 0; i < 16; i++)
 	{
-		BearCore::bear_swap(TextureBuffers[i].Shader, Right.TextureBuffers[i].Shader);
+		BearCore::bear_swap(Textures[i].Shader, Right.Textures[i].Shader);
 	}
 	for (bsize i = 0; i < 16; i++)
 	{
-		BearCore::bear_swap(SamplerStates[i].Shader, Right.SamplerStates[i].Shader);
+		BearCore::bear_swap(Samplers[i].Shader, Right.Samplers[i].Shader);
 	}
 }

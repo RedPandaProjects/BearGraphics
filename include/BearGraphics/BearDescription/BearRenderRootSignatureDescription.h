@@ -19,18 +19,18 @@ namespace BearGraphics
 			BearShaderType Shader;
 		}
 		UniformBuffers[16];
-		struct TextureBuffer
+		struct UniformTexture
 		{
-			TextureBuffer() :Shader(ST_Null) {}
+			UniformTexture() :Shader(ST_Null) {}
 			BearShaderType Shader;
 		}
-		TextureBuffers[16];
-		struct SamplerState
+		Textures[16];
+		struct UniformSampler
 		{
-			SamplerState() :Shader(ST_Null) {}
+			UniformSampler() :Shader(ST_Null) {}
 			BearShaderType Shader;
 		}
-		SamplerStates[16];
+		Samplers[16];
 
 	};
 }

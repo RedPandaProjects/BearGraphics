@@ -4,7 +4,16 @@ void BearGraphics::BearRenderDescriptorHeapDescription::Copy(const BearRenderDes
 {
 	for (bsize i = 0; i < 16; i++)
 	{
-		UniformBuffers[i].Buffer.copy(Right.UniformBuffers[i].Buffer);\
+		UniformBuffers[i].Buffer.copy(Right.UniformBuffers[i].Buffer);
+	}
+
+	for (bsize i = 0; i < 16; i++)
+	{
+		Textures[i].Texture.copy(Right.Textures[i].Texture);
+	}
+	for (bsize i = 0; i < 16; i++)
+	{
+		Samplers[i].Sampler.copy(Right.Samplers[i].Sampler);
 	}
 }
 
@@ -13,5 +22,13 @@ void BearGraphics::BearRenderDescriptorHeapDescription::Swap(BearRenderDescripto
 	for (bsize i = 0; i < 16; i++)
 	{
 		UniformBuffers[i].Buffer.swap(Right.UniformBuffers[i].Buffer);
+	}
+	for (bsize i = 0; i < 16; i++)
+	{
+		Textures[i].Texture.copy(Right.Textures[i].Texture);
+	}
+	for (bsize i = 0; i < 16; i++)
+	{
+		Samplers[i].Sampler.copy(Right.Samplers[i].Sampler);
 	}
 }

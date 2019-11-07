@@ -333,6 +333,18 @@ bsize BearGraphics::BearTextureUtils::GetCountBlock(bsize w)
 	return (w + 3) / 4;
 }
 
+bsize BearGraphics::BearTextureUtils::GetCountBlock(bsize w, BearGraphics::BearTexturePixelFormat format)
+{
+	if (isCompressor(format))
+	{
+		return GetCountBlock(w);
+	}
+	else
+	{
+		return w;
+	}
+}
+
 bsize BearGraphics::BearTextureUtils::GetSizeBlock(BearGraphics::BearTexturePixelFormat format)
 {
 	switch (format)

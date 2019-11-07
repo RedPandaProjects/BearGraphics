@@ -19,17 +19,17 @@ namespace BearGraphics
 		}
 		UniformBuffers[16];
 
-		struct TextureBuffer
+		struct UniformTexture
 		{
-			BearFactoryPointer<BearRenderBase::BearRenderTexture2DBase> Texture;
+			BearFactoryPointer<BearRenderBase::BearRenderShaderResourceBase> Texture;
 		}
-		TextureBuffers[16];
+		Textures[16];
 
-		struct SamplerBuffer
+		struct UniformSampler
 		{
 			BearFactoryPointer<BearRenderBase::BearRenderSamplerStateBase> Sampler;
 		}
-		SamplerBuffers[16];
+		Samplers[16];
 
 		BearFactoryPointer<BearRenderBase::BearRenderRootSignatureBase> RootSignature;
 	};

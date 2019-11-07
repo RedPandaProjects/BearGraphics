@@ -22,6 +22,7 @@ namespace BearGraphics
 		static bsize GetSizeInMemory(bsize w, bsize h, bsize mips, BearGraphics::BearTexturePixelFormat format);
 		static void Convert( BearGraphics::BearTexturePixelFormat dst_format, BearGraphics::BearTexturePixelFormat src_format,uint8*dst,uint8*src,bsize w,bsize h);
 		static bsize GetCountBlock(bsize w);
+		static bsize GetCountBlock(bsize w, BearGraphics::BearTexturePixelFormat format);
 		static bsize GetSizeBlock(BearGraphics::BearTexturePixelFormat format);
 		static uint8 GetCountComp(BearGraphics::BearTexturePixelFormat format);
 		static uint8*GetImage(uint8*data, bsize w, bsize h, bsize mips,bsize depth, bsize mip, BearGraphics::BearTexturePixelFormat format);
