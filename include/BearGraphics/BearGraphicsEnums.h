@@ -49,13 +49,25 @@ namespace BearGraphics
 		TPF_BC6,//RGBA FP16 64 bit 16 pxiel
 		TPF_BC7//RGBA 64 bit 16 pxiel
 	};
+	enum BearTextureUAVPixelFormat
+	{
+		TPUF_R8 = 1,
+		TPUF_R8G8,
+		TPUF_R8G8B8A8,
+		TPUF_R32F,
+		TPUF_R32G32F,
+		TPUF_R32G32B32A32F,
+	};
 	enum BearGraphicsObjectType
 	{
 		GOT_None=0,
 		GOT_Object,
-		GOT_ShaderResource,
+		GOT_ShaderResourceView,
+		GOT_UnorderedAccessView,
 		GOT_Texture2D,
+		GOT_Texture2DUAV,
 		GOT_RenderTargetView,
+		GOT_FrameBuffer,
 		GOT_Viewport,
 		GOT_Shader,
 		GOT_Pipeline,

@@ -23,6 +23,10 @@ namespace BearRenderBase
 		RHI_FACTORY_DECLARE(DescriptorHeap, const BearGraphics::BearRenderDescriptorHeapDescription&Description);
 		RHI_FACTORY_DECLARE(SamplerState, const BearGraphics::BearRenderSamplerDescription&Description);
 		RHI_FACTORY_DECLARE(Texture2D);
+		RHI_FACTORY_DECLARE(Texture2DUAV);
+
+		RHI_FACTORY_DECLARE(FrameBuffer, const BearGraphics::BearRenderFrameBufferDescription&Description);
+		RHI_FACTORY_DECLARE(TargetView, const BearGraphics::BearRenderTargetViewDescription&Description);
 	/*	RHI_FACTORY_DECLARE(DefaultManager);
 
 		RHI_FACTORY_DECLARE(RenderTargetView, bsize w, bsize h, BearGraphics::BearRenderTargetFormat format);

@@ -84,9 +84,24 @@ namespace BearGraphics
 				return GOT_SamplerState;
 			}
 			template<>
-			static	BearGraphicsObjectType GetType<BearRenderBase::BearRenderShaderResourceBase>()
+			static	BearGraphicsObjectType GetType<BearRenderBase::BearRenderShaderResourceViewBase>()
 			{
-				return GOT_ShaderResource;
+				return GOT_ShaderResourceView;
+			}
+			template<>
+			static	BearGraphicsObjectType GetType<BearRenderBase::BearRenderFrameBufferBase>()
+			{
+				return GOT_FrameBuffer;
+			}
+			template<>
+			static	BearGraphicsObjectType GetType<BearRenderBase::BearRenderUnorderedAccessViewBase>()
+			{
+				return GOT_UnorderedAccessView;
+			}
+			template<>
+			static	BearGraphicsObjectType GetType<BearRenderBase::BearRenderTexture2DUAVBase>()
+			{
+				return GOT_Texture2DUAV;
 			}
 		private:
 

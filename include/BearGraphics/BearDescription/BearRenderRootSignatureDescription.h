@@ -13,6 +13,12 @@ namespace BearGraphics
 		void Swap(BearRenderRootSignatureDescription&Right);
 		inline BearRenderRootSignatureDescription&operator=(const BearRenderRootSignatureDescription&Right) { Copy(Right); return*this; }
 		inline BearRenderRootSignatureDescription&operator=(BearRenderRootSignatureDescription&&Right) { Swap(Right); return*this; }
+		struct UAVResource
+		{
+			UAVResource() :Shader(ST_Null) {}
+			BearShaderType Shader;
+		}
+		UAVResources[16];
 		struct UniformBuffer
 		{
 			UniformBuffer() :Shader(ST_Null) {}

@@ -7,8 +7,10 @@
 
 #include "BearRenderInterfaceBase.h"
 #include "BearRenderObject.h"
-#include "BearRenderShaderResourceBase.h"
+#include "BearRenderShaderResourceViewBase.h"
+#include "BearRenderUnorderedAccessViewBase.h"
 #include "BearRenderTexture2DBase.h"
+#include "BearRenderTexture2DUAVBase.h"
 #include "BearRenderTargetViewBase.h"
 #include "BearRenderViewportBase.h"
 #include "BearRenderShaderBase.h"
@@ -33,6 +35,7 @@
 #include "BearDescription/BearRenderPipelineDescription.h"
 #include "BearDescription/BearRenderViewportDescription.h"
 #include "BearDescription/BearRenderSamplerDescription.h"
+#include "BearDescription/BearRenderTargetViewDescription.h"
 #include "BearRenderFactoryBase.h"
 
 #include "BearTextureUtils.h"

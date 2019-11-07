@@ -5,7 +5,7 @@ namespace BearGraphics
 }
 namespace BearRenderBase
 {
-	class BEARGRAPHICS_API BearRenderTexture2DBase :public BearRenderShaderResourceBase
+	class BEARGRAPHICS_API BearRenderTexture2DBase :public BearRenderShaderResourceViewBase
 	{
 		BEAR_CLASS_NO_COPY(BearRenderTexture2DBase)
 	public:
@@ -16,6 +16,6 @@ namespace BearRenderBase
 		virtual void  Unlock() = 0;
 		virtual void  Clear() = 0;
 		virtual ~BearRenderTexture2DBase() = 0;
-		virtual void*GetHandle() = 0;
+
 	};
 }

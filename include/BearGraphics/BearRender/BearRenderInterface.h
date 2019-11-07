@@ -15,9 +15,13 @@ namespace BearGraphics
 		static BearFactoryPointer<BearRenderBase::BearRenderUniformBufferBase> CreateUniformBuffer();
 		static BearFactoryPointer<BearRenderBase::BearRenderViewportBase> CreateViewport(const BearWindow&Window,const BearRenderViewportDescription&Description);
 
+		static BearFactoryPointer<BearRenderBase::BearRenderTargetViewBase> CreateRenderTarget(const BearRenderTargetViewDescription&Description);;
+		static BearFactoryPointer<BearRenderBase::BearRenderFrameBufferBase> CreateFrameBuffer(const BearRenderFrameBufferDescription&Description);
+
 		static BearFactoryPointer<BearRenderBase::BearRenderRootSignatureBase> CreateRootSignature(const BearRenderRootSignatureDescription&Description);
 		static BearFactoryPointer<BearRenderBase::BearRenderDescriptorHeapBase> CreateDescriptorHeap(const BearRenderDescriptorHeapDescription&Description);
 		static BearFactoryPointer<BearRenderBase::BearRenderTexture2DBase> CreateTexture2D();
+		static BearFactoryPointer<BearRenderBase::BearRenderTexture2DUAVBase> CreateTexture2DUAV();
 		static BearFactoryPointer<BearRenderBase::BearRenderSamplerStateBase> CreateSamplerState(const BearRenderSamplerDescription&Description);
 		/*RTX*/
 		static BearFactoryPointer<BearRenderBase::BearRenderShaderBase> CreateRayGenerationShader();

@@ -9,6 +9,7 @@ namespace BearRenderBase
 		virtual void Flush(bool wait) = 0;
 		virtual void Wait() = 0;
 		virtual void AttachViewportAsFrameBuffer(BearGraphics::BearFactoryPointer<BearRenderViewportBase> Viewport) = 0;
+		virtual void AttachFrameBuffer(BearGraphics::BearFactoryPointer<BearRenderFrameBufferBase> Viewport) = 0;
 		virtual void DetachFrameBuffer() = 0;
 		virtual void ClearFrameBuffer() = 0;
 		virtual void SetPipeline(BearGraphics::BearFactoryPointer<BearRenderBase::BearRenderPipelineBase> Pipeline)=0;

@@ -80,6 +80,20 @@ BearGraphics::BearFactoryPointer<BearRenderBase::BearRenderViewportBase> BearGra
 	return BearFactoryPointer<BearRenderBase::BearRenderViewportBase>(GRenderFactoty->CreateViewport(Window.GetWindowHandle(), Window.GetSize().x, Window.GetSize().y, Window.IsFullScreen(),false, Description));
 }
 
+BearGraphics::BearFactoryPointer<BearRenderBase::BearRenderTargetViewBase> BearGraphics::BearRenderInterface::CreateRenderTarget(const BearRenderTargetViewDescription & Description)
+{
+	if (Empty())
+	return BearFactoryPointer<BearRenderBase::BearRenderTargetViewBase>();
+	return BearFactoryPointer<BearRenderBase::BearRenderTargetViewBase>(GRenderFactoty->CreateTargetView(Description));
+}
+
+BearGraphics::BearFactoryPointer<BearRenderBase::BearRenderFrameBufferBase> BearGraphics::BearRenderInterface::CreateFrameBuffer(const BearRenderFrameBufferDescription & Description)
+{
+	if (Empty())
+	return BearFactoryPointer<BearRenderBase::BearRenderFrameBufferBase>();
+	return BearFactoryPointer<BearRenderBase::BearRenderFrameBufferBase>(GRenderFactoty->CreateFrameBuffer(Description));
+}
+
 
 BearGraphics::BearFactoryPointer<BearRenderBase::BearRenderRootSignatureBase> BearGraphics::BearRenderInterface::CreateRootSignature(const BearRenderRootSignatureDescription & Description)
 {
@@ -101,6 +115,13 @@ BearGraphics::BearFactoryPointer<BearRenderBase::BearRenderTexture2DBase> BearGr
 	if (Empty())
 	return BearFactoryPointer<BearRenderBase::BearRenderTexture2DBase>();
 	return BearFactoryPointer<BearRenderBase::BearRenderTexture2DBase>(GRenderFactoty->CreateTexture2D());
+}
+
+BearGraphics::BearFactoryPointer<BearRenderBase::BearRenderTexture2DUAVBase> BearGraphics::BearRenderInterface::CreateTexture2DUAV()
+{
+	if (Empty())
+	return BearFactoryPointer<BearRenderBase::BearRenderTexture2DUAVBase>();
+	return BearFactoryPointer<BearRenderBase::BearRenderTexture2DUAVBase>(GRenderFactoty->CreateTexture2DUAV());
 }
 
 BearGraphics::BearFactoryPointer<BearRenderBase::BearRenderSamplerStateBase> BearGraphics::BearRenderInterface::CreateSamplerState(const BearRenderSamplerDescription & Description)

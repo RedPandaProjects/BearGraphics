@@ -13,6 +13,12 @@ namespace BearGraphics
 		void Swap(BearRenderDescriptorHeapDescription&Right);
 		inline BearRenderDescriptorHeapDescription&operator=(const BearRenderDescriptorHeapDescription&Right) { Copy(Right); return*this; }
 		inline BearRenderDescriptorHeapDescription&operator=(BearRenderDescriptorHeapDescription&&Right) { Swap(Right); return*this; }
+		struct UAVResource
+		{
+			BearFactoryPointer<BearRenderBase::BearRenderUnorderedAccessViewBase> UAVResource;
+		}
+		UAVResources[16];
+		
 		struct UniformBuffer
 		{
 			BearFactoryPointer<BearRenderBase::BearRenderUniformBufferBase> Buffer;
@@ -21,7 +27,7 @@ namespace BearGraphics
 
 		struct UniformTexture
 		{
-			BearFactoryPointer<BearRenderBase::BearRenderShaderResourceBase> Texture;
+			BearFactoryPointer<BearRenderBase::BearRenderShaderResourceViewBase> Texture;
 		}
 		Textures[16];
 
