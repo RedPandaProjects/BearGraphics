@@ -8,6 +8,8 @@ namespace BearGraphics
 		static bool Initialize(const bchar*name);
 		static BearFactoryPointer<BearRenderBase::BearRenderContextBase> CreateContext();
 		static BearFactoryPointer<BearRenderBase::BearRenderPipelineBase> CreatePipeline(const BearRenderPipelineDescription&Descripter);
+		static BearFactoryPointer<BearRenderBase::BearRenderPipelineBase> CreatePipeline(const BearRenderRTXPipelineDescription&Descripter);
+
 		static BearFactoryPointer<BearRenderBase::BearRenderShaderBase> CreatePixelShader();
 		static BearFactoryPointer<BearRenderBase::BearRenderShaderBase> CreateVertexShader();
 		static BearFactoryPointer<BearRenderBase::BearRenderVertexBufferBase> CreateVertexBuffer();

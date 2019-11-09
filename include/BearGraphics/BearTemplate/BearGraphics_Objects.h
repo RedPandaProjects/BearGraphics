@@ -16,4 +16,5 @@ REGISTER_OBJECT(BearGraphics::GOT_VertexBuffer, BearRenderVertexBufferBase, Bear
 REGISTER_OBJECT(BearGraphics::GOT_RootSignature, BearRenderRootSignatureBase, BearRenderObject)
 REGISTER_OBJECT(BearGraphics::GOT_DescriptorHeap, BearRenderDescriptorHeapBase, BearRenderObject)
 REGISTER_OBJECT(BearGraphics::GOT_SamplerState, BearRenderSamplerStateBase, BearRenderObject)
+REGISTER_OBJECT(BearGraphics::GOT_AccelerationStructures, BearRenderAccelerationStructuresBase, BearRenderObject)
 #undef REGISTER_OBJECT

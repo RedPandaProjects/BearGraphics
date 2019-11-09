@@ -11,8 +11,9 @@ namespace BearRenderBase
 		BearRenderFactoryBase() {}
 		RHI_FACTORY_DECLARE(Interface);
 		RHI_FACTORY_DECLARE(Context);
-		RHI_FACTORY_DECLARE(Pipeline, const BearGraphics::BearRenderPipelineDescription&Descruotion);
-		RHI_FACTORY_DECLARE(Viewport, void*Handle, bsize Width, bsize Height, bool Fullscreen, bool VSync,const BearGraphics::BearRenderViewportDescription&Descruotion);
+		RHI_FACTORY_DECLARE(Pipeline, const BearGraphics::BearRenderPipelineDescription&Description);
+
+		RHI_FACTORY_DECLARE(Viewport, void*Handle, bsize Width, bsize Height, bool Fullscreen, bool VSync,const BearGraphics::BearRenderViewportDescription&Description);
 
 		RHI_FACTORY_DECLARE(Shader, BearGraphics::BearShaderType Type);
 
@@ -27,6 +28,10 @@ namespace BearRenderBase
 
 		RHI_FACTORY_DECLARE(FrameBuffer, const BearGraphics::BearRenderFrameBufferDescription&Description);
 		RHI_FACTORY_DECLARE(TargetView, const BearGraphics::BearRenderTargetViewDescription&Description);
+
+		//RTX
+		RHI_FACTORY_DECLARE(Pipeline, const BearGraphics::BearRenderRTXPipelineDescription&Description);
+		RHI_FACTORY_DECLARE(AccelerationStructures, const BearGraphics::BearRenderAccelerationStructuresDescription&Description);
 	/*	RHI_FACTORY_DECLARE(DefaultManager);
 
 		RHI_FACTORY_DECLARE(RenderTargetView, bsize w, bsize h, BearGraphics::BearRenderTargetFormat format);

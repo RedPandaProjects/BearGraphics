@@ -23,6 +23,8 @@
 #include "BearRenderRootSignatureBase.h"
 #include "BearRenderDescriptorHeapBase.h"
 #include "BearRenderSamplerStateBase.h"
+//RTX
+#include "BearRenderAccelerationStructuresBase.h"
 
 #include "BearTemplate/BearGraphicsTypeManager.h"
 #include "BearTemplate/BearGraphicsRemover.h"
@@ -36,6 +38,8 @@
 #include "BearDescription/BearRenderViewportDescription.h"
 #include "BearDescription/BearRenderSamplerDescription.h"
 #include "BearDescription/BearRenderTargetViewDescription.h"
+#include "BearDescription/BearRenderAccelerationStructuresDescription.h"
+#include "BearDescription/BearRenderRTXPipelineDescription.h"
 #include "BearRenderFactoryBase.h"
 
 #include "BearTextureUtils.h"

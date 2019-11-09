@@ -78,10 +78,14 @@ namespace BearGraphics
 		GOT_RootSignature,
 		GOT_DescriptorHeap,
 		GOT_SamplerState,
+		GOT_AccelerationStructures,
 	};
 	enum BearVertexFormat
 	{
 		VF_NONE = 0,
+		VF_R16G16_FLOAT,
+		VF_R16G16B16_FLOAT,
+		VF_R16G16B16A16_FLOAT,
 		VF_R32_FLOAT,
 		VF_R32G32_FLOAT,
 		VF_R32G32B32_FLOAT,
@@ -125,5 +129,14 @@ namespace BearGraphics
 		SF_COMPARISON_MAG_LINEAR_MIP_POINT,
 		SF_COMPARISON_MAG_MIP_LINEAR,
 		SF_COMPARISON_ANISOTROPIC,
+	};
+	//RTX
+	enum BearRTXVertexFormat
+	{
+		RTVF_NONE = 0,
+		RTVF_R16G16_FLOAT,
+		RTVF_R16G16B16A16_FLOAT,
+		RTVF_R32G32_FLOAT,
+		RTVF_R32G32B32_FLOAT,
 	};
 }

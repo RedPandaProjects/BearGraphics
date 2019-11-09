@@ -5,7 +5,7 @@ namespace BearGraphics
 	class BEARGRAPHICS_API BearRenderRootSignatureDescription
 	{
 	public:
-		BearRenderRootSignatureDescription() {}
+		BearRenderRootSignatureDescription():Local(false){}
 		BearRenderRootSignatureDescription(const BearRenderRootSignatureDescription&Right) { Copy(Right); }
 		BearRenderRootSignatureDescription(BearRenderRootSignatureDescription&&Right) { Swap(Right); }
 		inline ~BearRenderRootSignatureDescription() {}
@@ -25,18 +25,18 @@ namespace BearGraphics
 			BearShaderType Shader;
 		}
 		UniformBuffers[16];
-		struct UniformTexture
+		struct SRVResource
 		{
-			UniformTexture() :Shader(ST_Null) {}
+			SRVResource() :Shader(ST_Null) {}
 			BearShaderType Shader;
 		}
-		Textures[16];
-		struct UniformSampler
+		SRVResources[16];
+		struct Sampler
 		{
-			UniformSampler() :Shader(ST_Null) {}
+			Sampler() :Shader(ST_Null) {}
 			BearShaderType Shader;
 		}
 		Samplers[16];
-
+		bool Local;
 	};
 }

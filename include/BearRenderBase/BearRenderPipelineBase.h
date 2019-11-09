@@ -7,5 +7,6 @@ namespace BearRenderBase
 	public:
 		BearRenderPipelineBase() {}
 		virtual ~BearRenderPipelineBase() = 0;
+		virtual void Set(void*);
 	};
 }

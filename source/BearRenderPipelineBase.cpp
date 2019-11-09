@@ -3,3 +3,7 @@ BearRenderBase::BearRenderPipelineBase::~BearRenderPipelineBase()
 {
 
 }
+
+void BearRenderBase::BearRenderPipelineBase::Set(void *)
+{
+}
