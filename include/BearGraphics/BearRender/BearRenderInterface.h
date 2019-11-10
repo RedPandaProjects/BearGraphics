@@ -8,7 +8,6 @@ namespace BearGraphics
 		static bool Initialize(const bchar*name);
 		static BearFactoryPointer<BearRenderBase::BearRenderContextBase> CreateContext();
 		static BearFactoryPointer<BearRenderBase::BearRenderPipelineBase> CreatePipeline(const BearRenderPipelineDescription&Descripter);
-		static BearFactoryPointer<BearRenderBase::BearRenderPipelineBase> CreatePipeline(const BearRenderRTXPipelineDescription&Descripter);
 
 		static BearFactoryPointer<BearRenderBase::BearRenderShaderBase> CreatePixelShader();
 		static BearFactoryPointer<BearRenderBase::BearRenderShaderBase> CreateVertexShader();
@@ -29,7 +28,8 @@ namespace BearGraphics
 		static BearFactoryPointer<BearRenderBase::BearRenderShaderBase> CreateRayGenerationShader();
 		static BearFactoryPointer<BearRenderBase::BearRenderShaderBase> CreateMissShader();
 		static BearFactoryPointer<BearRenderBase::BearRenderShaderBase> CreateHitShader();
-
+		static BearFactoryPointer<BearRenderBase::BearRenderPipelineBase> CreatePipeline(const BearRenderRTXPipelineDescription&Descripter);
+		static BearFactoryPointer<BearRenderBase::BearRenderAccelerationStructuresBase> CreateAccelerationStructures(const BearRenderAccelerationStructuresDescription&Descripter);
 		static bool RTXSupport();
 		static void Destroy();
 		static bool Empty();

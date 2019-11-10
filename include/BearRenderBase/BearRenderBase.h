@@ -30,6 +30,7 @@
 #include "BearTemplate/BearGraphicsRemover.h"
 #include "BearTemplate/BearGraphicsCaster.h"
 #include "BearResource/BearFactoryPointer.h"
+#include "BearDescription/BearRenderDispatchRaysDescription.h"
 #include "BearRenderContextBase.h"
 #include "BearDescription/BearRenderDescriptorHeapDescription.h"
 #include "BearDescription/BearRenderRootSignatureDescription.h"
