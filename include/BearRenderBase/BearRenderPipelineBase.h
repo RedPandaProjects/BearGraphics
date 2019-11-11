@@ -9,4 +9,11 @@ namespace BearRenderBase
 		virtual ~BearRenderPipelineBase() = 0;
 		virtual void Set(void*) = 0;
 	};
+	class BEARGRAPHICS_API BearRenderRTXPipelineBase :public BearRenderPipelineBase
+	{
+	public:
+		virtual void*GetRayGenerationIdentifier() = 0;
+		virtual void*MissGenerationIdentifier() = 0;
+		virtual void*HitGenerationIdentifier() = 0;
+	};
 }

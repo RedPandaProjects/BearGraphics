@@ -37,11 +37,11 @@ BearGraphics::BearFactoryPointer<BearRenderBase::BearRenderPipelineBase> BearGra
 	return BearFactoryPointer<BearRenderBase::BearRenderPipelineBase>(GRenderFactoty->CreatePipeline(Descripter));
 
 }
-BearGraphics::BearFactoryPointer<BearRenderBase::BearRenderPipelineBase> BearGraphics::BearRenderInterface::CreatePipeline(const BearRenderRTXPipelineDescription & Descripter)
+BearGraphics::BearFactoryPointer<BearRenderBase::BearRenderRTXPipelineBase> BearGraphics::BearRenderInterface::CreatePipeline(const BearRenderRTXPipelineDescription & Descripter)
 {
 	if (Empty())
-		return BearFactoryPointer<BearRenderBase::BearRenderPipelineBase>();
-	return BearFactoryPointer<BearRenderBase::BearRenderPipelineBase>(GRenderFactoty->CreatePipeline(Descripter));
+		return BearFactoryPointer<BearRenderBase::BearRenderRTXPipelineBase>();
+	return BearFactoryPointer<BearRenderBase::BearRenderRTXPipelineBase>(GRenderFactoty->CreateRTXPipeline(Descripter));
 }
 BearGraphics::BearFactoryPointer<BearRenderBase::BearRenderAccelerationStructuresBase> BearGraphics::BearRenderInterface::CreateAccelerationStructures(const BearRenderAccelerationStructuresDescription & Descripter)
 {

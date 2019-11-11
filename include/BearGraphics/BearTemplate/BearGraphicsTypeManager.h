@@ -108,6 +108,11 @@ namespace BearGraphics
 			{
 				return GOT_AccelerationStructures;
 			}
+			template<>
+			static	BearGraphicsObjectType GetType<BearRenderBase::BearRenderRTXPipelineBase>()
+			{
+				return GOT_RTXPipeline;
+			}
 		private:
 
 		};

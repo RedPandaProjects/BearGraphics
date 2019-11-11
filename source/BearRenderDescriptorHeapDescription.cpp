@@ -15,6 +15,7 @@ void BearGraphics::BearRenderDescriptorHeapDescription::Copy(const BearRenderDes
 	{
 		Samplers[i].Sampler.copy(Right.Samplers[i].Sampler);
 	}
+	CS = Right.CS;
 }
 
 void BearGraphics::BearRenderDescriptorHeapDescription::Swap(BearRenderDescriptorHeapDescription & Right)

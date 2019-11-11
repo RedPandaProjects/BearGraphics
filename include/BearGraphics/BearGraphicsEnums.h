@@ -71,6 +71,7 @@ namespace BearGraphics
 		GOT_Viewport,
 		GOT_Shader,
 		GOT_Pipeline,
+		GOT_RTXPipeline,
 		GOT_Context,
 		GOT_IndexBuffer,
 		GOT_VertexBuffer,

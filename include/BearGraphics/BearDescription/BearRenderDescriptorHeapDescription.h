@@ -5,7 +5,7 @@ namespace BearGraphics
 	class BEARGRAPHICS_API BearRenderDescriptorHeapDescription
 	{
 	public:
-		BearRenderDescriptorHeapDescription() {}
+		BearRenderDescriptorHeapDescription():CS(false){}
 		BearRenderDescriptorHeapDescription(const BearRenderDescriptorHeapDescription&Right) { Copy(Right); }
 		BearRenderDescriptorHeapDescription(BearRenderDescriptorHeapDescription&&Right) { Swap(Right); }
 		inline ~BearRenderDescriptorHeapDescription() {}
@@ -36,7 +36,7 @@ namespace BearGraphics
 			BearFactoryPointer<BearRenderBase::BearRenderSamplerStateBase> Sampler;
 		}
 		Samplers[16];
-
+		bool CS;
 		BearFactoryPointer<BearRenderBase::BearRenderRootSignatureBase> RootSignature;
 	};
 }
