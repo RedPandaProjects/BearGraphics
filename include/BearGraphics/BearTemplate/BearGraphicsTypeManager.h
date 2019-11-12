@@ -103,16 +103,7 @@ namespace BearGraphics
 			{
 				return GOT_Texture2DUAV;
 			}
-			template<>
-			static	BearGraphicsObjectType GetType<BearRenderBase::BearRenderAccelerationStructuresBase>()
-			{
-				return GOT_AccelerationStructures;
-			}
-			template<>
-			static	BearGraphicsObjectType GetType<BearRenderBase::BearRenderRTXPipelineBase>()
-			{
-				return GOT_RTXPipeline;
-			}
+
 		private:
 
 		};

@@ -10,12 +10,10 @@ REGISTER_OBJECT(BearGraphics::GOT_FrameBuffer, BearRenderFrameBufferBase, BearRe
 REGISTER_OBJECT(BearGraphics::GOT_Viewport,BearRenderViewportBase,BearRenderTargetViewBase)
 REGISTER_OBJECT(BearGraphics::GOT_Shader, BearRenderShaderBase, BearRenderObject)
 REGISTER_OBJECT(BearGraphics::GOT_Pipeline, BearRenderPipelineBase, BearRenderObject)
-REGISTER_OBJECT(BearGraphics::GOT_RTXPipeline, BearRenderRTXPipelineBase, BearRenderPipelineBase)
 REGISTER_OBJECT(BearGraphics::GOT_IndexBuffer,BearRenderIndexBufferBase, BearRenderObject)
 REGISTER_OBJECT(BearGraphics::GOT_UniformBuffer, BearRenderUniformBufferBase, BearRenderObject)
 REGISTER_OBJECT(BearGraphics::GOT_VertexBuffer, BearRenderVertexBufferBase, BearRenderObject)
 REGISTER_OBJECT(BearGraphics::GOT_RootSignature, BearRenderRootSignatureBase, BearRenderObject)
 REGISTER_OBJECT(BearGraphics::GOT_DescriptorHeap, BearRenderDescriptorHeapBase, BearRenderObject)
 REGISTER_OBJECT(BearGraphics::GOT_SamplerState, BearRenderSamplerStateBase, BearRenderObject)
-REGISTER_OBJECT(BearGraphics::GOT_AccelerationStructures, BearRenderAccelerationStructuresBase, BearRenderShaderResourceViewBase)
 #undef REGISTER_OBJECT

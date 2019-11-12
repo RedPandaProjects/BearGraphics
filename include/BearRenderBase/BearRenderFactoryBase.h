@@ -30,8 +30,8 @@ namespace BearRenderBase
 		RHI_FACTORY_DECLARE(TargetView, const BearGraphics::BearRenderTargetViewDescription&Description);
 
 		//RTX
-		RHI_FACTORY_DECLARE(RTXPipeline, const BearGraphics::BearRenderRTXPipelineDescription&Description);
-		RHI_FACTORY_DECLARE(AccelerationStructures, const BearGraphics::BearRenderAccelerationStructuresDescription&Description);
+		/*RHI_FACTORY_DECLARE(RTXPipeline, const BearGraphics::BearRenderRTXPipelineDescription&Description);
+		RHI_FACTORY_DECLARE(AccelerationStructures, const BearGraphics::BearRenderAccelerationStructuresDescription&Description);*/
 	/*	RHI_FACTORY_DECLARE(DefaultManager);
 
 		RHI_FACTORY_DECLARE(RenderTargetView, bsize w, bsize h, BearGraphics::BearRenderTargetFormat format);

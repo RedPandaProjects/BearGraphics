@@ -22,6 +22,5 @@ namespace BearRenderBase
 		virtual void DrawIndex(bsize count, bsize offset = 0)=0;
 		virtual ~BearRenderContextBase() = 0;
 		//RTX
-		virtual void DispatchRays(const BearGraphics::BearRenderDispatchRaysDescription&Description) = 0;
 	};
 }
