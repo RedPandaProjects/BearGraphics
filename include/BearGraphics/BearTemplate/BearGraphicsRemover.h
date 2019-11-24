@@ -17,8 +17,9 @@ namespace BearGraphics
 				case GOT_None:
 					BearCore::bear_delete(reinterpret_cast<T*>(object));
 					break;
-#define REGISTER_OBJECT(EType,Class,Parent) case EType: BearCore::bear_delete(reinterpret_cast<BearRenderBase::Class*>(object));  break;
-#include "BearGraphics_Objects.h"
+
+#define RENDER_BEGIN_CLASS_REGISTRATION1(Name,...) case GOT_##Name: BearCore::bear_delete(reinterpret_cast<BearRHI::BearRHI##Name*>(object));  break;
+#include "BearTemplate/BearGraphicsObjectsList.h"
 				default:
 					BearCore::bear_delete(object);
 					break;

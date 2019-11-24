@@ -9,20 +9,29 @@ namespace BearGraphics
 			BEAR_CLASS_STATIC(BearCasterObject);
 		private:
 			template<typename C>
-			static inline void*CastParent( C*, BearGraphicsObjectType OutType)
+			static inline void*CastParent( C*, BearGraphicsObjectType OutType) 
 			{
 				return 0;
 			}
-#define REGISTER_OBJECT(EType,Class,Parent)  template<>		static inline void*CastParent<BearRenderBase::Class>(BearRenderBase::Class *C,BearGraphicsObjectType OutType) { BearRenderBase::Parent*P= static_cast<BearRenderBase::Parent*>(C); if(OutType==BearTypeManager::GetType<BearRenderBase::Parent>()) return reinterpret_cast<void*>(P); return CastParent<BearRenderBase::Parent>(P,OutType); }
-#include "BearGraphics_Objects.h"
+#define RENDER_BEGIN_CLASS_REGISTRATION2(Name,Parent,...) \
+			template<>\
+			static inline void*CastParent<BearRHI::BearRHI##Name>(BearRHI::BearRHI##Name *C,BearGraphicsObjectType OutType)  \
+			{ \
+				BearRHI::BearRHI##Parent*P= static_cast<BearRHI::BearRHI##Parent*>(C);\
+				if(OutType==BearTypeManager::GetType<BearRHI::BearRHI##Parent>())\
+					return reinterpret_cast<void*>(P);\
+				return CastParent<BearRHI::BearRHI##Parent>(P,OutType); \
+			}
+#include "BearTemplate/BearGraphicsObjectsList.h"
 		public:
 			static inline void*Cast(void*in, BearGraphicsObjectType InType, BearGraphicsObjectType OutType)
 			{
 				if (OutType == GOT_None)return 0;
 				switch (InType)
 				{
-#define REGISTER_OBJECT(EType,Class,Parent) case EType: return CastParent<BearRenderBase::Class>(reinterpret_cast<BearRenderBase::Class*>(in),OutType);
-#include "BearGraphics_Objects.h"
+#define RENDER_BEGIN_CLASS_REGISTRATION2(Name,Parent,...) \
+ case GOT_##Name: return CastParent<BearRHI::BearRHI##Name>(reinterpret_cast<BearRHI::BearRHI##Name*>(in),OutType);
+#include "BearTemplate/BearGraphicsObjectsList.h"
 				default:
 					return 0;
 					break;

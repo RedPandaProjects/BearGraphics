@@ -50,11 +50,24 @@ namespace BearGraphics
 		template<typename C>
 		inline BearFactoryPointer<C> cast() const
 		{
-			if (empty())return  BearFactoryPointer<C>();
-			m_data->Count++;
-			void* out = Impl::BearCasterObject::Cast(m_data->Object,m_data->ObjectType, Impl::BearTypeManager::GetType<C>());
-			BearFactoryPointer<C> result(reinterpret_cast<void*>( const_cast<Data*>(m_data)),out);
-			return result;
+			if (empty())
+			{
+				return  BearFactoryPointer<C>();
+			}
+			void* out = Impl::BearCasterObject::Cast(m_data->Object, m_data->ObjectType, Impl::BearTypeManager::GetType<C>());
+			if (out)
+			{
+				m_data->Count++;
+
+				BearFactoryPointer<C> result(reinterpret_cast<void*>(const_cast<Data*>(m_data)), out);
+				return result;
+			}
+			else
+			{
+				BearFactoryPointer<C> result;
+				return result;
+			}
+		
 		}
 		
 		inline void replace(BearFactoryPointer&right)
@@ -96,5 +109,7 @@ namespace BearGraphics
 		inline bool operator==(const BearFactoryPointer&right)const { return right.m_data == m_data; };
 		inline bool operator!=(const BearFactoryPointer&right)const { return right.m_data != m_data; };
 		inline bool operator<(const BearFactoryPointer&right)const { return right.m_data < m_data; };
+		template<class C>
+		inline C*StaticCast() { return static_cast<C*>(get_object()); }
 	};
 }
