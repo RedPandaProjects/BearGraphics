@@ -6,8 +6,8 @@
 #include "BearRHI/BearRHIFactory.h"
 #include "BearRHI/BearRenderHardwareInterface.h"
 
-BEARGRAPHICS_API BearRHI::BearRHIFactory*GFactory = 0;
-BEARGRAPHICS_API BearRHI::BearRenderHardwareInterface*GRenderHardwareInterface = 0;
+extern BEARGRAPHICS_API BearRHI::BearRHIFactory*GFactory ;
+extern BEARGRAPHICS_API BearRHI::BearRenderHardwareInterface*GRenderHardwareInterface;
 #ifndef BEAR_GRAPHICS_EXPORTS
 extern "C"
 {

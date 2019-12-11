@@ -30,14 +30,14 @@
 #if RENDER_LEVEL_0_REGISTER == 1
 RENDER_BEGIN_CLASS_REGISTRATION1_WITHOUT_FACTORY(Object)
 RENDER_END_CLASS_REGISTRATION()
-RENDER_BEGIN_CLASS_REGISTRATION2(Viewport,Object,const BearGraphics::BearRenderViewportDescription&Description)
+RENDER_BEGIN_CLASS_REGISTRATION2(Viewport,Object,constBearRenderViewportDescription&Description)
 RENDER_END_CLASS_REGISTRATION()
 #endif
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #if RENDER_LEVEL_1_REGISTER == 1
-RENDER_BEGIN_CLASS_REGISTRATION2(Context, Object)
-RENDER_METHOD_REGISTRATION(void, AttachViewportAsFrameBuffer,BearGraphics::BearFactoryPointer<BearRHIViewport> Viewport)
+RENDER_BEGIN_CLASS_REGISTRATION1(Context)
+RENDER_METHOD_REGISTRATION(void, AttachViewportAsFrameBuffer,BearFactoryPointer<BearRHIViewport> Viewport)
 RENDER_END_CLASS_REGISTRATION()
 #endif
 

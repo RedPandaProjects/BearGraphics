@@ -1,10 +1,7 @@
 #pragma once 
-namespace BearGraphics
+struct BearRenderViewportDescription
 {
-	struct BearRenderViewportDescription
-	{
-		BearRenderViewportDescription() :Clear(false) {}
-		bool Clear;
-		BearCore::BearColor ClearColor;
-	};
-}
+	BearRenderViewportDescription() :Clear(false) {}
+	bool Clear;
+	BearColor ClearColor;
+};

@@ -4,7 +4,7 @@
     <Filter Include="BearRenderBase">
       <UniqueIdentifier>{38b7c4bb-ed0e-4123-8493-8fec30c9a3ac}</UniqueIdentifier>
     </Filter>
-    <ClInclude Include="D:\GameDev\BearSDK\projects\bear\beargraphics\include\BearRenderBase\BearRenderBase.h">
+    <ClInclude Include="C:\GameDev\BearSDK\projects\bear\beargraphics\include\BearGraphics\BearRenderBase.h">
       <Filter>BearRenderBase</Filter>
     </ClInclude>
   </ItemGroup>
