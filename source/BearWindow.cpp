@@ -275,8 +275,9 @@ void BearWindow::OnEvent(HWND handle, UINT message, WPARAM wParam, LPARAM lParam
 
 		BearVector2<bsize> new_size(rect.right - rect.left, rect.bottom - rect.top);
 
-		if (wParam != SIZE_MINIMIZED && new_size != GetSize())
+		if (m_fullscreen == false &&wParam != SIZE_MINIMIZED && new_size != GetSize())
 		{
+			if(new_size.x + 8 == m_width && new_size.y + 31 == m_height ) break;
 			m_width = new_size.x;
 			m_height = new_size.y;
 			ev.Size.width = GetSizeFloat().x;
