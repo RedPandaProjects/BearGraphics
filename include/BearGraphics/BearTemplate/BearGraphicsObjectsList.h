@@ -2,14 +2,14 @@
 #define RENDER_BEGIN_CLASS_REGISTRATION1(Name,...)
 #endif 
 #ifndef  RENDER_BEGIN_CLASS_REGISTRATION2
-#define RENDER_BEGIN_CLASS_REGISTRATION2(Name,Parent,...) RENDER_BEGIN_CLASS_REGISTRATION1(Name,...)
+#define RENDER_BEGIN_CLASS_REGISTRATION2(Name,Parent,...) RENDER_BEGIN_CLASS_REGISTRATION1(Name,__VA_ARGS__)
 #endif 
 
 #ifndef  RENDER_BEGIN_CLASS_REGISTRATION1_WITHOUT_FACTORY
-#define RENDER_BEGIN_CLASS_REGISTRATION1_WITHOUT_FACTORY(Name,...) RENDER_BEGIN_CLASS_REGISTRATION1(Name,...)
+#define RENDER_BEGIN_CLASS_REGISTRATION1_WITHOUT_FACTORY(Name,...) RENDER_BEGIN_CLASS_REGISTRATION1(Name,__VA_ARGS__)
 #endif 
 #ifndef  RENDER_BEGIN_CLASS_REGISTRATION2_WITHOUT_FACTORY
-#define RENDER_BEGIN_CLASS_REGISTRATION2_WITHOUT_FACTORY(Name,Parent,...) RENDER_BEGIN_CLASS_REGISTRATION2(Name,Parent,...)
+#define RENDER_BEGIN_CLASS_REGISTRATION2_WITHOUT_FACTORY(Name,Parent,...) RENDER_BEGIN_CLASS_REGISTRATION2(Name,Parent,__VA_ARGS__)
 #endif 
 
 #ifndef  RENDER_METHOD_REGISTRATION
@@ -30,7 +30,11 @@
 #if RENDER_LEVEL_0_REGISTER == 1
 RENDER_BEGIN_CLASS_REGISTRATION1_WITHOUT_FACTORY(Object)
 RENDER_END_CLASS_REGISTRATION()
-RENDER_BEGIN_CLASS_REGISTRATION2(Viewport,Object,constBearRenderViewportDescription&Description)
+
+RENDER_BEGIN_CLASS_REGISTRATION2(Viewport,Object,void* Handle, bsize Width, bsize Height, bool Fullscreen, bool VSync, const BearRenderViewportDescription&Description)
+RENDER_METHOD_REGISTRATION(void, SetVSync,bool Sync)
+RENDER_METHOD_REGISTRATION(void, SetFullScreen,bool FullScreen)
+RENDER_METHOD_REGISTRATION(void, Resize ,bsize Width, bsize Height)
 RENDER_END_CLASS_REGISTRATION()
 #endif
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -38,9 +42,14 @@ RENDER_END_CLASS_REGISTRATION()
 #if RENDER_LEVEL_1_REGISTER == 1
 RENDER_BEGIN_CLASS_REGISTRATION1(Context)
 RENDER_METHOD_REGISTRATION(void, AttachViewportAsFrameBuffer,BearFactoryPointer<BearRHIViewport> Viewport)
+RENDER_METHOD_REGISTRATION(void, DetachFrameBuffer)
+RENDER_METHOD_REGISTRATION(void, ClearFrameBuffer)
+RENDER_METHOD_REGISTRATION(void, Flush, bool Wait)
+RENDER_METHOD_REGISTRATION(void, Wait)
 RENDER_END_CLASS_REGISTRATION()
 #endif
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #ifdef RENDER_LEVEL_0_REGISTER
 #undef RENDER_LEVEL_0_REGISTER 

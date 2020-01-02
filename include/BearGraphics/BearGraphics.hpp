@@ -39,3 +39,5 @@ namespace BearRHI
 #include "BearDescription/BearRenderViewportDescription.h"
 
 #include "BearSystem/BearWindow.h"
+
+#include "BearRenderInterface.h"

@@ -6,8 +6,6 @@ namespace BearRHI
 {
 #include "BearTemplate/BearGraphicsObjectsList.h"
 }
-BEARPROJECT_EXPORT BearRHI::BearRHIFactory*GFactory = 0;
-BEARPROJECT_EXPORT BearRHI::BearRenderHardwareInterface*GRenderHardwareInterface = 0;
 
 BearRHI::BearRenderHardwareInterface::~BearRenderHardwareInterface()
 {
