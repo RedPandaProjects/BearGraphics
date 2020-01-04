@@ -20,3 +20,8 @@ enum BearWindowEventType
 	WET_MouseLevae,
 
 };
+enum  BearShaderType
+{
+	ST_Vertex,
+	ST_Pixel,
+};
