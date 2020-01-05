@@ -40,14 +40,18 @@ RENDER_METHOD_REGISTRATION(void, LoadAsBinary, void* data, bsize size)
 RENDER_END_CLASS_REGISTRATION()
 
 
-RENDER_BEGIN_CLASS_REGISTRATION2(VertexBuffer, Object,  bsize Stride, bsize Count, bool Dynamic)
+RENDER_BEGIN_CLASS_REGISTRATION2(VertexBuffer, Object)
+RENDER_METHOD_REGISTRATION(void, Create, bsize Stride, bsize Count, bool Dynamic)
 RENDER_METHOD_REGISTRATION(void*, Lock)
 RENDER_METHOD_REGISTRATION(void, Unlock)
+RENDER_METHOD_REGISTRATION(void, Clear)
 RENDER_END_CLASS_REGISTRATION()
 
-RENDER_BEGIN_CLASS_REGISTRATION2(IndexBuffer, Object,  bsize Count, bool Dynamic)
-RENDER_METHOD_REGISTRATION(void*, Lock)
+RENDER_BEGIN_CLASS_REGISTRATION2(IndexBuffer, Object)
+RENDER_METHOD_REGISTRATION(void,Create, bsize Count, bool Dynamic)
+RENDER_METHOD_REGISTRATION(uint32*, Lock)
 RENDER_METHOD_REGISTRATION(void, Unlock)
+RENDER_METHOD_REGISTRATION(void,Clear)
 RENDER_END_CLASS_REGISTRATION()
 
 
@@ -66,6 +70,8 @@ RENDER_METHOD_REGISTRATION(void, DetachFrameBuffer)
 RENDER_METHOD_REGISTRATION(void, ClearFrameBuffer)
 RENDER_METHOD_REGISTRATION(void, Flush, bool Wait)
 RENDER_METHOD_REGISTRATION(void, Wait)
+RENDER_METHOD_REGISTRATION(void, Copy, BearFactoryPointer<BearRHIIndexBuffer> Dst, BearFactoryPointer<BearRHIIndexBuffer> Src)
+RENDER_METHOD_REGISTRATION(void, Copy, BearFactoryPointer<BearRHIVertexBuffer> Dst, BearFactoryPointer<BearRHIVertexBuffer> Src)
 RENDER_END_CLASS_REGISTRATION()
 #endif
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
