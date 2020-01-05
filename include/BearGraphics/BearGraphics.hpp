@@ -36,8 +36,8 @@ namespace BearRHI
 #include "BearTemplate/BearGraphicsFactoryOfDefinitionsForRegistration.h"
 #include "BearTemplate/BearGraphicsObjectsList.h"
 }
-#include "BearDescription/BearRenderViewportDescription.h"
-
+#include "BearDescription/BearViewportDescription.h"
+#include "BearDescription/BearPipelineDescription.h"
 #include "BearSystem/BearWindow.h"
 
 #include "BearRenderInterface.h"

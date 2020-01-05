@@ -24,7 +24,7 @@ bool BearRenderInterface::Initialize(const bchar* name)
 	return true;
 }
 
-BearFactoryPointer<BearRHI::BearRHIViewport> BearRenderInterface::CreateViewport(BearWindow& Window, const BearRenderViewportDescription& Description, bool Vsync)
+BearFactoryPointer<BearRHI::BearRHIViewport> BearRenderInterface::CreateViewport(BearWindow& Window, const BearViewportDescription& Description, bool Vsync)
 {
 	if (GFactory)return GFactory->CreateViewport(Window.GetWindowHandle(), Window.GetSize().x,Window.GetSize().y, Window.IsFullScreen(),Vsync,Description);
 	return BearFactoryPointer<BearRHI::BearRHIViewport>();
@@ -34,6 +34,36 @@ BearFactoryPointer<BearRHI::BearRHIContext> BearRenderInterface::CreateContext()
 {
 	if (GFactory)return GFactory->CreateContext();
 	return BearFactoryPointer<BearRHI::BearRHIContext>();
+}
+
+BearFactoryPointer<BearRHI::BearRHIShader> BearRenderInterface::CreatePixelShader()
+{
+	if (GFactory)return GFactory->CreateShader(ST_Pixel);
+	return BearFactoryPointer<BearRHI::BearRHIShader>();
+}
+
+BearFactoryPointer<BearRHI::BearRHIShader> BearRenderInterface::CreateVertexShader()
+{
+	if (GFactory)return GFactory->CreateShader(ST_Vertex);
+	return BearFactoryPointer<BearRHI::BearRHIShader>();
+}
+
+BearFactoryPointer<BearRHI::BearRHIVertexBuffer> BearRenderInterface::CreateVertexBuffer()
+{
+	if (GFactory)return GFactory->CreateVertexBuffer();
+	return BearFactoryPointer<BearRHI::BearRHIVertexBuffer>();
+}
+
+BearFactoryPointer<BearRHI::BearRHIIndexBuffer> BearRenderInterface::CreateIndexBuffer()
+{
+	if (GFactory)return GFactory->CreateIndexBuffer();
+	return BearFactoryPointer<BearRHI::BearRHIIndexBuffer>();
+}
+
+BearFactoryPointer<BearRHI::BearRHIPipeline> BearRenderInterface::CreatePipeline(const BearPipelineDescription& Descriptor)
+{
+	if (GFactory)return GFactory->CreatePipeline(Descriptor);
+	return BearFactoryPointer<BearRHI::BearRHIPipeline>();
 }
 
 

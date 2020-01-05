@@ -48,23 +48,32 @@ RENDER_METHOD_REGISTRATION(void, Clear)
 RENDER_END_CLASS_REGISTRATION()
 
 RENDER_BEGIN_CLASS_REGISTRATION2(IndexBuffer, Object)
-RENDER_METHOD_REGISTRATION(void,Create, bsize Count, bool Dynamic)
+RENDER_METHOD_REGISTRATION(void, Create, bsize Count, bool Dynamic)
 RENDER_METHOD_REGISTRATION(uint32*, Lock)
 RENDER_METHOD_REGISTRATION(void, Unlock)
-RENDER_METHOD_REGISTRATION(void,Clear)
+RENDER_METHOD_REGISTRATION(void, Clear)
 RENDER_END_CLASS_REGISTRATION()
 
+RENDER_BEGIN_CLASS_REGISTRATION2(Pipeline, Object, const BearPipelineDescription& Description)
+RENDER_END_CLASS_REGISTRATION()
 
-RENDER_BEGIN_CLASS_REGISTRATION2(Viewport,Object,void* Handle, bsize Width, bsize Height, bool Fullscreen, bool VSync, const BearRenderViewportDescription&Description)
-RENDER_METHOD_REGISTRATION(void, SetVSync,bool Sync)
-RENDER_METHOD_REGISTRATION(void, SetFullScreen,bool FullScreen)
-RENDER_METHOD_REGISTRATION(void, Resize ,bsize Width, bsize Height)
+RENDER_BEGIN_CLASS_REGISTRATION2(Viewport, Object, void* Handle, bsize Width, bsize Height, bool Fullscreen, bool VSync, const BearViewportDescription& Description)
+RENDER_METHOD_REGISTRATION(void, SetVSync, bool Sync)
+RENDER_METHOD_REGISTRATION(void, SetFullScreen, bool FullScreen)
+RENDER_METHOD_REGISTRATION(void, Resize, bsize Width, bsize Height)
 RENDER_END_CLASS_REGISTRATION()
 #endif
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #if RENDER_LEVEL_1_REGISTER == 1
 RENDER_BEGIN_CLASS_REGISTRATION1(Context)
+RENDER_METHOD_REGISTRATION(void, SetPipeline, BearFactoryPointer<BearRHIPipeline> Pipeline)
+RENDER_METHOD_REGISTRATION(void, SetVertexBuffer,BearFactoryPointer<BearRHIVertexBuffer> Buffer) 
+RENDER_METHOD_REGISTRATION(void, SetIndexBuffer,BearFactoryPointer<BearRHIIndexBuffer> buffer) 
+RENDER_METHOD_REGISTRATION(void, SetViewport,float x, float y, float width, float height, float minDepth = 0.f, float maxDepth = 1.f) 
+RENDER_METHOD_REGISTRATION(void, SetScissor,bool Enable, float x, float y, float x1, float y1) 
+RENDER_METHOD_REGISTRATION(void, Draw,bsize count, bsize offset = 0)
+RENDER_METHOD_REGISTRATION(void, DrawIndex,bsize count, bsize offset_index = 0, bsize offset_vertex  = 0)
 RENDER_METHOD_REGISTRATION(void, AttachViewportAsFrameBuffer,BearFactoryPointer<BearRHIViewport> Viewport)
 RENDER_METHOD_REGISTRATION(void, DetachFrameBuffer)
 RENDER_METHOD_REGISTRATION(void, ClearFrameBuffer)
