@@ -10,7 +10,11 @@ public:
 	static BearFactoryPointer<BearRHI::BearRHIShader> CreateVertexShader();
 	static BearFactoryPointer < BearRHI::BearRHIVertexBuffer> CreateVertexBuffer();
 	static BearFactoryPointer < BearRHI::BearRHIIndexBuffer> CreateIndexBuffer();
+
 	static BearFactoryPointer < BearRHI::BearRHIPipeline> CreatePipeline(const BearPipelineDescription& Descriptor);
+	static BearFactoryPointer < BearRHI::BearRHIRootSignature> CreateRootSignature(const BearRootSignatureDescription& Descriptor);
+	static BearFactoryPointer < BearRHI::BearRHIDescriptorHeap> CreateDescriptorHeap(const BearDescriptorHeapDescription& Descriptor);
+	static BearFactoryPointer < BearRHI::BearRHIUniformBuffer> CreateUniformBuffer();
 	static bool RTXSupport();
 	static void Destroy();
 	static bool Empty();

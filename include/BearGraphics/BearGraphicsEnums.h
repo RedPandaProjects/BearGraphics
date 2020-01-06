@@ -22,6 +22,7 @@ enum BearWindowEventType
 };
 enum  BearShaderType
 {
+	ST_Null,
 	ST_Vertex,
 	ST_Pixel,
 };

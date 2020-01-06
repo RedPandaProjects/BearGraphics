@@ -38,6 +38,8 @@ namespace BearRHI
 }
 #include "BearDescription/BearViewportDescription.h"
 #include "BearDescription/BearPipelineDescription.h"
+#include "BearDescription/BearRootSignatureDescription.h"
+#include "BearDescription/BearDescriptorHeapDescription.h"
 #include "BearSystem/BearWindow.h"
 
 #include "BearRenderInterface.h"

@@ -47,5 +47,5 @@ public:
 			
 	} RenderTargets;
 	BearTopologyType TopologyType;
-		
+	BearFactoryPointer<BearRHI::BearRHIRootSignature> RootSignature;
 };

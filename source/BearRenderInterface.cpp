@@ -3,6 +3,7 @@
 #include "BearRHI/BearRenderHardwareInterface.h"
 BEARGRAPHICS_API BearRHI::BearRHIFactory* GFactory=0;
 BEARGRAPHICS_API BearRHI::BearRenderHardwareInterface* GRenderHardwareInterface=0;
+
 static BearStringConteniar LProjectName;
 bool BearRenderInterface::Initialize(const bchar* name)
 {
@@ -64,6 +65,24 @@ BearFactoryPointer<BearRHI::BearRHIPipeline> BearRenderInterface::CreatePipeline
 {
 	if (GFactory)return GFactory->CreatePipeline(Descriptor);
 	return BearFactoryPointer<BearRHI::BearRHIPipeline>();
+}
+
+BearFactoryPointer<BearRHI::BearRHIRootSignature> BearRenderInterface::CreateRootSignature(const BearRootSignatureDescription& Descriptor)
+{
+	if (GFactory)return GFactory->CreateRootSignature(Descriptor);
+	return BearFactoryPointer<BearRHI::BearRHIRootSignature>();
+}
+
+BearFactoryPointer<BearRHI::BearRHIDescriptorHeap> BearRenderInterface::CreateDescriptorHeap(const BearDescriptorHeapDescription& Descriptor)
+{
+	if (GFactory)return GFactory->CreateDescriptorHeap(Descriptor);
+	return BearFactoryPointer<BearRHI::BearRHIDescriptorHeap>();
+}
+
+BearFactoryPointer<BearRHI::BearRHIUniformBuffer> BearRenderInterface::CreateUniformBuffer()
+{
+	if (GFactory)return GFactory->CreateUniformBuffer();
+	return BearFactoryPointer<BearRHI::BearRHIUniformBuffer>();
 }
 
 

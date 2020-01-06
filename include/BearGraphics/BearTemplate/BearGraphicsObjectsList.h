@@ -54,7 +54,20 @@ RENDER_METHOD_REGISTRATION(void, Unlock)
 RENDER_METHOD_REGISTRATION(void, Clear)
 RENDER_END_CLASS_REGISTRATION()
 
+RENDER_BEGIN_CLASS_REGISTRATION2(UniformBuffer, Object)
+RENDER_METHOD_REGISTRATION(void, Create, bsize Size, bool Dynamic)
+RENDER_METHOD_REGISTRATION(void*, Lock)
+RENDER_METHOD_REGISTRATION(void, Unlock)
+RENDER_METHOD_REGISTRATION(void, Clear)
+RENDER_END_CLASS_REGISTRATION()
+
 RENDER_BEGIN_CLASS_REGISTRATION2(Pipeline, Object, const BearPipelineDescription& Description)
+RENDER_END_CLASS_REGISTRATION()
+
+RENDER_BEGIN_CLASS_REGISTRATION2(RootSignature, Object,const BearRootSignatureDescription& Description)
+RENDER_END_CLASS_REGISTRATION()
+
+RENDER_BEGIN_CLASS_REGISTRATION2(DescriptorHeap, Object, const BearDescriptorHeapDescription& Description)
 RENDER_END_CLASS_REGISTRATION()
 
 RENDER_BEGIN_CLASS_REGISTRATION2(Viewport, Object, void* Handle, bsize Width, bsize Height, bool Fullscreen, bool VSync, const BearViewportDescription& Description)
@@ -67,6 +80,7 @@ RENDER_END_CLASS_REGISTRATION()
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #if RENDER_LEVEL_1_REGISTER == 1
 RENDER_BEGIN_CLASS_REGISTRATION1(Context)
+RENDER_METHOD_REGISTRATION(void, SetDescriptorHeap, BearFactoryPointer<BearRHIDescriptorHeap> DescriptorHeap  )
 RENDER_METHOD_REGISTRATION(void, SetPipeline, BearFactoryPointer<BearRHIPipeline> Pipeline)
 RENDER_METHOD_REGISTRATION(void, SetVertexBuffer,BearFactoryPointer<BearRHIVertexBuffer> Buffer) 
 RENDER_METHOD_REGISTRATION(void, SetIndexBuffer,BearFactoryPointer<BearRHIIndexBuffer> buffer) 
@@ -81,6 +95,7 @@ RENDER_METHOD_REGISTRATION(void, Flush, bool Wait)
 RENDER_METHOD_REGISTRATION(void, Wait)
 RENDER_METHOD_REGISTRATION(void, Copy, BearFactoryPointer<BearRHIIndexBuffer> Dst, BearFactoryPointer<BearRHIIndexBuffer> Src)
 RENDER_METHOD_REGISTRATION(void, Copy, BearFactoryPointer<BearRHIVertexBuffer> Dst, BearFactoryPointer<BearRHIVertexBuffer> Src)
+RENDER_METHOD_REGISTRATION(void, Copy, BearFactoryPointer<BearRHIUniformBuffer> Dst, BearFactoryPointer<BearRHIUniformBuffer> Src)
 RENDER_END_CLASS_REGISTRATION()
 #endif
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
