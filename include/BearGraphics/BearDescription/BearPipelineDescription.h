@@ -2,8 +2,8 @@
 
 struct BearInputLayoutElement
 {
-	BearInputLayoutElement(const char*Name, BearVertexFormat Type, bsize Offset, bool IsInstance = false) :Name(Name), Type(Type), Offset(Offset), IsInstance(IsInstance), SemanticIndex(0) {}
-	BearInputLayoutElement() :Type(VF_NONE), Offset(0), IsInstance(0), SemanticIndex(0) {}
+	BearInputLayoutElement(const char*Name, BearVertexFormat Type, bsize Offset, bool IsInstance = false) :Type(Type),Name(Name), Offset(Offset), SemanticIndex(0), IsInstance(IsInstance) {}
+	BearInputLayoutElement() :Type(VF_NONE), Offset(0), SemanticIndex(0) ,IsInstance(0){}
 	BearVertexFormat Type;
 	BearStringConteniarAnsi Name;
 	bsize Offset;

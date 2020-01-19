@@ -6,7 +6,7 @@ class BearFactoryPointer
 	struct Data
 	{
 		Data():Object(0), Count(1){}
-		Data(void *object, BearGraphicsObjectType objectType):Object(object), Count(1), ObjectType(objectType){}
+		Data(void *object, BearGraphicsObjectType objectType):Object(object), ObjectType(objectType), Count(1){}
 		~Data() { Impl::BearRemoverObject::Remove<T>(Object, ObjectType); Object = 0; }
 		void *Object;
 		BearGraphicsObjectType          ObjectType;
@@ -99,7 +99,7 @@ public:
 		bear_swap(m_CurObject, right.m_CurObject);
 	}
 	template<class C>
-	BearFactoryPointer(const BearFactoryPointer<C>& right) :m_data(0) { swap(right.template  cast<T>()); ; }
+	BearFactoryPointer(const BearFactoryPointer<C>& right) :m_data(0) { auto temp = right.template  cast<T>(); swap(temp); ; }
 	BearFactoryPointer(const BearFactoryPointer&right) :m_data(0) { copy(right); }
 	BearFactoryPointer(BearFactoryPointer&&right) :m_data(0) { swap(right); }
 	BearFactoryPointer&operator=(const BearFactoryPointer&right) { copy(right); return*this; }

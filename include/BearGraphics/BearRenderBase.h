@@ -14,3 +14,4 @@ extern "C"
 	BEARPROJECT_EXPORT bool RHIInitialize();
 }
 #endif
+#include "BearRHI/BearTextureUtils.h"

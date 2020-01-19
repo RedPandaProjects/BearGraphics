@@ -85,6 +85,18 @@ BearFactoryPointer<BearRHI::BearRHIUniformBuffer> BearRenderInterface::CreateUni
 	return BearFactoryPointer<BearRHI::BearRHIUniformBuffer>();
 }
 
+BearFactoryPointer<BearRHI::BearRHITexture2D> BearRenderInterface::CreateTexture2D(bsize Width, bsize Height, bsize Mips, bsize Count, BearTexturePixelFormat PixelFormat, const void* data)
+{
+	if (GFactory)return GFactory->CreateTexture2D(Width, Height, Mips, Count, PixelFormat,const_cast<void*>( data));
+	return BearFactoryPointer<BearRHI::BearRHITexture2D>();
+}
+
+BearFactoryPointer<BearRHI::BearRHISampler> BearRenderInterface::CreateSampler()
+{
+	if (GFactory)return GFactory->CreateSampler();
+	return BearFactoryPointer<BearRHI::BearRHISampler>();
+}
+
 
 bool BearRenderInterface::RTXSupport()
 {

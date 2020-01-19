@@ -14,6 +14,8 @@ public:
 	inline BearDescriptorHeapDescription& operator=(BearDescriptorHeapDescription&& Right) { Swap(Right); return*this; }
 
 	BearFactoryPointer<BearRHI::BearRHIUniformBuffer> UniformBuffers[16];
+	BearFactoryPointer<BearRHI::BearRHIShaderResource> SRVResurces[16];
+	BearFactoryPointer<BearRHI::BearRHISampler> Samplers[16];
 	BearFactoryPointer<BearRHI::BearRHIRootSignature> RootSignature;
 
 };

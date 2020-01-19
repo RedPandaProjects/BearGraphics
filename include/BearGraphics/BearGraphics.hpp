@@ -28,7 +28,7 @@ namespace BearRHI
 #include "BearTemplate/BearGraphicsRemover.h"
 #include "BearTemplate/BearGraphicsCaster.h"
 #include "BearTemplate/BearFactoryPointer.h"
-
+#include "BearResource/BearImage.h"
 
 #define RENDER_LEVEL_0_REGISTER 0
 namespace BearRHI

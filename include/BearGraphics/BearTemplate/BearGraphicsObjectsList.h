@@ -64,16 +64,26 @@ RENDER_END_CLASS_REGISTRATION()
 RENDER_BEGIN_CLASS_REGISTRATION2(Pipeline, Object, const BearPipelineDescription& Description)
 RENDER_END_CLASS_REGISTRATION()
 
-RENDER_BEGIN_CLASS_REGISTRATION2(RootSignature, Object,const BearRootSignatureDescription& Description)
+RENDER_BEGIN_CLASS_REGISTRATION2(RootSignature, Object, const BearRootSignatureDescription& Description)
 RENDER_END_CLASS_REGISTRATION()
 
 RENDER_BEGIN_CLASS_REGISTRATION2(DescriptorHeap, Object, const BearDescriptorHeapDescription& Description)
+RENDER_END_CLASS_REGISTRATION()
+
+RENDER_BEGIN_CLASS_REGISTRATION2(Sampler, Object)
 RENDER_END_CLASS_REGISTRATION()
 
 RENDER_BEGIN_CLASS_REGISTRATION2(Viewport, Object, void* Handle, bsize Width, bsize Height, bool Fullscreen, bool VSync, const BearViewportDescription& Description)
 RENDER_METHOD_REGISTRATION(void, SetVSync, bool Sync)
 RENDER_METHOD_REGISTRATION(void, SetFullScreen, bool FullScreen)
 RENDER_METHOD_REGISTRATION(void, Resize, bsize Width, bsize Height)
+RENDER_END_CLASS_REGISTRATION()
+
+
+RENDER_BEGIN_CLASS_REGISTRATION1_WITHOUT_FACTORY(ShaderResource, Object)
+RENDER_END_CLASS_REGISTRATION()
+
+RENDER_BEGIN_CLASS_REGISTRATION2(Texture2D, ShaderResource, bsize Width, bsize Height, bsize Mips, bsize Count, BearTexturePixelFormat PixelFormat, void* data = 0)
 RENDER_END_CLASS_REGISTRATION()
 #endif
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////

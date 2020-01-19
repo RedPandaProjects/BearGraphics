@@ -15,6 +15,8 @@ public:
 	static BearFactoryPointer < BearRHI::BearRHIRootSignature> CreateRootSignature(const BearRootSignatureDescription& Descriptor);
 	static BearFactoryPointer < BearRHI::BearRHIDescriptorHeap> CreateDescriptorHeap(const BearDescriptorHeapDescription& Descriptor);
 	static BearFactoryPointer < BearRHI::BearRHIUniformBuffer> CreateUniformBuffer();
+	static BearFactoryPointer < BearRHI::BearRHITexture2D> CreateTexture2D(bsize Width, bsize Height, bsize Mips, bsize Count, BearTexturePixelFormat PixelFormat,const void* data);
+	static BearFactoryPointer < BearRHI::BearRHISampler> CreateSampler();
 	static bool RTXSupport();
 	static void Destroy();
 	static bool Empty();
