@@ -1,9 +1,10 @@
 #include "BearGraphics.hpp"
 #include "BearRHI/BearRHIFactory.h"
 #include "BearRHI/BearRenderHardwareInterface.h"
+#include "BearRHI/BearRHIStats.h"
 BEARGRAPHICS_API BearRHI::BearRHIFactory* GFactory=0;
 BEARGRAPHICS_API BearRHI::BearRenderHardwareInterface* GRenderHardwareInterface=0;
-
+BEARGRAPHICS_API BearRHI::BearRHIStats* GStats = 0;
 static BearStringConteniar LProjectName;
 bool BearRenderInterface::Initialize(const bchar* name)
 {
@@ -20,6 +21,7 @@ bool BearRenderInterface::Initialize(const bchar* name)
 		Destroy();
 		return false;
 	}
+	BEAR_ASSERT(GStats);
 	BearLog::Printf(TEXT("BearGraphics build %s"), *BearLog::GetBuild(2016, 11, 27));
 	LProjectName = name;
 	return true;
@@ -85,16 +87,40 @@ BearFactoryPointer<BearRHI::BearRHIUniformBuffer> BearRenderInterface::CreateUni
 	return BearFactoryPointer<BearRHI::BearRHIUniformBuffer>();
 }
 
-BearFactoryPointer<BearRHI::BearRHITexture2D> BearRenderInterface::CreateTexture2D(bsize Width, bsize Height, bsize Mips, bsize Count, BearTexturePixelFormat PixelFormat, const void* data)
+BearFactoryPointer<BearRHI::BearRHITexture2D> BearRenderInterface::CreateTexture2D(bsize Width, bsize Height, bsize Mips, bsize Count, BearTexturePixelFormat PixelFormat, BearTextureUsage TypeUsage , const void* data)
 {
-	if (GFactory)return GFactory->CreateTexture2D(Width, Height, Mips, Count, PixelFormat,const_cast<void*>( data));
+	if (GFactory)return GFactory->CreateTexture2D(Width, Height, Mips, Count, PixelFormat, TypeUsage,const_cast<void*>( data));
 	return BearFactoryPointer<BearRHI::BearRHITexture2D>();
 }
 
-BearFactoryPointer<BearRHI::BearRHISampler> BearRenderInterface::CreateSampler()
+BearFactoryPointer<BearRHI::BearRHISampler> BearRenderInterface::CreateSampler(const BearSamplerDescription& Description)
 {
-	if (GFactory)return GFactory->CreateSampler();
+	if (GFactory)return GFactory->CreateSampler(Description);
 	return BearFactoryPointer<BearRHI::BearRHISampler>();
+}
+
+BearFactoryPointer<BearRHI::BearRHITexture2D> BearRenderInterface::CreateTexture2D(bsize Width, bsize Height, BearRenderTargetFormat RTF)
+{
+	if (GFactory)return GFactory->CreateTexture2D(Width, Height, RTF);
+	return BearFactoryPointer<BearRHI::BearRHITexture2D>();
+}
+
+BearFactoryPointer<BearRHI::BearRHITexture2D> BearRenderInterface::CreateTexture2D(bsize Width, bsize Height, BearDepthStencilFormat DSF)
+{
+	if (GFactory)return GFactory->CreateTexture2D(Width, Height, DSF);
+	return BearFactoryPointer<BearRHI::BearRHITexture2D>();
+}
+
+BearFactoryPointer<BearRHI::BearRHIRenderPass> BearRenderInterface::CreateRenderPass(const BearRenderPassDescription& Description)
+{
+	if (GFactory)return GFactory->CreateRenderPass(Description);
+	return BearFactoryPointer<BearRHI::BearRHIRenderPass>();
+}
+
+BearFactoryPointer<BearRHI::BearRHIFrameBuffer> BearRenderInterface::CreateFrameBuffer(const BearFrameBufferDescription& Description)
+{
+	if (GFactory)return GFactory->CreateFrameBuffer(Description);
+	return BearFactoryPointer<BearRHI::BearRHIFrameBuffer>();
 }
 
 
@@ -105,8 +131,11 @@ bool BearRenderInterface::RTXSupport()
 
 void BearRenderInterface::Destroy()
 {
+	BearRenderStats::Cheak();
 	if (LProjectName.size() == 0)return;
 	if (GFactory)bear_delete(GFactory);
+	if (GStats) bear_delete(GStats);
+	GStats = 0;
 	if (GRenderHardwareInterface)bear_delete(GRenderHardwareInterface);
 	GRenderHardwareInterface = nullptr;
 	GFactory = nullptr;

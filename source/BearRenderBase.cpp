@@ -15,3 +15,7 @@ BearRHI::BearRHIFactory::~BearRHIFactory()
 {
 
 }
+BearRHI::BearRHIStats::~BearRHIStats()
+{
+
+}

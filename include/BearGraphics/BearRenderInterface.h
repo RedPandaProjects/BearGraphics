@@ -15,8 +15,13 @@ public:
 	static BearFactoryPointer < BearRHI::BearRHIRootSignature> CreateRootSignature(const BearRootSignatureDescription& Descriptor);
 	static BearFactoryPointer < BearRHI::BearRHIDescriptorHeap> CreateDescriptorHeap(const BearDescriptorHeapDescription& Descriptor);
 	static BearFactoryPointer < BearRHI::BearRHIUniformBuffer> CreateUniformBuffer();
-	static BearFactoryPointer < BearRHI::BearRHITexture2D> CreateTexture2D(bsize Width, bsize Height, bsize Mips, bsize Count, BearTexturePixelFormat PixelFormat,const void* data);
-	static BearFactoryPointer < BearRHI::BearRHISampler> CreateSampler();
+	static BearFactoryPointer < BearRHI::BearRHITexture2D> CreateTexture2D(bsize Width, bsize Height, bsize Mips, bsize Count, BearTexturePixelFormat PixelFormat, BearTextureUsage TypeUsage = TU_STATIC,const void* data=0);
+	static BearFactoryPointer < BearRHI::BearRHISampler> CreateSampler(const BearSamplerDescription& Description);
+
+	static BearFactoryPointer < BearRHI::BearRHITexture2D> CreateTexture2D(bsize Width, bsize Height, BearRenderTargetFormat RTF);
+	static BearFactoryPointer < BearRHI::BearRHITexture2D> CreateTexture2D(bsize Width, bsize Height, BearDepthStencilFormat DSF);
+	static BearFactoryPointer < BearRHI::BearRHIRenderPass> CreateRenderPass(const BearRenderPassDescription& Description);
+	static BearFactoryPointer < BearRHI::BearRHIFrameBuffer> CreateFrameBuffer(const BearFrameBufferDescription& Description);
 	static bool RTXSupport();
 	static void Destroy();
 	static bool Empty();
