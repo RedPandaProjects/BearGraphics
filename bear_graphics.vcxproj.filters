@@ -1,63 +1,120 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="..\..\..\projects\bear\beargraphics\include\BearGraphics\BearRenderBase.h" />
-    <ClInclude Include="..\..\..\projects\bear\beargraphics\include\BearGraphics\BearRenderInterface.h" />
-    <ClInclude Include="..\..\..\projects\bear\beargraphics\include\BearGraphics\BearGraphics.hpp" />
-    <ClInclude Include="..\..\..\projects\bear\beargraphics\include\BearGraphics\BearGraphicsEnums.h" />
-    <ClInclude Include="..\..\..\projects\bear\beargraphics\include\BearGraphics\BearDescription\BearRenderViewportDescription.h">
+    <ClInclude Include="..\..\..\projects\bear_bundle\beargraphics\include\BearGraphics\BearGraphics.hpp" />
+    <ClInclude Include="..\..\..\projects\bear_bundle\beargraphics\include\BearGraphics\BearGraphicsEnums.h" />
+    <ClInclude Include="..\..\..\projects\bear_bundle\beargraphics\include\BearGraphics\BearRenderBase.h" />
+    <ClInclude Include="..\..\..\projects\bear_bundle\beargraphics\include\BearGraphics\BearRenderInterface.h" />
+    <ClInclude Include="..\..\..\projects\bear_bundle\beargraphics\include\BearGraphics\BearRenderStats.h" />
+    <ClInclude Include="..\..\..\projects\bear_bundle\beargraphics\include\BearGraphics\BearDescription\BearViewportDescription.h">
       <Filter>BearDescription</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\projects\bear\beargraphics\include\BearGraphics\BearRHI\BearRenderHardwareInterface.h">
+    <ClInclude Include="..\..\..\projects\bear_bundle\beargraphics\include\BearGraphics\BearDescription\BearDescriptorHeapDescription.h">
+      <Filter>BearDescription</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\projects\bear_bundle\beargraphics\include\BearGraphics\BearDescription\BearPipelineDescription.h">
+      <Filter>BearDescription</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\projects\bear_bundle\beargraphics\include\BearGraphics\BearDescription\BearRootSignatureDescription.h">
+      <Filter>BearDescription</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\projects\bear_bundle\beargraphics\include\BearGraphics\BearResource\BearImage.h">
+      <Filter>BearResource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\projects\bear_bundle\beargraphics\include\BearGraphics\BearRHI\BearRenderHardwareInterface.h">
       <Filter>BearRHI</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\projects\bear\beargraphics\include\BearGraphics\BearRHI\BearRHIFactory.h">
+    <ClInclude Include="..\..\..\projects\bear_bundle\beargraphics\include\BearGraphics\BearRHI\BearRHIFactory.h">
       <Filter>BearRHI</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\projects\bear\beargraphics\include\BearGraphics\BearSystem\BearWindow.h">
+    <ClInclude Include="..\..\..\projects\bear_bundle\beargraphics\include\BearGraphics\BearRHI\BearRHIStats.h">
+      <Filter>BearRHI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\projects\bear_bundle\beargraphics\include\BearGraphics\BearRHI\BearTextureUtils.h">
+      <Filter>BearRHI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\projects\bear_bundle\beargraphics\include\BearGraphics\BearSystem\BearWindow.h">
       <Filter>BearSystem</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\projects\bear\beargraphics\include\BearGraphics\BearTemplate\BearFactoryPointer.h">
+    <ClInclude Include="..\..\..\projects\bear_bundle\beargraphics\source\dds.h">
+      <Filter>BearResource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\projects\bear_bundle\beargraphics\source\DXGIFormat.h">
+      <Filter>BearResource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\projects\bear_bundle\beargraphics\include\BearGraphics\BearTemplate\BearFactoryPointer.h">
       <Filter>BearTemplate</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\projects\bear\beargraphics\include\BearGraphics\BearTemplate\BearGraphicsCaster.h">
+    <ClInclude Include="..\..\..\projects\bear_bundle\beargraphics\include\BearGraphics\BearTemplate\BearGraphicsCaster.h">
       <Filter>BearTemplate</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\projects\bear\beargraphics\include\BearGraphics\BearTemplate\BearGraphicsFactoryOfDefinitionsForRegistration.h">
+    <ClInclude Include="..\..\..\projects\bear_bundle\beargraphics\include\BearGraphics\BearTemplate\BearGraphicsFactoryOfDefinitionsForRegistration.h">
       <Filter>BearTemplate</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\projects\bear\beargraphics\include\BearGraphics\BearTemplate\BearGraphicsObjectsList.h">
+    <ClInclude Include="..\..\..\projects\bear_bundle\beargraphics\include\BearGraphics\BearTemplate\BearGraphicsObjectsList.h">
       <Filter>BearTemplate</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\projects\bear\beargraphics\include\BearGraphics\BearTemplate\BearGraphicsRemover.h">
+    <ClInclude Include="..\..\..\projects\bear_bundle\beargraphics\include\BearGraphics\BearTemplate\BearGraphicsRemover.h">
       <Filter>BearTemplate</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\projects\bear\beargraphics\include\BearGraphics\BearTemplate\BearGraphicsTypeManager.h">
+    <ClInclude Include="..\..\..\projects\bear_bundle\beargraphics\include\BearGraphics\BearTemplate\BearGraphicsTypeManager.h">
       <Filter>BearTemplate</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\projects\bear_bundle\beargraphics\include\BearGraphics\BearDescription\BearSamplerDescription.h">
+      <Filter>BearDescription</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\projects\bear_bundle\beargraphics\include\BearGraphics\BearDescription\BearFrameBufferDescription.h">
+      <Filter>BearDescription</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\projects\bear_bundle\beargraphics\include\BearGraphics\BearDescription\BearRenderPassDescription.h">
+      <Filter>BearDescription</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="BearDescription">
-      <UniqueIdentifier>{865c24da-b1b6-42c4-8a82-2c4ee2e7a596}</UniqueIdentifier>
+      <UniqueIdentifier>{f959e6d6-7fc2-48cb-a442-091fdeed0461}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BearResource">
+      <UniqueIdentifier>{2d7c96fa-9f57-4394-abfd-d5bddb0ac469}</UniqueIdentifier>
     </Filter>
     <Filter Include="BearRHI">
-      <UniqueIdentifier>{fb43e5e4-7456-40eb-8368-734996e265ac}</UniqueIdentifier>
+      <UniqueIdentifier>{f99c8668-b2bf-4af8-994d-a8e37fd0ba6d}</UniqueIdentifier>
     </Filter>
     <Filter Include="BearSystem">
-      <UniqueIdentifier>{3f206d3c-6326-426f-8979-b2f53b733390}</UniqueIdentifier>
+      <UniqueIdentifier>{76c16265-99ce-4cad-9f05-6da5f301488e}</UniqueIdentifier>
     </Filter>
     <Filter Include="BearTemplate">
-      <UniqueIdentifier>{6b289cf6-9bed-4f97-b6b4-48972e80bf5c}</UniqueIdentifier>
+      <UniqueIdentifier>{9b009240-de58-49e0-9481-09d22c67527e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\projects\bear\beargraphics\source\BearRenderInterface.cpp" />
-    <ClCompile Include="..\..\..\projects\bear\beargraphics\source\BearRenderBase.cpp">
-      <Filter>BearRHI</Filter>
+    <ClCompile Include="..\..\..\projects\bear_bundle\beargraphics\source\BearDescriptorHeapDescription.cpp">
+      <Filter>BearDescription</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\projects\bear\beargraphics\source\BearWindow.cpp">
+    <ClCompile Include="..\..\..\projects\bear_bundle\beargraphics\source\BearPipelineDescription.cpp">
+      <Filter>BearDescription</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\projects\bear_bundle\beargraphics\source\BearGraphics.PCH.cpp" />
+    <ClCompile Include="..\..\..\projects\bear_bundle\beargraphics\source\BearImage3.cpp">
+      <Filter>BearResource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\projects\bear_bundle\beargraphics\source\BearImage1.cpp">
+      <Filter>BearResource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\projects\bear_bundle\beargraphics\source\BearImage2.cpp">
+      <Filter>BearResource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\projects\bear_bundle\beargraphics\source\BearWindow.cpp">
       <Filter>BearSystem</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\projects\bear\beargraphics\source\BearGraphics.PCH.cpp" />
+    <ClCompile Include="..\..\..\projects\bear_bundle\beargraphics\source\BearRenderInterface.cpp" />
+    <ClCompile Include="..\..\..\projects\bear_bundle\beargraphics\source\BearRenderStats.cpp" />
+    <ClCompile Include="..\..\..\projects\bear_bundle\beargraphics\source\BearRenderBase.cpp" />
+    <ClCompile Include="..\..\..\projects\bear_bundle\beargraphics\source\BearTextureUtils.cpp">
+      <Filter>BearRHI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\projects\bear_bundle\beargraphics\source\BearFrameBufferDescription.cpp">
+      <Filter>BearDescription</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
