@@ -46,7 +46,7 @@ RENDER_END_CLASS_REGISTRATION()
 
 
 RENDER_BEGIN_CLASS_REGISTRATION2(VertexBuffer, Object)
-RENDER_METHOD_REGISTRATION(void, Create, bsize Stride, bsize Count, bool Dynamic)
+RENDER_METHOD_REGISTRATION(void, Create, bsize Stride, bsize Count, bool Dynamic, void* data=0)
 RENDER_METHOD_REGISTRATION(void*, Lock)
 RENDER_METHOD_REGISTRATION(void, Unlock)
 RENDER_METHOD_REGISTRATION(void, Clear)
@@ -54,7 +54,7 @@ RENDER_METHOD_REGISTRATION(bsize, GetCount)
 RENDER_END_CLASS_REGISTRATION()
 
 RENDER_BEGIN_CLASS_REGISTRATION2(IndexBuffer, Object)
-RENDER_METHOD_REGISTRATION(void, Create, bsize Count, bool Dynamic)
+RENDER_METHOD_REGISTRATION(void, Create, bsize Count, bool Dynamic,void*data=0)
 RENDER_METHOD_REGISTRATION(uint32*, Lock)
 RENDER_METHOD_REGISTRATION(void, Unlock)
 RENDER_METHOD_REGISTRATION(void, Clear)
