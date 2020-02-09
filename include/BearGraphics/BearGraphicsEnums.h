@@ -59,7 +59,9 @@ enum BearTopologyType
 {
 	TT_POINT_LIST = 0,
 	TT_LINE_LIST,
+	TT_LINE_STRIP,
 	TT_TRIANGLE_LIST,
+	TT_TRIANGLE_STRIP,
 };
 enum BearTexturePixelFormat
 {

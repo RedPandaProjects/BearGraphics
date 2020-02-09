@@ -156,12 +156,28 @@ void BearWindow::Resize(bsize width, bsize height)
 
 
 		SetWindowLong((HWND)m_window, GWL_STYLE, m_Style);
-		RECT rectangle = { static_cast<long>(xpos),  static_cast<long>(ypos), static_cast<long>(m_width), static_cast<long>(m_height) };
-		AdjustWindowRect(&rectangle, GetWindowLong((HWND)m_window, GWL_STYLE), false);
+		//AdjustWindowRect(&rectangle, GetWindowLong((HWND)m_window, GWL_STYLE), false);
 
+		RECT			m_rcWindowBounds;
+		RECT				DesktopRect;
 
-		SetWindowPos((HWND)m_window, HWND_NOTOPMOST, rectangle.left, rectangle.top, rectangle.right, rectangle.bottom, SWP_SHOWWINDOW | SWP_NOCOPYBITS | SWP_DRAWFRAME);
-		SetForegroundWindow((HWND)m_window);
+		GetClientRect(GetDesktopWindow(), &DesktopRect);
+
+		SetRect(&m_rcWindowBounds,
+			(DesktopRect.right - m_width) / 2,
+			(DesktopRect.bottom - m_height) / 2,
+			(DesktopRect.right + m_width) / 2,
+			(DesktopRect.bottom + m_height) / 2);
+
+		AdjustWindowRect(&m_rcWindowBounds, m_Style, FALSE);
+
+		SetWindowPos((HWND)m_window,
+			HWND_NOTOPMOST,
+			m_rcWindowBounds.left,
+			m_rcWindowBounds.top,
+			(m_rcWindowBounds.right - m_rcWindowBounds.left),
+			(m_rcWindowBounds.bottom - m_rcWindowBounds.top),
+			SWP_SHOWWINDOW | SWP_NOCOPYBITS | SWP_DRAWFRAME);
 	}
 	else
 	{
