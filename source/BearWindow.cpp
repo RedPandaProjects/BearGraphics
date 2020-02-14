@@ -149,8 +149,6 @@ void BearWindow::Resize(bsize width, bsize height)
 
 	if (!m_fullscreen)
 	{
-		uint32 xpos = static_cast<int32>(((uint32)GetSystemMetrics(SM_CXSCREEN) / 2) - (m_width / 2));
-		uint32 ypos = static_cast<int32>(((uint32)GetSystemMetrics(SM_CYSCREEN) / 2) - (m_height / 2));
 
 
 
@@ -164,10 +162,10 @@ void BearWindow::Resize(bsize width, bsize height)
 		GetClientRect(GetDesktopWindow(), &DesktopRect);
 
 		SetRect(&m_rcWindowBounds,
-			(DesktopRect.right - m_width) / 2,
-			(DesktopRect.bottom - m_height) / 2,
-			(DesktopRect.right + m_width) / 2,
-			(DesktopRect.bottom + m_height) / 2);
+			(DesktopRect.right -static_cast<LONG>( m_width)) / 2,
+			(DesktopRect.bottom - static_cast<LONG>(m_height)) / 2,
+			(DesktopRect.right + static_cast<LONG>(m_width)) / 2,
+			(DesktopRect.bottom + static_cast<LONG>(m_height)) / 2);
 
 		AdjustWindowRect(&m_rcWindowBounds, m_Style, FALSE);
 
