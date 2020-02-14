@@ -60,7 +60,7 @@ bool BearImage::LoadFromBuffer(const BearBufferedReader & stream)
 
 bool BearImage::LoadFromFile(bsize depth, const bchar * str)
 {
-	if (Empty())return false;
+	if (!Empty())return false;
 	BearFileStream stream;
 	if (!stream.Open(str))
 		return false;
@@ -69,14 +69,14 @@ bool BearImage::LoadFromFile(bsize depth, const bchar * str)
 
 bool BearImage::LoadFromStream(bsize depth, const BearInputStream & stream)
 {
-	if (Empty())return false;
+	if (!Empty())return false;
 	BearMemoryStream memory(stream);
 	return LoadFromBuffer(depth, memory);
 }
 
 bool BearImage::LoadFromBuffer(bsize depth, const BearBufferedReader & stream)
 {
-	if (Empty())return false;
+	if (!Empty())return false;
 	int w, h, comp;
 	stbi_uc*data = stbi_load_from_memory((const stbi_uc*)stream.Begin(), (int)((uint8*)stream.End() - (uint8*)stream.Begin()), &w, &h, &comp, STBI_rgb_alpha);
 	if (!data)

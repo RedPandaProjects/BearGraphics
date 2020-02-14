@@ -76,8 +76,9 @@ public:
 			bool backStencillEnable = false,
 			uint8 stencilReadMask = 0xFF,
 			uint8 stencilWriteMask = 0xFF)
-			:DepthEnable(depthEnable),
-			EnableDepthWrite(enableDepthWrite),
+
+			:EnableDepthWrite(enableDepthWrite),
+			DepthEnable(depthEnable),
 			DepthTest(depthTest),
 			StencillEnable(stencillEnable),
 			BackStencillEnable(stencillEnable),

@@ -13,7 +13,7 @@ extern BEARGRAPHICS_API BearRHI::BearRHIStats* GStats;
 void BearRenderStats::Dump()
 {
 	BearLog::Printf(TEXT("-------------------------------DUMP Render resources--------------------------------"));
-#define RENDER_BEGIN_CLASS_REGISTRATION1(Name,...)  BearLog::Printf(TEXT("" # Name ## ":%d"),Count ## Name());
+#define RENDER_BEGIN_CLASS_REGISTRATION1(Name,...)  BearLog::Printf(TEXT( BEAR_TO_STRING( Name)  ":%d"),Count ## Name());
 #define RENDER_BEGIN_CLASS_REGISTRATION2(Name,Parent,...) RENDER_BEGIN_CLASS_REGISTRATION1(Name)
 #define RENDER_BEGIN_CLASS_REGISTRATION1_WITHOUT_FACTORY(Name,...)
 #define RENDER_BEGIN_CLASS_REGISTRATION2_WITHOUT_FACTORY(Name,Parent,...) 

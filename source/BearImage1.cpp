@@ -23,7 +23,7 @@ void BearImage::Fill(const BearColor & color)
 void BearImage::Create(bsize w, bsize h, bsize mip, bsize depth, BearTexturePixelFormat px)
 {
 	Clear();
-	m_mips = 1;
+
 	m_depth = depth;
 	if (BearTextureUtils::isCompressor(px))
 	{
@@ -33,9 +33,10 @@ void BearImage::Create(bsize w, bsize h, bsize mip, bsize depth, BearTexturePixe
 	m_h = h;
 	m_px = px;
 	BEAR_FATALERROR(m_depth, TEXT("Depth is invalid!"));
-
-	m_mips = mip;
-
+	if(mip)
+		m_mips = mip;
+	else
+		m_mips = 1;
 	m_images = bear_alloc<uint8>(GetSizeInMemory());
 }
 
