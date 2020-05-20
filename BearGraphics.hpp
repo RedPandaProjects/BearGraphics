@@ -1,7 +1,7 @@
 #pragma once
 
 #pragma warning(disable:4995)
-#include "BearCore.hpp"
+#include "../BearCore/BearCore.hpp"
 
 #ifdef BEARGRAPHICS_EXPORTS
 #define BEARGRAPHICS_API   BEARDLL_EXPORT

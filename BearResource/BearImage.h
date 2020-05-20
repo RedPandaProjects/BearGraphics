@@ -5,9 +5,9 @@ class BEARGRAPHICS_API BearImage
 public:
 	BearImage();
 
-	BearImage(bsize w, bsize h, bsize mip = 1, bsize depth = 1, BearTexturePixelFormat px = TPF_R8G8B8A8);
+	BearImage(bsize w, bsize h, bsize mip = 1, bsize depth = 1, BearTexturePixelFormat px = TPF_R8G8B8A8, bool cube = false);
 	void Fill(const BearColor& color = BearColor::Brown);
-	void Create(bsize w, bsize h, bsize mip = 1, bsize depth = 1, BearTexturePixelFormat px = TPF_R8G8B8A8);
+	void Create(bsize w, bsize h, bsize mip = 1, bsize depth = 1, BearTexturePixelFormat px = TPF_R8G8B8A8, bool cube = false);
 	void Append(bsize x, bsize y, const BearImage& img, bsize x_src, bsize y_src, bsize w_src, bsize h_src, bsize dst_depth, bsize src_depth);
 	void Append(bsize x, bsize y, const BearImage& img, bsize dst_depth, bsize src_depth);
 
@@ -62,11 +62,13 @@ public:
 	bsize GetSizeInMemory()const;
 	BearVector2<bsize>GetSize()const;
 
+	inline bool SetCubeMap() { m_bCube = m_w == m_h && (m_depth % 6 == 0) && m_depth; if (m_bCube)m_depth = m_depth / 6; return m_bCube; }
+	inline bool IsCubeMap()const { return m_bCube; }
 private:
 	void Resize(bsize w, bsize h, bsize depth, BearTexturePixelFormat px);
 	BearTexturePixelFormat m_px;
 	bsize m_w, m_h, m_mips, m_depth;
-	
+	bool m_bCube;
 	uint8* m_images;
 
 };

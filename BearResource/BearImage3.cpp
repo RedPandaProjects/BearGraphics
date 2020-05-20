@@ -58,6 +58,7 @@ bool BearImage::LoadDDSFromStream(const BearInputStream & stream)
 			return false;
 		m_depth = header.dwHeaderFlags&DDSD_DEPTH ? header.dwDepth : 1;
 		m_mips = header.dwHeaderFlags&DDSD_MIPMAPCOUNT ? header.dwMipMapCount : 1;
+		m_bCube = !!(header.dwCubemapFlags & DDS_CUBEMAP_ALLFACES);
 		m_h = header.dwHeight;
 		m_w = header.dwWidth;
 		if (m_mips==0)
@@ -84,6 +85,14 @@ bool BearImage::LoadDDSFromStream(const BearInputStream & stream)
 			else
 				m_px = TPF_R8;
 			uint8 coutComp =BearTextureUtils::GetCountComp(m_px);
+			if (coutComp == 1 && header.ddspf.dwBitsMask[3])
+			{
+				std::swap(size_bit[0], size_bit[3]);
+
+				std::swap(shift_bit[0], shift_bit[3]);
+				std::swap(header.ddspf.dwBitsMask[0], header.ddspf.dwBitsMask[3]);
+			}
+
 			uint32 pixel = 0;
 			Create(m_w, m_h, m_mips, m_depth, m_px);
 			for (bsize d = 0; d < m_depth; d++)
@@ -191,7 +200,7 @@ bool BearImage::LoadDDSFromStream(const BearInputStream & stream)
 					return false;
 				}
 			}
-			Create(m_w, m_h, m_mips , m_depth, m_px);
+			Create(m_w, m_h, m_mips , m_depth, m_px, m_bCube);
 			stream.ReadBuffer(m_images, GetSizeInMemory());
 			return true;
 		}

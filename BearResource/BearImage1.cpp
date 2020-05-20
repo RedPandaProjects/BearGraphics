@@ -5,9 +5,9 @@ BearImage::BearImage() :m_px(TPF_R8), m_w(0), m_h(0), m_mips(0), m_depth(0), m_i
 {
 }
 
-BearImage::BearImage(bsize w, bsize h, bsize mip, bsize depth, BearTexturePixelFormat px) : m_px(TPF_R8), m_w(0), m_h(0), m_mips(0), m_depth(0), m_images(0)
+BearImage::BearImage(bsize w, bsize h, bsize mip, bsize depth, BearTexturePixelFormat px, bool cube ) : m_px(TPF_R8), m_w(0), m_h(0), m_mips(0), m_depth(0), m_images(0)
 {
-	Create(w, h, mip, depth, px);
+	Create(w, h, mip, depth, px, cube);
 }
 
 void BearImage::Fill(const BearColor & color)
@@ -20,11 +20,12 @@ void BearImage::Fill(const BearColor & color)
 	}
 }
 
-void BearImage::Create(bsize w, bsize h, bsize mip, bsize depth, BearTexturePixelFormat px)
+void BearImage::Create(bsize w, bsize h, bsize mip, bsize depth, BearTexturePixelFormat px, bool cube )
 {
 	Clear();
-
+	m_bCube = cube;
 	m_depth = depth;
+	if (cube)m_depth *= 6;
 	if (BearTextureUtils::isCompressor(px))
 	{
 		BEAR_CHECK(m_w%4==0&&m_h%4==0);
