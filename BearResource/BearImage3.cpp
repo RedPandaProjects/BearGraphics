@@ -221,20 +221,48 @@ bool BearImage::SaveToDds(const bchar * name)
 	DDS_HEADER ddsh;
 	bear_fill(ddsh);
 	ddsh.dwSize = sizeof(ddsh) - sizeof(ddsh.Header10);
-	ddsh.dwHeaderFlags = DDSD_HEIGHT | DDSD_WIDTH | DDSD_PIXELFORMAT | DDSD_MIPMAPCOUNT | DDSD_DEPTH;
+	ddsh.dwHeaderFlags = DDSD_CAPS|DDSD_HEIGHT | DDSD_WIDTH | DDSD_PIXELFORMAT;// DDSD_MIPMAPCOUNT | DDSD_DEPTH;
 	ddsh.dwWidth = static_cast<DWORD>(m_w);
 	ddsh.dwHeight = static_cast<DWORD>(m_h);
-	ddsh.dwMipMapCount = static_cast<DWORD>(m_mips);
-	ddsh.dwDepth = static_cast<DWORD>(m_depth);
+	ddsh.dwSurfaceFlags = DDS_SURFACE_FLAGS_TEXTURE;
+	if (m_depth>1)
+	{
+		ddsh.dwDepth = static_cast<DWORD>(m_depth);
+		ddsh.dwHeaderFlags |= DDSD_DEPTH;
+		
+	}
+	if (m_mips>1)
+	{
+		ddsh.dwMipMapCount = static_cast<DWORD>(m_mips);
+		ddsh.dwHeaderFlags |= DDSD_MIPMAPCOUNT;
+	}
+	switch (m_px)
+	{
+	case TPF_R8:
+	case TPF_R8G8:
+	case TPF_R8G8B8:
+	case TPF_R8G8B8A8:
+	case TPF_R32F:
+	case TPF_R32G32F:
+	case TPF_R32G32B32F:
+	case TPF_R32G32B32A32F:
+		ddsh.dwHeaderFlags |= DDSD_LINEARSIZE;
+		ddsh.dwPitchOrLinearSize = BearTextureUtils::GetSizePixel(m_px) * m_w;
+		break;
+	default:
+		break;
+	}
 	char ddst[] = {'D','D','S',' '};
 	dds.WriteBuffer(ddst, 4);
 	switch (m_px)
 	{
 	case TPF_R8:
 		ddsh.ddspf = DDSPF_R8G8B8;
+		ddsh.ddspf.dwFlags = 0x2;
+		ddsh.ddspf.dwRBitMask = 0;
 		ddsh.ddspf.dwBBitMask = 0;
 		ddsh.ddspf.dwGBitMask = 0;
-		ddsh.ddspf.dwRBitMask = 255;
+		ddsh.ddspf.dwABitMask = 255;
 		ddsh.ddspf.dwRGBBitCount = 8;
 		break;
 	case TPF_R8G8:

@@ -9,6 +9,7 @@
 #define _DDS_H_
 #include <Windows.h>
 #define DDS_FOURCC 0x00000004 // DDPF_FOURCC
+#define DDS_ALPHA 0x1
 #define DDS_RGB 0x00000040 // DDPF_RGB
 #define DDS_RGBA 0x00000041 // DDPF_RGB | DDPF_ALPHAPIXELS
 #ifdef MAKEFOURCC
