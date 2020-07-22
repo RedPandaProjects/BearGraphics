@@ -213,7 +213,7 @@ bool BearWindow::Update()
 {
 	m_events.clear_not_free();
 	m_events_item = m_events.end();
-	MSG msg;
+	MSG msg;msg.message= WM_NULL;
 	while (PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE))
 	{
 		if (msg.message == WM_QUIT)
