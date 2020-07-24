@@ -44,6 +44,7 @@ namespace BearRHI
 #include "BearDescription/BearViewportDescription.h"
 #include "BearDescription/BearPipelineGraphicsDescription.h"
 #include "BearDescription/BearPipelineMeshDescription.h"
+#include "BearDescription/BearPipelineRayTracingDescription.h"
 #include "BearDescription/BearRootSignatureDescription.h"
 #include "BearDescription/BearDescriptorHeapDescription.h"
 #include "BearDescription/BearSamplerDescription.h"

@@ -218,3 +218,9 @@ enum BearTextureType
 	TT_DepthStencil,
 	TT_UAV,
 };
+
+enum BearHitGroupType
+{
+	HGT_Triangles,
+	HGT_Procedural_Primitive,
+};

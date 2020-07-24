@@ -52,6 +52,9 @@
     <ClCompile Include="..\..\BearSystem\BearWindow.cpp">
       <Filter>BearSystem</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\BearDescription\BearPipelineRayTracingDescription.cpp">
+      <Filter>BearDescription</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\BearDescription\BearDescriptorHeapDescription.h">
@@ -127,6 +130,9 @@
     <ClInclude Include="..\..\BearRenderBase.h" />
     <ClInclude Include="..\..\BearSystem\BearWindow.h">
       <Filter>BearSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearDescription\BearPipelineRayTracingDescription.h">
+      <Filter>BearDescription</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
