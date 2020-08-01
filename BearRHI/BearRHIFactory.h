@@ -13,7 +13,7 @@ namespace BearRHI
 	public:
 #include "..\BearTemplate\BearGraphicsObjectsList.h"
 		virtual ~BearRHIFactory() = 0;
-		virtual bool SupportRTX() = 0;
+		virtual bool SupportRayTracing() = 0;
 		virtual bool SupportMeshShader() = 0;
 	};
 }
