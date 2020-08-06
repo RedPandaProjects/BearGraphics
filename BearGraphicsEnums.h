@@ -31,6 +31,7 @@ enum  BearShaderType
 	ST_Compute,
 	ST_Mesh,
 	ST_Amplification,
+	ST_RayTracing,
 	ST_Count,
 	ST_ALL,
 };
@@ -39,7 +40,8 @@ enum  BearPipelineType
 	PT_Null = 0,
 	PT_Graphics,
 	PT_Compute,
-	PT_Mesh
+	PT_Mesh,
+	PT_RayTracing,
 };
 enum BearDescriptorType
 {
@@ -223,4 +225,22 @@ enum BearHitGroupType
 {
 	HGT_Triangles,
 	HGT_Procedural_Primitive,
+};
+enum class BearAccelerationStructureBuildFlags 
+{
+	AllowUpdate = 1 << 0,
+	AllowCompaction = 1 << 1,
+	PreferFastTrace = 1 << 2,
+	PreferFastBuild = 1 << 3,
+	MinimizeMemory = 1 << 4,
+};
+enum class BearRaytracingGeometryFlags
+{
+	Opaque = 1 << 0,
+	NoDuplicateAnyhitInvocation = 1 << 1,
+};
+enum class BearRaytracingGeometryType
+{
+	Triangles,
+	ProceduralPrimitiveAABBS
 };

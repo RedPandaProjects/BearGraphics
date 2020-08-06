@@ -50,6 +50,7 @@
     <ClCompile Include="..\..\BearSystem\BearWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\BearDescription\BearBottomLevelDescription.h" />
     <ClInclude Include="..\..\BearDescription\BearDescriptorHeapDescription.h" />
     <ClInclude Include="..\..\BearDescription\BearFrameBufferDescription.h" />
     <ClInclude Include="..\..\BearDescription\BearPipelineGraphicsDescription.h" />

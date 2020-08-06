@@ -11,6 +11,7 @@ public:
 	static BearFactoryPointer<BearRHI::BearRHIShader> CreateComputeShader();
 	static BearFactoryPointer<BearRHI::BearRHIShader> CreateMeshShader();
 	static BearFactoryPointer<BearRHI::BearRHIShader> CreateAmplificationShader();
+	static BearFactoryPointer<BearRHI::BearRHIShader> CreateRayTracingShader();
 
 	static BearFactoryPointer<BearRHI::BearRHIViewport> CreateViewport(void*Handle,bsize Width,bsize Height,bool fullscreen,const BearViewportDescription& Description, bool Vsync=false);
 	static BearFactoryPointer<BearRHI::BearRHIContext> CreateContext();
@@ -19,6 +20,7 @@ public:
 
 	static BearFactoryPointer < BearRHI::BearRHIPipelineGraphics> CreatePipelineGraphics(const BearPipelineGraphicsDescription& Descriptor);
 	static BearFactoryPointer < BearRHI::BearRHIPipelineMesh> CreatePipelineMesh(const BearPipelineMeshDescription& Descriptor);
+
 	static BearFactoryPointer < BearRHI::BearRHIRootSignature> CreateRootSignature(const BearRootSignatureDescription& Descriptor);
 	static BearFactoryPointer < BearRHI::BearRHIDescriptorHeap> CreateDescriptorHeap(const BearDescriptorHeapDescription& Descriptor);
 	static BearFactoryPointer < BearRHI::BearRHIUniformBuffer> CreateUniformBuffer(bsize Stride, bsize Count, bool Dynamic);
@@ -31,6 +33,10 @@ public:
 	static BearFactoryPointer < BearRHI::BearRHITexture2D> CreateTexture2D(bsize Width, bsize Height, BearDepthStencilFormat DSF);
 	static BearFactoryPointer < BearRHI::BearRHIRenderPass> CreateRenderPass(const BearRenderPassDescription& Description);
 	static BearFactoryPointer < BearRHI::BearRHIFrameBuffer> CreateFrameBuffer(const BearFrameBufferDescription& Description);
+
+	static BearFactoryPointer < BearRHI::BearRHIPipelineRayTracing> CreatePipelineRayTracing(const BearPipelineRayTracingDescription& Descriptor);
+	static BearFactoryPointer < BearRHI::BearRHIBottomLevel> CreateBottomLevel(const BearBottomLevelDescription& Descriptor);
+
 	static bool RTXSupport();
 	static bool MeshShaderSupport();
 	static void Destroy();

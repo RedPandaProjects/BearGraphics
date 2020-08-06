@@ -50,6 +50,8 @@ namespace BearRHI
 #include "BearDescription/BearSamplerDescription.h"
 #include "BearDescription/BearRenderPassDescription.h"
 #include "BearDescription/BearFrameBufferDescription.h"
+#include "BearDescription/BearBottomLevelDescription.h"
+
 #include "BearRenderInterface.h"
 #include "BearRenderStats.h"
 #include "BearUtils/BearContextEventLock.h"

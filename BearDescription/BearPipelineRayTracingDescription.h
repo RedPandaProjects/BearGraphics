@@ -19,10 +19,10 @@ public:
 	{
 		HitGroupDescription():Type(HGT_Triangles){}
 		BearHitGroupType	Type;
-		BearStringConteniar NameExport;
-		BearStringConteniar AnyHitShaderImport;
-		BearStringConteniar ClosestHitShaderImport;
-		BearStringConteniar IntersectionShaderImport;
+		BearStringConteniarUnicode NameExport;
+		BearStringConteniarUnicode AnyHitShaderImport;
+		BearStringConteniarUnicode ClosestHitShaderImport;
+		BearStringConteniarUnicode IntersectionShaderImport;
 	};
 	BearVector<HitGroupDescription> HitGroups;
 
@@ -30,8 +30,8 @@ public:
 	{
 		struct ExportDescription
 		{
-			BearStringConteniar NameFunction;
-			BearStringConteniar NameExport;
+			BearStringConteniarUnicode NameFunction;
+			BearStringConteniarUnicode NameExport;
 		};
 		BearVector<ExportDescription> Exports;
 		BearFactoryPointer<BearRHI::BearRHIShader> Shader;
@@ -42,7 +42,7 @@ public:
 
 	struct LocalRootSignatureDescription
 	{
-		BearVector<BearStringConteniar> Exports;
+		BearVector<BearStringConteniarUnicode> Exports;
 		BearFactoryPointer<BearRHI::BearRHIRootSignature> RootSignature;
 	};
 	BearVector<LocalRootSignatureDescription> LocalRootSignatures;

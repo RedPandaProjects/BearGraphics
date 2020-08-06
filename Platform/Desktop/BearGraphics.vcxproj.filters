@@ -134,6 +134,9 @@
     <ClInclude Include="..\..\BearDescription\BearPipelineRayTracingDescription.h">
       <Filter>BearDescription</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\BearDescription\BearBottomLevelDescription.h">
+      <Filter>BearDescription</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\LICENSE" />

@@ -77,6 +77,10 @@ RENDER_END_CLASS_REGISTRATION()
 RENDER_BEGIN_CLASS_REGISTRATION2(PipelineMesh, Pipeline, const BearPipelineMeshDescription& Description)
 RENDER_END_CLASS_REGISTRATION()
 
+RENDER_BEGIN_CLASS_REGISTRATION2(PipelineRayTracing, Pipeline, const BearPipelineRayTracingDescription& Description)
+RENDER_END_CLASS_REGISTRATION()
+
+
 RENDER_BEGIN_CLASS_REGISTRATION2(Sampler, Object, const BearSamplerDescription& Description)
 RENDER_END_CLASS_REGISTRATION()
 
@@ -107,6 +111,9 @@ RENDER_METHOD_REGISTRATION(void, Unlock)
 RENDER_END_CLASS_REGISTRATION()
 
 RENDER_BEGIN_CLASS_REGISTRATION2(StructuredBuffer, ShaderResource,bsize Size,void* Data = 0)
+RENDER_END_CLASS_REGISTRATION()
+
+RENDER_BEGIN_CLASS_REGISTRATION2(BottomLevel, ShaderResource, const BearBottomLevelDescription& Description)
 RENDER_END_CLASS_REGISTRATION()
 #endif
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////

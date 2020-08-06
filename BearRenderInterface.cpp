@@ -62,6 +62,12 @@ BearFactoryPointer<BearRHI::BearRHIShader> BearRenderInterface::CreateAmplificat
 	return BearFactoryPointer<BearRHI::BearRHIShader>();
 }
 
+BearFactoryPointer<BearRHI::BearRHIShader> BearRenderInterface::CreateRayTracingShader()
+{
+	if (GFactory)return GFactory->CreateShader(ST_RayTracing);
+	return BearFactoryPointer<BearRHI::BearRHIShader>();
+}
+
 BearFactoryPointer<BearRHI::BearRHIShader> BearRenderInterface::CreateVertexShader()
 {
 	if (GFactory)return GFactory->CreateShader(ST_Vertex);
@@ -109,6 +115,19 @@ BearFactoryPointer<BearRHI::BearRHIPipelineMesh> BearRenderInterface::CreatePipe
 	if (GFactory)return GFactory->CreatePipelineMesh(Descriptor);
 	return BearFactoryPointer<BearRHI::BearRHIPipelineMesh>();
 }
+
+BearFactoryPointer<BearRHI::BearRHIPipelineRayTracing> BearRenderInterface::CreatePipelineRayTracing(const BearPipelineRayTracingDescription& Descriptor)
+{
+	if (GFactory)return GFactory->CreatePipelineRayTracing(Descriptor);
+	return BearFactoryPointer<BearRHI::BearRHIPipelineRayTracing>();
+}
+
+BearFactoryPointer<BearRHI::BearRHIBottomLevel> BearRenderInterface::CreateBottomLevel(const BearBottomLevelDescription& Descriptor)
+{
+	if (GFactory)return GFactory->CreateBottomLevel(Descriptor);
+	return BearFactoryPointer<BearRHI::BearRHIBottomLevel>();
+}
+
 
 BearFactoryPointer<BearRHI::BearRHIRootSignature> BearRenderInterface::CreateRootSignature(const BearRootSignatureDescription& Descriptor)
 {
