@@ -51,6 +51,7 @@ namespace BearRHI
 #include "BearDescription/BearRenderPassDescription.h"
 #include "BearDescription/BearFrameBufferDescription.h"
 #include "BearDescription/BearBottomLevelDescription.h"
+#include "BearDescription/BearTopLevelDescription.h"
 
 #include "BearRenderInterface.h"
 #include "BearRenderStats.h"

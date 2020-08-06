@@ -115,6 +115,9 @@ RENDER_END_CLASS_REGISTRATION()
 
 RENDER_BEGIN_CLASS_REGISTRATION2(BottomLevel, ShaderResource, const BearBottomLevelDescription& Description)
 RENDER_END_CLASS_REGISTRATION()
+
+RENDER_BEGIN_CLASS_REGISTRATION2(TopLevel, ShaderResource, const BearTopLevelDescription& Description)
+RENDER_END_CLASS_REGISTRATION()
 #endif
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////

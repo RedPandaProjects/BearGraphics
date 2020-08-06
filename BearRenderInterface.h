@@ -36,7 +36,7 @@ public:
 
 	static BearFactoryPointer < BearRHI::BearRHIPipelineRayTracing> CreatePipelineRayTracing(const BearPipelineRayTracingDescription& Descriptor);
 	static BearFactoryPointer < BearRHI::BearRHIBottomLevel> CreateBottomLevel(const BearBottomLevelDescription& Descriptor);
-
+	static BearFactoryPointer < BearRHI::BearRHITopLevel> CreateTopLevel(const BearTopLevelDescription& Descriptor);
 	static bool RTXSupport();
 	static bool MeshShaderSupport();
 	static void Destroy();

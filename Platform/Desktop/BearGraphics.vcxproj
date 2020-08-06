@@ -59,6 +59,7 @@
     <ClInclude Include="..\..\BearDescription\BearRenderPassDescription.h" />
     <ClInclude Include="..\..\BearDescription\BearRootSignatureDescription.h" />
     <ClInclude Include="..\..\BearDescription\BearSamplerDescription.h" />
+    <ClInclude Include="..\..\BearDescription\BearTopLevelDescription.h" />
     <ClInclude Include="..\..\BearDescription\BearViewportDescription.h" />
     <ClInclude Include="..\..\BearGraphics.hpp" />
     <ClInclude Include="..\..\BearGraphicsEnums.h" />

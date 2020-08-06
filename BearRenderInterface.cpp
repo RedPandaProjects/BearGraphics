@@ -128,6 +128,12 @@ BearFactoryPointer<BearRHI::BearRHIBottomLevel> BearRenderInterface::CreateBotto
 	return BearFactoryPointer<BearRHI::BearRHIBottomLevel>();
 }
 
+BearFactoryPointer<BearRHI::BearRHITopLevel> BearRenderInterface::CreateTopLevel(const BearTopLevelDescription& Descriptor)
+{
+	if (GFactory)return GFactory->CreateTopLevel(Descriptor);
+	return BearFactoryPointer<BearRHI::BearRHITopLevel>();
+}
+
 
 BearFactoryPointer<BearRHI::BearRHIRootSignature> BearRenderInterface::CreateRootSignature(const BearRootSignatureDescription& Descriptor)
 {
