@@ -97,7 +97,10 @@ RENDER_END_CLASS_REGISTRATION()
 RENDER_BEGIN_CLASS_REGISTRATION2_WITHOUT_FACTORY(ShaderResource, Object)
 RENDER_END_CLASS_REGISTRATION()
 
-RENDER_BEGIN_CLASS_REGISTRATION2(Texture2D, ShaderResource, bsize Width, bsize Height, bsize Mips, bsize Count, BearTexturePixelFormat PixelFormat, BearTextureUsage TypeUsage = TU_STATIC, void* data = 0)
+RENDER_BEGIN_CLASS_REGISTRATION2_WITHOUT_FACTORY(UnorderedAccess, ShaderResource)
+RENDER_END_CLASS_REGISTRATION()
+
+RENDER_BEGIN_CLASS_REGISTRATION2(Texture2D, UnorderedAccess, bsize Width, bsize Height, bsize Mips, bsize Count, BearTexturePixelFormat PixelFormat, BearTextureUsage TypeUsage = TU_STATIC, void* data = 0,bool UAV=false)
 RENDER_CONSTRUCTOR_REGISTRATION(Texture2D, bsize Width, bsize Height, BearRenderTargetFormat Format)
 RENDER_CONSTRUCTOR_REGISTRATION(Texture2D, bsize Width, bsize Height, BearDepthStencilFormat Format)
 RENDER_METHOD_REGISTRATION(void*, Lock, bsize mip = 0, bsize depth = 0)
@@ -110,13 +113,13 @@ RENDER_METHOD_REGISTRATION(void*, Lock, bsize mip = 0, bsize depth = 0)
 RENDER_METHOD_REGISTRATION(void, Unlock)
 RENDER_END_CLASS_REGISTRATION()
 
-RENDER_BEGIN_CLASS_REGISTRATION2(StructuredBuffer, ShaderResource,bsize Size,void* Data = 0)
+RENDER_BEGIN_CLASS_REGISTRATION2(StructuredBuffer, UnorderedAccess,bsize Size,void* Data = 0, bool UAV = false)
 RENDER_END_CLASS_REGISTRATION()
 
-RENDER_BEGIN_CLASS_REGISTRATION2(BottomLevel, ShaderResource, const BearBottomLevelDescription& Description)
+RENDER_BEGIN_CLASS_REGISTRATION2(BottomLevel, UnorderedAccess, const BearBottomLevelDescription& Description)
 RENDER_END_CLASS_REGISTRATION()
 
-RENDER_BEGIN_CLASS_REGISTRATION2(TopLevel, ShaderResource, const BearTopLevelDescription& Description)
+RENDER_BEGIN_CLASS_REGISTRATION2(TopLevel, UnorderedAccess, const BearTopLevelDescription& Description)
 RENDER_END_CLASS_REGISTRATION()
 #endif
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -128,6 +131,7 @@ RENDER_BEGIN_CLASS_REGISTRATION1(DescriptorHeap, const BearDescriptorHeapDescrip
 RENDER_METHOD_REGISTRATION(void, SetUniformBuffer, bsize slot, BearFactoryPointer<BearRHIUniformBuffer> UniformBuffer, bsize offset = 0)
 RENDER_METHOD_REGISTRATION(void, SetShaderResource, bsize slot, BearFactoryPointer<BearRHIShaderResource> ShaderResource, bsize offset = 0)
 RENDER_METHOD_REGISTRATION(void, SetSampler, bsize slot, BearFactoryPointer<BearRHISampler> Sampler)
+RENDER_METHOD_REGISTRATION(void, SetUnorderedAccess, bsize slot, BearFactoryPointer<BearRHIUnorderedAccess> UnorderedAccess, bsize offset = 0)
 RENDER_END_CLASS_REGISTRATION()
 
 
@@ -167,6 +171,8 @@ RENDER_METHOD_REGISTRATION(void, Lock, BearFactoryPointer<BearRHIViewport> Viewp
 RENDER_METHOD_REGISTRATION(void, Lock, BearFactoryPointer<BearRHIFrameBuffer> FrameBuffer)
 RENDER_METHOD_REGISTRATION(void, Unlock, BearFactoryPointer<BearRHIViewport> Viewport)
 RENDER_METHOD_REGISTRATION(void, Unlock, BearFactoryPointer<BearRHIFrameBuffer> FrameBuffer)
+RENDER_METHOD_REGISTRATION(void, Lock, BearFactoryPointer<BearRHIUnorderedAccess> UnorderedAccess)
+RENDER_METHOD_REGISTRATION(void, Unlock, BearFactoryPointer<BearRHIUnorderedAccess> UnorderedAccess)
 RENDER_END_CLASS_REGISTRATION()
 #endif
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////

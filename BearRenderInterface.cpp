@@ -153,9 +153,9 @@ BearFactoryPointer<BearRHI::BearRHIUniformBuffer> BearRenderInterface::CreateUni
 	return BearFactoryPointer<BearRHI::BearRHIUniformBuffer>();
 }
 
-BearFactoryPointer<BearRHI::BearRHITexture2D> BearRenderInterface::CreateTexture2D(bsize Width, bsize Height, bsize Mips, bsize Count, BearTexturePixelFormat PixelFormat, BearTextureUsage TypeUsage , const void* data)
+BearFactoryPointer<BearRHI::BearRHITexture2D> BearRenderInterface::CreateTexture2D(bsize Width, bsize Height, bsize Mips, bsize Count, BearTexturePixelFormat PixelFormat, BearTextureUsage TypeUsage , const void* data, bool UAV)
 {
-	if (GFactory)return GFactory->CreateTexture2D(Width, Height, Mips, Count, PixelFormat, TypeUsage,const_cast<void*>( data));
+	if (GFactory)return GFactory->CreateTexture2D(Width, Height, Mips, Count, PixelFormat, TypeUsage,const_cast<void*>( data),UAV);
 	return BearFactoryPointer<BearRHI::BearRHITexture2D>();
 }
 
@@ -165,9 +165,9 @@ BearFactoryPointer<BearRHI::BearRHITextureCube> BearRenderInterface::CreateTextu
 	return BearFactoryPointer<BearRHI::BearRHITextureCube>();
 }
 
-BearFactoryPointer<BearRHI::BearRHIStructuredBuffer> BearRenderInterface::CreateStructuredBuffer(bsize Size, const void* Data)
+BearFactoryPointer<BearRHI::BearRHIStructuredBuffer> BearRenderInterface::CreateStructuredBuffer(bsize Size, const void* Data, bool UAV)
 {
-	if (GFactory)return GFactory->CreateStructuredBuffer(Size, const_cast<void*>(Data));
+	if (GFactory)return GFactory->CreateStructuredBuffer(Size, const_cast<void*>(Data), UAV);
 	return BearFactoryPointer<BearRHI::BearRHIStructuredBuffer>();
 }
 

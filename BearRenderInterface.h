@@ -24,9 +24,9 @@ public:
 	static BearFactoryPointer < BearRHI::BearRHIRootSignature> CreateRootSignature(const BearRootSignatureDescription& Descriptor);
 	static BearFactoryPointer < BearRHI::BearRHIDescriptorHeap> CreateDescriptorHeap(const BearDescriptorHeapDescription& Descriptor);
 	static BearFactoryPointer < BearRHI::BearRHIUniformBuffer> CreateUniformBuffer(bsize Stride, bsize Count, bool Dynamic);
-	static BearFactoryPointer < BearRHI::BearRHITexture2D> CreateTexture2D(bsize Width, bsize Height, bsize Mips, bsize Count, BearTexturePixelFormat PixelFormat, BearTextureUsage TypeUsage = TU_STATIC,const void* data=0);
+	static BearFactoryPointer < BearRHI::BearRHITexture2D> CreateTexture2D(bsize Width, bsize Height, bsize Mips, bsize Count, BearTexturePixelFormat PixelFormat, BearTextureUsage TypeUsage = TU_STATIC,const void* data=0,bool UAV=false);
 	static BearFactoryPointer < BearRHI::BearRHITextureCube> CreateTextureCube(bsize Width, bsize Height, bsize Mips, bsize Count, BearTexturePixelFormat PixelFormat, BearTextureUsage TypeUsage = TU_STATIC, const void* data = 0);
-	static BearFactoryPointer<BearRHI::BearRHIStructuredBuffer> CreateStructuredBuffer(bsize Size, const void* Data);
+	static BearFactoryPointer<BearRHI::BearRHIStructuredBuffer> CreateStructuredBuffer(bsize Size, const void* Data, bool UAV = false);
 	static BearFactoryPointer < BearRHI::BearRHISampler> CreateSampler(const BearSamplerDescription& Description);
 
 	static BearFactoryPointer < BearRHI::BearRHITexture2D> CreateTexture2D(bsize Width, bsize Height, BearRenderTargetFormat RTF);
