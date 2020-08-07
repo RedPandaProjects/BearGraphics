@@ -35,6 +35,9 @@ namespace BearRHI
 #include "BearTemplate/BearFactoryPointer.h"
 #include "BearResource/BearImage.h"
 
+
+#include "BearDescription/BearDispatchRaysDescription.h"
+
 #define RENDER_LEVEL_0_REGISTER 0
 namespace BearRHI
 {
@@ -52,6 +55,7 @@ namespace BearRHI
 #include "BearDescription/BearFrameBufferDescription.h"
 #include "BearDescription/BearBottomLevelDescription.h"
 #include "BearDescription/BearTopLevelDescription.h"
+#include "BearDescription/BearRayTracingShaderTableDescription.h"
 
 #include "BearRenderInterface.h"
 #include "BearRenderStats.h"

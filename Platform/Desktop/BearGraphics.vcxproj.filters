@@ -140,6 +140,12 @@
     <ClInclude Include="..\..\BearDescription\BearTopLevelDescription.h">
       <Filter>BearDescription</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\BearDescription\BearRayTracingShaderTableDescription.h">
+      <Filter>BearDescription</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearDescription\BearDispatchRaysDescription.h">
+      <Filter>BearDescription</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\LICENSE" />

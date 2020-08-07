@@ -134,6 +134,12 @@ BearFactoryPointer<BearRHI::BearRHITopLevel> BearRenderInterface::CreateTopLevel
 	return BearFactoryPointer<BearRHI::BearRHITopLevel>();
 }
 
+BearFactoryPointer<BearRHI::BearRHIRayTracingShaderTable> BearRenderInterface::CreateRayTracingShaderTable(const BearRayTracingShaderTableDescription& Descriptor)
+{
+	if (GFactory)return GFactory->CreateRayTracingShaderTable(Descriptor);
+	return BearFactoryPointer<BearRHI::BearRHIRayTracingShaderTable>();
+}
+
 
 BearFactoryPointer<BearRHI::BearRHIRootSignature> BearRenderInterface::CreateRootSignature(const BearRootSignatureDescription& Descriptor)
 {

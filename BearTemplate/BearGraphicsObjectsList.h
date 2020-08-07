@@ -116,10 +116,13 @@ RENDER_END_CLASS_REGISTRATION()
 RENDER_BEGIN_CLASS_REGISTRATION2(StructuredBuffer, UnorderedAccess,bsize Size,void* Data = 0, bool UAV = false)
 RENDER_END_CLASS_REGISTRATION()
 
-RENDER_BEGIN_CLASS_REGISTRATION2(BottomLevel, UnorderedAccess, const BearBottomLevelDescription& Description)
+RENDER_BEGIN_CLASS_REGISTRATION2(BottomLevel, Object, const BearBottomLevelDescription& Description)
 RENDER_END_CLASS_REGISTRATION()
 
-RENDER_BEGIN_CLASS_REGISTRATION2(TopLevel, UnorderedAccess, const BearTopLevelDescription& Description)
+RENDER_BEGIN_CLASS_REGISTRATION2(TopLevel, ShaderResource, const BearTopLevelDescription& Description)
+RENDER_END_CLASS_REGISTRATION()
+
+RENDER_BEGIN_CLASS_REGISTRATION1(RayTracingShaderTable, const BearRayTracingShaderTableDescription& Description)
 RENDER_END_CLASS_REGISTRATION()
 #endif
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -133,7 +136,6 @@ RENDER_METHOD_REGISTRATION(void, SetShaderResource, bsize slot, BearFactoryPoint
 RENDER_METHOD_REGISTRATION(void, SetSampler, bsize slot, BearFactoryPointer<BearRHISampler> Sampler)
 RENDER_METHOD_REGISTRATION(void, SetUnorderedAccess, bsize slot, BearFactoryPointer<BearRHIUnorderedAccess> UnorderedAccess, bsize offset = 0)
 RENDER_END_CLASS_REGISTRATION()
-
 
 
 RENDER_BEGIN_CLASS_REGISTRATION1(Viewport, void* Handle, bsize Width, bsize Height, bool Fullscreen, bool VSync, const BearViewportDescription& Description)
@@ -154,6 +156,7 @@ RENDER_METHOD_REGISTRATION(void, SetIndexBuffer, BearFactoryPointer<BearRHIIndex
 RENDER_METHOD_REGISTRATION(void, SetViewport, float x, float y, float width, float height, float minDepth = 0.f, float maxDepth = 1.f)
 RENDER_METHOD_REGISTRATION(void, SetScissor, bool Enable, float x, float y, float x1, float y1)
 RENDER_METHOD_REGISTRATION(void, Draw, bsize count, bsize offset = 0)
+RENDER_METHOD_REGISTRATION(void, DispatchRays,const BearDispatchRaysDescription& Description)
 RENDER_METHOD_REGISTRATION(void, DispatchMesh,bsize CountX, bsize CountY, bsize CountZ)
 RENDER_METHOD_REGISTRATION(void, DrawIndex, bsize count, bsize offset_index = 0, bsize offset_vertex = 0)
 RENDER_METHOD_REGISTRATION(void, SetViewportAsFrameBuffer, BearFactoryPointer<BearRHIViewport> Viewport)
