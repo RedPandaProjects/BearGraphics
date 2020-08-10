@@ -1,9 +1,11 @@
 #include "BearGraphics.hpp"
 #include "BearRHI/BearRHIFactory.h"
 #include "BearRHI/BearRHIStats.h"
+
 BEARGRAPHICS_API BearRHI::BearRHIFactory* GFactory=0;
 BEARGRAPHICS_API BearRHI::BearRHIStats* GStats = 0;
 static BearStringConteniar LName;
+
 bool BearRenderInterface::Initialize(BearStringConteniar name)
 {
 	Destroy();
@@ -26,11 +28,9 @@ bool BearRenderInterface::Initialize(BearStringConteniar name)
 	return true;
 }
 
-
-
-BearFactoryPointer<BearRHI::BearRHIViewport> BearRenderInterface::CreateViewport(void* Handle, bsize Width, bsize Height, bool fullscreen, const BearViewportDescription& Description, bool Vsync)
+BearFactoryPointer<BearRHI::BearRHIViewport> BearRenderInterface::CreateViewport(void* handle, bsize width, bsize height, bool fullscreen, const BearViewportDescription& description, bool vsync)
 {
-	if (GFactory)return GFactory->CreateViewport(Handle, Width, Height, fullscreen,Vsync,Description);
+	if (GFactory)return GFactory->CreateViewport(handle, width, height, fullscreen,vsync,description);
 	return BearFactoryPointer<BearRHI::BearRHIViewport>();
 }
 
@@ -129,106 +129,106 @@ BearFactoryPointer<BearRHI::BearRHIIndexBuffer> BearRenderInterface::CreateIndex
 	return BearFactoryPointer<BearRHI::BearRHIIndexBuffer>();
 }
 
-BearFactoryPointer<BearRHI::BearRHIPipelineGraphics> BearRenderInterface::CreatePipelineGraphics(const BearPipelineGraphicsDescription& Descriptor)
+BearFactoryPointer<BearRHI::BearRHIPipelineGraphics> BearRenderInterface::CreatePipelineGraphics(const BearPipelineGraphicsDescription& description)
 {
-	if (GFactory)return GFactory->CreatePipelineGraphics(Descriptor);
+	if (GFactory)return GFactory->CreatePipelineGraphics(description);
 	return BearFactoryPointer<BearRHI::BearRHIPipelineGraphics>();
 }
 
-BearFactoryPointer<BearRHI::BearRHIPipelineMesh> BearRenderInterface::CreatePipelineMesh(const BearPipelineMeshDescription& Descriptor)
+BearFactoryPointer<BearRHI::BearRHIPipelineMesh> BearRenderInterface::CreatePipelineMesh(const BearPipelineMeshDescription& description)
 {
-	if (GFactory)return GFactory->CreatePipelineMesh(Descriptor);
+	if (GFactory)return GFactory->CreatePipelineMesh(description);
 	return BearFactoryPointer<BearRHI::BearRHIPipelineMesh>();
 }
 
-BearFactoryPointer<BearRHI::BearRHIPipelineRayTracing> BearRenderInterface::CreatePipelineRayTracing(const BearPipelineRayTracingDescription& Descriptor)
+BearFactoryPointer<BearRHI::BearRHIPipelineRayTracing> BearRenderInterface::CreatePipelineRayTracing(const BearPipelineRayTracingDescription& description)
 {
-	if (GFactory)return GFactory->CreatePipelineRayTracing(Descriptor);
+	if (GFactory)return GFactory->CreatePipelineRayTracing(description);
 	return BearFactoryPointer<BearRHI::BearRHIPipelineRayTracing>();
 }
 
-BearFactoryPointer<BearRHI::BearRHIBottomLevel> BearRenderInterface::CreateBottomLevel(const BearBottomLevelDescription& Descriptor)
+BearFactoryPointer<BearRHI::BearRHIBottomLevel> BearRenderInterface::CreateBottomLevel(const BearBottomLevelDescription& description)
 {
-	if (GFactory)return GFactory->CreateBottomLevel(Descriptor);
+	if (GFactory)return GFactory->CreateBottomLevel(description);
 	return BearFactoryPointer<BearRHI::BearRHIBottomLevel>();
 }
 
-BearFactoryPointer<BearRHI::BearRHITopLevel> BearRenderInterface::CreateTopLevel(const BearTopLevelDescription& Descriptor)
+BearFactoryPointer<BearRHI::BearRHITopLevel> BearRenderInterface::CreateTopLevel(const BearTopLevelDescription& description)
 {
-	if (GFactory)return GFactory->CreateTopLevel(Descriptor);
+	if (GFactory)return GFactory->CreateTopLevel(description);
 	return BearFactoryPointer<BearRHI::BearRHITopLevel>();
 }
 
-BearFactoryPointer<BearRHI::BearRHIRayTracingShaderTable> BearRenderInterface::CreateRayTracingShaderTable(const BearRayTracingShaderTableDescription& Descriptor)
+BearFactoryPointer<BearRHI::BearRHIRayTracingShaderTable> BearRenderInterface::CreateRayTracingShaderTable(const BearRayTracingShaderTableDescription& description)
 {
-	if (GFactory)return GFactory->CreateRayTracingShaderTable(Descriptor);
+	if (GFactory)return GFactory->CreateRayTracingShaderTable(description);
 	return BearFactoryPointer<BearRHI::BearRHIRayTracingShaderTable>();
 }
 
 
-BearFactoryPointer<BearRHI::BearRHIRootSignature> BearRenderInterface::CreateRootSignature(const BearRootSignatureDescription& Descriptor)
+BearFactoryPointer<BearRHI::BearRHIRootSignature> BearRenderInterface::CreateRootSignature(const BearRootSignatureDescription& description)
 {
-	if (GFactory)return GFactory->CreateRootSignature(Descriptor);
+	if (GFactory)return GFactory->CreateRootSignature(description);
 	return BearFactoryPointer<BearRHI::BearRHIRootSignature>();
 }
 
-BearFactoryPointer<BearRHI::BearRHIDescriptorHeap> BearRenderInterface::CreateDescriptorHeap(const BearDescriptorHeapDescription& Descriptor)
+BearFactoryPointer<BearRHI::BearRHIDescriptorHeap> BearRenderInterface::CreateDescriptorHeap(const BearDescriptorHeapDescription& description)
 {
-	if (GFactory)return GFactory->CreateDescriptorHeap(Descriptor);
+	if (GFactory)return GFactory->CreateDescriptorHeap(description);
 	return BearFactoryPointer<BearRHI::BearRHIDescriptorHeap>();
 }
 
-BearFactoryPointer<BearRHI::BearRHIUniformBuffer> BearRenderInterface::CreateUniformBuffer(bsize Stride, bsize Count, bool Dynamic)
+BearFactoryPointer<BearRHI::BearRHIUniformBuffer> BearRenderInterface::CreateUniformBuffer(bsize stride, bsize count, bool dynamic)
 {
-	if (GFactory)return GFactory->CreateUniformBuffer(Stride,Count,Dynamic);
+	if (GFactory)return GFactory->CreateUniformBuffer(stride,count,dynamic);
 	return BearFactoryPointer<BearRHI::BearRHIUniformBuffer>();
 }
 
-BearFactoryPointer<BearRHI::BearRHITexture2D> BearRenderInterface::CreateTexture2D(bsize Width, bsize Height, bsize Mips, bsize Count, BearTexturePixelFormat PixelFormat, BearTextureUsage TypeUsage , const void* data)
+BearFactoryPointer<BearRHI::BearRHITexture2D> BearRenderInterface::CreateTexture2D(bsize width, bsize height, bsize mips, bsize count, BearTexturePixelFormat PixelFormat, BearTextureUsage type_usage , const void* data)
 {
-	if (GFactory)return GFactory->CreateTexture2D(Width, Height, Mips, Count, PixelFormat, TypeUsage,const_cast<void*>( data));
+	if (GFactory)return GFactory->CreateTexture2D(width, height, mips, count, PixelFormat, type_usage,const_cast<void*>( data));
 	return BearFactoryPointer<BearRHI::BearRHITexture2D>();
 }
 
-BearFactoryPointer<BearRHI::BearRHITextureCube> BearRenderInterface::CreateTextureCube(bsize Width, bsize Height, bsize Mips, bsize Count, BearTexturePixelFormat PixelFormat, BearTextureUsage TypeUsage, const void* data)
+BearFactoryPointer<BearRHI::BearRHITextureCube> BearRenderInterface::CreateTextureCube(bsize width, bsize height, bsize mips, bsize count, BearTexturePixelFormat PixelFormat, BearTextureUsage type_usage, const void* data)
 {
-	if (GFactory)return GFactory->CreateTextureCube(Width, Height, Mips, Count, PixelFormat, TypeUsage, const_cast<void*>(data));
+	if (GFactory)return GFactory->CreateTextureCube(width, height, mips, count, PixelFormat, type_usage, const_cast<void*>(data));
 	return BearFactoryPointer<BearRHI::BearRHITextureCube>();
 }
 
-BearFactoryPointer<BearRHI::BearRHIStructuredBuffer> BearRenderInterface::CreateStructuredBuffer(bsize Size, const void* Data, bool UAV)
+BearFactoryPointer<BearRHI::BearRHIStructuredBuffer> BearRenderInterface::CreateStructuredBuffer(bsize size, const void* data, bool uav)
 {
-	if (GFactory)return GFactory->CreateStructuredBuffer(Size, const_cast<void*>(Data), UAV);
+	if (GFactory)return GFactory->CreateStructuredBuffer(size, const_cast<void*>(data), uav);
 	return BearFactoryPointer<BearRHI::BearRHIStructuredBuffer>();
 }
 
-BearFactoryPointer<BearRHI::BearRHISampler> BearRenderInterface::CreateSampler(const BearSamplerDescription& Description)
+BearFactoryPointer<BearRHI::BearRHISampler> BearRenderInterface::CreateSampler(const BearSamplerDescription& description)
 {
-	if (GFactory)return GFactory->CreateSampler(Description);
+	if (GFactory)return GFactory->CreateSampler(description);
 	return BearFactoryPointer<BearRHI::BearRHISampler>();
 }
 
-BearFactoryPointer<BearRHI::BearRHITexture2D> BearRenderInterface::CreateTexture2D(bsize Width, bsize Height, BearRenderTargetFormat RTF)
+BearFactoryPointer<BearRHI::BearRHITexture2D> BearRenderInterface::CreateTexture2D(bsize width, bsize height, BearRenderTargetFormat rtf)
 {
-	if (GFactory)return GFactory->CreateTexture2D(Width, Height, RTF);
+	if (GFactory)return GFactory->CreateTexture2D(width, height, rtf);
 	return BearFactoryPointer<BearRHI::BearRHITexture2D>();
 }
 
-BearFactoryPointer<BearRHI::BearRHITexture2D> BearRenderInterface::CreateTexture2D(bsize Width, bsize Height, BearDepthStencilFormat DSF)
+BearFactoryPointer<BearRHI::BearRHITexture2D> BearRenderInterface::CreateTexture2D(bsize width, bsize height, BearDepthStencilFormat dsf)
 {
-	if (GFactory)return GFactory->CreateTexture2D(Width, Height, DSF);
+	if (GFactory)return GFactory->CreateTexture2D(width, height, dsf);
 	return BearFactoryPointer<BearRHI::BearRHITexture2D>();
 }
 
-BearFactoryPointer<BearRHI::BearRHIRenderPass> BearRenderInterface::CreateRenderPass(const BearRenderPassDescription& Description)
+BearFactoryPointer<BearRHI::BearRHIRenderPass> BearRenderInterface::CreateRenderPass(const BearRenderPassDescription& description)
 {
-	if (GFactory)return GFactory->CreateRenderPass(Description);
+	if (GFactory)return GFactory->CreateRenderPass(description);
 	return BearFactoryPointer<BearRHI::BearRHIRenderPass>();
 }
 
-BearFactoryPointer<BearRHI::BearRHIFrameBuffer> BearRenderInterface::CreateFrameBuffer(const BearFrameBufferDescription& Description)
+BearFactoryPointer<BearRHI::BearRHIFrameBuffer> BearRenderInterface::CreateFrameBuffer(const BearFrameBufferDescription& description)
 {
-	if (GFactory)return GFactory->CreateFrameBuffer(Description);
+	if (GFactory)return GFactory->CreateFrameBuffer(description);
 	return BearFactoryPointer<BearRHI::BearRHIFrameBuffer>();
 }
 
