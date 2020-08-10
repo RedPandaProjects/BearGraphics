@@ -29,9 +29,21 @@ enum  BearShaderType
 	ST_Geometry,
 	ST_Pixel,
 	ST_Compute,
+	/// <summary>
+	/// Mesh sahding
+	/// </summary>
 	ST_Mesh,
 	ST_Amplification,
-	ST_RayTracing,
+	/// <summary>
+	/// RayTacing
+	/// </summary>
+	ST_RayGeneration,
+	ST_Miss,
+	ST_Callable,
+	ST_Intersection,
+	ST_ClosestHit,
+	ST_AnyHit,
+
 	ST_Count,
 	ST_ALL,
 };
@@ -47,6 +59,7 @@ enum BearDescriptorType
 {
 	DT_Image,
 	DT_Buffer,
+	DT_AccelerationStructure
 };
 enum BearVertexFormat
 {
@@ -203,7 +216,9 @@ enum BearTextureUsage
 {
 	TU_STATIC,
 	TU_DYNAMIC,
-	TU_STATING
+	TU_STATING,
+	//UAV
+	TU_STORAGE,
 };
 enum BearDepthStencilFormat
 {
@@ -218,13 +233,12 @@ enum BearTextureType
 	TT_Default,
 	TT_RenderTarget,
 	TT_DepthStencil,
-	TT_UAV,
 };
 
 enum BearHitGroupType
 {
 	HGT_Triangles,
-	HGT_Procedural_Primitive,
+	HGT_ProceduralPrimitive,
 };
 enum class BearAccelerationStructureBuildFlags 
 {
@@ -243,4 +257,8 @@ enum class BearRaytracingGeometryType
 {
 	Triangles,
 	ProceduralPrimitiveAABBS
+};
+enum  class BearRayTracingShaderType
+{
+
 };

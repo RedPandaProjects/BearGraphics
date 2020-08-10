@@ -11,7 +11,12 @@ public:
 	static BearFactoryPointer<BearRHI::BearRHIShader> CreateComputeShader();
 	static BearFactoryPointer<BearRHI::BearRHIShader> CreateMeshShader();
 	static BearFactoryPointer<BearRHI::BearRHIShader> CreateAmplificationShader();
-	static BearFactoryPointer<BearRHI::BearRHIShader> CreateRayTracingShader();
+	static BearFactoryPointer<BearRHI::BearRHIShader> CreateRayGenerationShader();
+	static BearFactoryPointer<BearRHI::BearRHIShader> CreateMissShader();
+	static BearFactoryPointer<BearRHI::BearRHIShader> CreateCallableShader();
+	static BearFactoryPointer<BearRHI::BearRHIShader> CreateIntersectionShader();
+	static BearFactoryPointer<BearRHI::BearRHIShader> CreateAnyHitShader();
+	static BearFactoryPointer<BearRHI::BearRHIShader> CreateClosestHitShader();
 
 	static BearFactoryPointer<BearRHI::BearRHIViewport> CreateViewport(void*Handle,bsize Width,bsize Height,bool fullscreen,const BearViewportDescription& Description, bool Vsync=false);
 	static BearFactoryPointer<BearRHI::BearRHIContext> CreateContext();
@@ -24,7 +29,7 @@ public:
 	static BearFactoryPointer < BearRHI::BearRHIRootSignature> CreateRootSignature(const BearRootSignatureDescription& Descriptor);
 	static BearFactoryPointer < BearRHI::BearRHIDescriptorHeap> CreateDescriptorHeap(const BearDescriptorHeapDescription& Descriptor);
 	static BearFactoryPointer < BearRHI::BearRHIUniformBuffer> CreateUniformBuffer(bsize Stride, bsize Count, bool Dynamic);
-	static BearFactoryPointer < BearRHI::BearRHITexture2D> CreateTexture2D(bsize Width, bsize Height, bsize Mips, bsize Count, BearTexturePixelFormat PixelFormat, BearTextureUsage TypeUsage = TU_STATIC,const void* data=0,bool UAV=false);
+	static BearFactoryPointer < BearRHI::BearRHITexture2D> CreateTexture2D(bsize Width, bsize Height, bsize Mips, bsize Count, BearTexturePixelFormat PixelFormat, BearTextureUsage TypeUsage = TU_STATIC,const void* data=0);
 	static BearFactoryPointer < BearRHI::BearRHITextureCube> CreateTextureCube(bsize Width, bsize Height, bsize Mips, bsize Count, BearTexturePixelFormat PixelFormat, BearTextureUsage TypeUsage = TU_STATIC, const void* data = 0);
 	static BearFactoryPointer<BearRHI::BearRHIStructuredBuffer> CreateStructuredBuffer(bsize Size, const void* Data, bool UAV = false);
 	static BearFactoryPointer < BearRHI::BearRHISampler> CreateSampler(const BearSamplerDescription& Description);

@@ -36,7 +36,7 @@
 RENDER_BEGIN_CLASS_REGISTRATION2(Shader, Object, BearShaderType Type)
 
 #ifdef DEVELOPER_VERSION	
-RENDER_METHOD_REGISTRATION(bool, LoadAsText, const bchar* Text, const BearMap<BearStringConteniar, BearStringConteniar>& Defines, BearString& OutError, BearIncluder*Includer)
+RENDER_METHOD_REGISTRATION(bool, LoadAsText, const bchar* Text,const bchar* EntryPoint, const BearMap<BearStringConteniar, BearStringConteniar>& Defines, BearString& OutError, BearIncluder*Includer)
 RENDER_METHOD_REGISTRATION(void*, GetPointer)
 RENDER_METHOD_REGISTRATION(bsize, GetSize)
 #endif
@@ -100,7 +100,7 @@ RENDER_END_CLASS_REGISTRATION()
 RENDER_BEGIN_CLASS_REGISTRATION2_WITHOUT_FACTORY(UnorderedAccess, ShaderResource)
 RENDER_END_CLASS_REGISTRATION()
 
-RENDER_BEGIN_CLASS_REGISTRATION2(Texture2D, UnorderedAccess, bsize Width, bsize Height, bsize Mips, bsize Count, BearTexturePixelFormat PixelFormat, BearTextureUsage TypeUsage = TU_STATIC, void* data = 0,bool UAV=false)
+RENDER_BEGIN_CLASS_REGISTRATION2(Texture2D, UnorderedAccess, bsize Width, bsize Height, bsize Mips, bsize Count, BearTexturePixelFormat PixelFormat, BearTextureUsage TypeUsage = TU_STATIC, void* data = 0)
 RENDER_CONSTRUCTOR_REGISTRATION(Texture2D, bsize Width, bsize Height, BearRenderTargetFormat Format)
 RENDER_CONSTRUCTOR_REGISTRATION(Texture2D, bsize Width, bsize Height, BearDepthStencilFormat Format)
 RENDER_METHOD_REGISTRATION(void*, Lock, bsize mip = 0, bsize depth = 0)

@@ -28,24 +28,19 @@ public:
 
 	struct ShaderDescription
 	{
-		struct ExportDescription
-		{
-			BearStringConteniarUnicode NameFunction;
-			BearStringConteniarUnicode NameExport;
-		};
-		BearVector<ExportDescription> Exports;
-		BearFactoryPointer<BearRHI::BearRHIShader> Shader;
+		BearStringConteniarUnicode					NameExport;
+		BearFactoryPointer<BearRHI::BearRHIShader>	Shader;
 	};
 	BearVector<ShaderDescription> Shaders;
 	
 	BearFactoryPointer<BearRHI::BearRHIRootSignature> GlobalRootSignature;
 
-	struct LocalRootSignatureDescription
+/*	struct LocalRootSignatureDescription
 	{
 		BearVector<BearStringConteniarUnicode> Exports;
 		BearFactoryPointer<BearRHI::BearRHIRootSignature> RootSignature;
 	};
-	BearVector<LocalRootSignatureDescription> LocalRootSignatures;
+	BearVector<LocalRootSignatureDescription> LocalRootSignatures;*/
 
 	struct ShaderConfigDescription
 	{

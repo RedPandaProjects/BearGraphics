@@ -26,6 +26,8 @@ bool BearRenderInterface::Initialize(BearStringConteniar name)
 	return true;
 }
 
+
+
 BearFactoryPointer<BearRHI::BearRHIViewport> BearRenderInterface::CreateViewport(void* Handle, bsize Width, bsize Height, bool fullscreen, const BearViewportDescription& Description, bool Vsync)
 {
 	if (GFactory)return GFactory->CreateViewport(Handle, Width, Height, fullscreen,Vsync,Description);
@@ -37,7 +39,11 @@ BearFactoryPointer<BearRHI::BearRHIContext> BearRenderInterface::CreateContext()
 	if (GFactory)return GFactory->CreateContext();
 	return BearFactoryPointer<BearRHI::BearRHIContext>();
 }
-
+BearFactoryPointer<BearRHI::BearRHIShader> BearRenderInterface::CreateVertexShader()
+{
+	if (GFactory)return GFactory->CreateShader(ST_Vertex);
+	return BearFactoryPointer<BearRHI::BearRHIShader>();
+}
 BearFactoryPointer<BearRHI::BearRHIShader> BearRenderInterface::CreatePixelShader()
 {
 	if (GFactory)return GFactory->CreateShader(ST_Pixel);
@@ -62,15 +68,34 @@ BearFactoryPointer<BearRHI::BearRHIShader> BearRenderInterface::CreateAmplificat
 	return BearFactoryPointer<BearRHI::BearRHIShader>();
 }
 
-BearFactoryPointer<BearRHI::BearRHIShader> BearRenderInterface::CreateRayTracingShader()
+BearFactoryPointer<BearRHI::BearRHIShader> BearRenderInterface::CreateRayGenerationShader()
 {
-	if (GFactory)return GFactory->CreateShader(ST_RayTracing);
+	if (GFactory)return GFactory->CreateShader(ST_RayGeneration);
 	return BearFactoryPointer<BearRHI::BearRHIShader>();
 }
-
-BearFactoryPointer<BearRHI::BearRHIShader> BearRenderInterface::CreateVertexShader()
+BearFactoryPointer<BearRHI::BearRHIShader> BearRenderInterface::CreateMissShader()
 {
-	if (GFactory)return GFactory->CreateShader(ST_Vertex);
+	if (GFactory)return GFactory->CreateShader(ST_Miss);
+	return BearFactoryPointer<BearRHI::BearRHIShader>();
+}
+BearFactoryPointer<BearRHI::BearRHIShader> BearRenderInterface::CreateCallableShader()
+{
+	if (GFactory)return GFactory->CreateShader(ST_Callable);
+	return BearFactoryPointer<BearRHI::BearRHIShader>();
+}
+BearFactoryPointer<BearRHI::BearRHIShader> BearRenderInterface::CreateIntersectionShader()
+{
+	if (GFactory)return GFactory->CreateShader(ST_Intersection);
+	return BearFactoryPointer<BearRHI::BearRHIShader>();
+}
+BearFactoryPointer<BearRHI::BearRHIShader> BearRenderInterface::CreateAnyHitShader()
+{
+	if (GFactory)return GFactory->CreateShader(ST_AnyHit);
+	return BearFactoryPointer<BearRHI::BearRHIShader>();
+}
+BearFactoryPointer<BearRHI::BearRHIShader> BearRenderInterface::CreateClosestHitShader()
+{
+	if (GFactory)return GFactory->CreateShader(ST_ClosestHit);
 	return BearFactoryPointer<BearRHI::BearRHIShader>();
 }
 
@@ -159,9 +184,9 @@ BearFactoryPointer<BearRHI::BearRHIUniformBuffer> BearRenderInterface::CreateUni
 	return BearFactoryPointer<BearRHI::BearRHIUniformBuffer>();
 }
 
-BearFactoryPointer<BearRHI::BearRHITexture2D> BearRenderInterface::CreateTexture2D(bsize Width, bsize Height, bsize Mips, bsize Count, BearTexturePixelFormat PixelFormat, BearTextureUsage TypeUsage , const void* data, bool UAV)
+BearFactoryPointer<BearRHI::BearRHITexture2D> BearRenderInterface::CreateTexture2D(bsize Width, bsize Height, bsize Mips, bsize Count, BearTexturePixelFormat PixelFormat, BearTextureUsage TypeUsage , const void* data)
 {
-	if (GFactory)return GFactory->CreateTexture2D(Width, Height, Mips, Count, PixelFormat, TypeUsage,const_cast<void*>( data),UAV);
+	if (GFactory)return GFactory->CreateTexture2D(Width, Height, Mips, Count, PixelFormat, TypeUsage,const_cast<void*>( data));
 	return BearFactoryPointer<BearRHI::BearRHITexture2D>();
 }
 

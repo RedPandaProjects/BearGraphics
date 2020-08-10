@@ -12,7 +12,7 @@ void BearPipelineRayTracingDescription::Copy(const BearPipelineRayTracingDescrip
 	bear_copy(&GlobalRootSignature, &Right.GlobalRootSignature, 1);
 	HitGroups.copy(Right.HitGroups);
 	Shaders.copy(Right.Shaders);
-	LocalRootSignatures.copy(Right.LocalRootSignatures);
+	//LocalRootSignatures.copy(Right.LocalRootSignatures);
 }
 void BearPipelineRayTracingDescription::Swap(BearPipelineRayTracingDescription& Right)
 {
@@ -21,7 +21,7 @@ void BearPipelineRayTracingDescription::Swap(BearPipelineRayTracingDescription& 
 	bear_swap(GlobalRootSignature, Right.GlobalRootSignature);
 	HitGroups.swap(Right.HitGroups);
 	Shaders.swap(Right.Shaders);
-	LocalRootSignatures.swap(Right.LocalRootSignatures);
+	//LocalRootSignatures.swap(Right.LocalRootSignatures);
 }
 bool BearPipelineRayTracingDescription::operator==(const BearPipelineRayTracingDescription& Right) const
 {
@@ -61,21 +61,8 @@ bool BearPipelineRayTracingDescription::operator==(const BearPipelineRayTracingD
 		{
 			if (Shaders[i].Shader != Right.Shaders[i].Shader)
 				return false;
-			if (Shaders[i].Exports.size() == Right.Shaders[i].Exports.size())
-			{
-				for (bsize a = 0; a < Shaders[i].Exports.size(); a++)
-				{
-					if (Shaders[i].Exports[a].NameExport != Right.Shaders[i].Exports[a].NameExport)
-						return false;
-
-					if (Shaders[i].Exports[a].NameFunction != Right.Shaders[i].Exports[a].NameFunction)
-						return false;
-				}
-			}
-			else
-			{
+			if (Shaders[i].NameExport != Right.Shaders[i].NameExport)
 				return false;
-			}
 		}
 	}
 	else
@@ -83,7 +70,7 @@ bool BearPipelineRayTracingDescription::operator==(const BearPipelineRayTracingD
 		return false;
 	}
 
-	if (LocalRootSignatures.size() == Right.LocalRootSignatures.size())
+	/*if (LocalRootSignatures.size() == Right.LocalRootSignatures.size())
 	{
 		for (bsize i = 0; i < LocalRootSignatures.size(); i++)
 		{
@@ -109,7 +96,7 @@ bool BearPipelineRayTracingDescription::operator==(const BearPipelineRayTracingD
 	else
 	{
 		return false;
-	}
+	}*/
 	return true;
 }
 bool BearPipelineRayTracingDescription::operator<(const BearPipelineRayTracingDescription& Right) const
@@ -155,21 +142,8 @@ bool BearPipelineRayTracingDescription::operator<(const BearPipelineRayTracingDe
 		{
 			if (Shaders[i].Shader != Right.Shaders[i].Shader)
 				return Shaders[i].Shader < Right.Shaders[i].Shader;
-			if (Shaders[i].Exports.size() == Right.Shaders[i].Exports.size())
-			{
-				for (bsize a = 0; a < Shaders[i].Exports.size(); a++)
-				{
-					if (Shaders[i].Exports[a].NameExport != Right.Shaders[i].Exports[a].NameExport)
-						return Shaders[i].Exports[a].NameExport < Right.Shaders[i].Exports[a].NameExport;
-
-					if (Shaders[i].Exports[a].NameFunction != Right.Shaders[i].Exports[a].NameFunction)
-						return Shaders[i].Exports[a].NameFunction < Right.Shaders[i].Exports[a].NameFunction;
-				}
-			}
-			else
-			{
-				return Shaders[i].Exports.size() < Right.Shaders[i].Exports.size();
-			}
+			if (Shaders[i].NameExport != Right.Shaders[i].NameExport)
+				return Shaders[i].NameExport < Right.Shaders[i].NameExport;
 		}
 	}
 	else
@@ -177,7 +151,7 @@ bool BearPipelineRayTracingDescription::operator<(const BearPipelineRayTracingDe
 		return Shaders.size() < Right.Shaders.size();
 	}
 
-	if (LocalRootSignatures.size() == Right.LocalRootSignatures.size())
+	/*if (LocalRootSignatures.size() == Right.LocalRootSignatures.size())
 	{
 		for (bsize i = 0; i < LocalRootSignatures.size(); i++)
 		{
@@ -203,6 +177,6 @@ bool BearPipelineRayTracingDescription::operator<(const BearPipelineRayTracingDe
 	else
 	{
 		return LocalRootSignatures.size() < Right.LocalRootSignatures.size();
-	}
+	}*/
 	return false;
 }
