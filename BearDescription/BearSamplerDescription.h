@@ -2,12 +2,12 @@
 struct BearSamplerDescription
 {
 	BearSamplerDescription(
-		BearSamplerAddressMode addressU = SAM_WRAP,
-		BearSamplerAddressMode addressV = SAM_WRAP,
-		BearSamplerAddressMode addressW = SAM_WRAP,
+		BearSamplerAddressMode addressU = BearSamplerAddressMode::Wrap,
+		BearSamplerAddressMode addressV = BearSamplerAddressMode::Wrap,
+		BearSamplerAddressMode addressW = BearSamplerAddressMode::Wrap,
 		bsize mipBias = 0,
 		bsize maxAnisotropy = 1,
-		BearSamplerFilter filter = SF_MIN_MAG_MIP_LINEAR,
+		BearSamplerFilter filter = BearSamplerFilter::MinMagMipLinear,
 		BearColor borderColor = BearColor::Transparent
 	)
 		:AddressU(addressU),

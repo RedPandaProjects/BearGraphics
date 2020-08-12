@@ -17,7 +17,7 @@ public:
 
 	struct HitGroupDescription
 	{
-		HitGroupDescription():Type(HGT_Triangles){}
+		HitGroupDescription():Type(BearHitGroupType::Triangles){}
 		BearHitGroupType	Type;
 		BearStringConteniarUnicode NameExport;
 		BearStringConteniarUnicode AnyHitShaderImport;
@@ -28,7 +28,14 @@ public:
 
 	struct ShaderDescription
 	{
-		BearStringConteniarUnicode					NameExport;
+		struct ExportDescription
+		{
+			ExportDescription() :Type(BearRayTracingShaderType::RayGeneration) {}
+			BearStringConteniarUnicode NameFunction;
+			BearStringConteniarUnicode NameExport;
+			BearRayTracingShaderType Type;
+		};
+		BearVector<ExportDescription> Exports;
 		BearFactoryPointer<BearRHI::BearRHIShader>	Shader;
 	};
 	BearVector<ShaderDescription> Shaders;

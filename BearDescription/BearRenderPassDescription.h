@@ -3,7 +3,7 @@ struct BearRenderPassDescription
 {
 	BearRenderPassDescription()
 	{
-		DepthStencil.Format = DSF_NONE;
+		DepthStencil.Format = BearDepthStencilFormat::None;
 		DepthStencil.Clear = false;
 	}
 	struct RenderTarget
@@ -11,7 +11,7 @@ struct BearRenderPassDescription
 		RenderTarget()
 		{
 			Clear = false;
-			Format = RTF_NONE;
+			Format = BearRenderTargetFormat::None;
 		}
 		BearRenderTargetFormat Format;
 		bool Clear;

@@ -1,23 +1,23 @@
 #pragma once
-class BEARGRAPHICS_API BearBottomLevelDescription
+class BEARGRAPHICS_API BearRayTracingBottomLevelDescription
 {
 public:
-	BearBottomLevelDescription(){}
-	inline ~BearBottomLevelDescription(){}
-	BearBottomLevelDescription(const BearBottomLevelDescription& Right) { Copy(Right); }
-	BearBottomLevelDescription(BearBottomLevelDescription&& Right) { Swap(Right); }
-	inline void Copy(const BearBottomLevelDescription& Right)
+	BearRayTracingBottomLevelDescription(){}
+	inline ~BearRayTracingBottomLevelDescription(){}
+	BearRayTracingBottomLevelDescription(const BearRayTracingBottomLevelDescription& Right) { Copy(Right); }
+	BearRayTracingBottomLevelDescription(BearRayTracingBottomLevelDescription&& Right) { Swap(Right); }
+	inline void Copy(const BearRayTracingBottomLevelDescription& Right)
 	{
 		GeometryDescriptions.copy(Right.GeometryDescriptions);
 		BuildFlags.copy(Right.BuildFlags);
 	}
-	inline void Swap(BearBottomLevelDescription& Right)
+	inline void Swap(BearRayTracingBottomLevelDescription& Right)
 	{
 		GeometryDescriptions.swap(Right.GeometryDescriptions);
 		BuildFlags.swap(Right.BuildFlags);
 	}
-	inline BearBottomLevelDescription& operator=(const BearBottomLevelDescription& Right) { Copy(Right); return*this; }
-	inline BearBottomLevelDescription& operator=(BearBottomLevelDescription&& Right) { Swap(Right); return*this; }
+	inline BearRayTracingBottomLevelDescription& operator=(const BearRayTracingBottomLevelDescription& Right) { Copy(Right); return*this; }
+	inline BearRayTracingBottomLevelDescription& operator=(BearRayTracingBottomLevelDescription&& Right) { Swap(Right); return*this; }
 	struct GeometryDescription
 	{
 		GeometryDescription() { Type = BearRaytracingGeometryType::Triangles; }
@@ -25,7 +25,7 @@ public:
 		BearFlags<uint32>  Flags;
 		struct TrianglesDescription
 		{
-			TrianglesDescription() { VertexCount = 0; VertexOffset = 0; VertexFormat = VF_R32G32B32_FLOAT; IndexCount = 0; IndexOffset = 0; }
+			TrianglesDescription() { VertexCount = 0; VertexOffset = 0; VertexFormat = BearVertexFormat::R32G32B32_FLOAT; IndexCount = 0; IndexOffset = 0; }
 			BearFactoryPointer<BearRHI::BearRHIVertexBuffer> VertexBuffer;
 			bsize VertexCount;
 			bsize VertexOffset;

@@ -2,7 +2,7 @@
 
 struct BearEventWindows
 {
-	BearEventWindows() { Type = WET_None; }
+	BearEventWindows() { Type = BearWindowEventType::None; }
 
 	BearWindowEventType Type;
 	BearInput::Key Key;
@@ -27,17 +27,7 @@ struct BearEventWindows
 class BEARGRAPHICS_API BearWindow
 {
 	BEAR_CLASS_WITHOUT_COPY(BearWindow);
-
-
-
 public:
-	enum TypeWindow
-	{
-		TW_POPUP = 1,
-		TW_ONLY_CLOSED = 4,
-		TW_WIHTOUT_CLOSED = 2,
-
-	};
 	BearWindow(bsize width = 0x400, bsize height = 0x300, bool fullscreen = false, BearFlags<int32> flags = 0);
 	~BearWindow();
 	void Resize(bsize width, bsize height);
@@ -58,21 +48,21 @@ public:
 #endif
 		GetWindowHandle() const
 	{
-		return m_window;
+		return m_WindowHandle;
 	}
 
-	bool IsFullScreen()const
+	inline bool IsFullScreen()const
 	{
-		return m_fullscreen;
+		return m_Fullscreen;
 	}
 	inline BearFVector2 GetSizeFloat()const
 	{
-		return BearVector2<float>(static_cast<float>(m_width), static_cast<float>(m_height));
+		return BearVector2<float>(static_cast<float>(m_Width), static_cast<float>(m_Height));
 	}
 
 	inline BearVector2<bsize> GetSize()const
 	{
-		return BearVector2<bsize>(m_width, m_height);
+		return BearVector2<bsize>(m_Width, m_Height);
 	}
 #ifndef BEARGRAPHICS_EXPORTS
 private:
@@ -90,14 +80,10 @@ private:
 #elif LINUX
 	void*
 #endif
-		m_window;
-
-
-	BearVector<BearEventWindows>  m_events;
-	BearVector<BearEventWindows>::iterator  m_events_item;
-	bsize m_width, m_height;
-	bool m_fullscreen;
-	bool m_mouse_enter;
-
-
+	m_WindowHandle;
+	BearVector<BearEventWindows>  m_Events;
+	BearVector<BearEventWindows>::iterator  m_EventPtr;
+	bsize m_Width, m_Height;
+	bool m_Fullscreen;
+	bool m_MouseEnter;
 };

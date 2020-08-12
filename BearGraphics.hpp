@@ -36,7 +36,6 @@ namespace BearRHI
 #include "BearResource/BearImage.h"
 
 
-#include "BearDescription/BearDispatchRaysDescription.h"
 
 #define RENDER_LEVEL_0_REGISTER 0
 namespace BearRHI
@@ -44,18 +43,27 @@ namespace BearRHI
 #include "BearTemplate/BearGraphicsFactoryOfDefinitionsForRegistration.h"
 #include "BearTemplate/BearGraphicsObjectsList.h"
 }
+
+#include "BearDescription\Base\BearInputLayoutElement.h"
+#include "BearDescription\Base\BearBlendStateDescription.h"
+#include "BearDescription\Base\BearDepthStencilStateDescription.h"
+#include "BearDescription\Base\BearRasterizerStateDescription.h"
+#include "BearDescription\Base\BearMultisampleStateDescription.h"
+
 #include "BearDescription/BearViewportDescription.h"
 #include "BearDescription/BearPipelineGraphicsDescription.h"
 #include "BearDescription/BearPipelineMeshDescription.h"
-#include "BearDescription/BearPipelineRayTracingDescription.h"
 #include "BearDescription/BearRootSignatureDescription.h"
 #include "BearDescription/BearDescriptorHeapDescription.h"
 #include "BearDescription/BearSamplerDescription.h"
 #include "BearDescription/BearRenderPassDescription.h"
 #include "BearDescription/BearFrameBufferDescription.h"
-#include "BearDescription/BearBottomLevelDescription.h"
-#include "BearDescription/BearTopLevelDescription.h"
-#include "BearDescription/BearRayTracingShaderTableDescription.h"
+
+
+#include "BearDescription/RayTracing/BearPipelineRayTracingDescription.h"
+#include "BearDescription/RayTracing/BearRayTracingBottomLevelDescription.h"
+#include "BearDescription/RayTracing/BearRayTracingTopLevelDescription.h"
+#include "BearDescription/RayTracing/BearRayTracingShaderTableDescription.h"
 
 #include "BearRenderInterface.h"
 #include "BearRenderStats.h"

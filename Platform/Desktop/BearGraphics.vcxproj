@@ -31,7 +31,7 @@
     <ClCompile Include="..\..\BearDescription\BearFrameBufferDescription.cpp" />
     <ClCompile Include="..\..\BearDescription\BearPipelineGraphicsDescription.cpp" />
     <ClCompile Include="..\..\BearDescription\BearPipelineMeshDescription.cpp" />
-    <ClCompile Include="..\..\BearDescription\BearPipelineRayTracingDescription.cpp" />
+    <ClCompile Include="..\..\BearDescription\RayTracing\BearPipelineRayTracingDescription.cpp" />
     <ClCompile Include="..\..\BearGraphics.PCH.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -50,19 +50,24 @@
     <ClCompile Include="..\..\BearSystem\BearWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\BearDescription\BearBottomLevelDescription.h" />
+    <ClInclude Include="..\..\BearDescription\Base\BearInputLayoutElement.h" />
+    <ClInclude Include="..\..\BearDescription\Base\BearBlendStateDescription.h" />
+    <ClInclude Include="..\..\BearDescription\Base\BearDepthStencilStateDescription.h" />
+    <ClInclude Include="..\..\BearDescription\Base\BearMultisampleStateDescription.h" />
+    <ClInclude Include="..\..\BearDescription\Base\BearRasterizerStateDescription.h" />
     <ClInclude Include="..\..\BearDescription\BearDescriptorHeapDescription.h" />
     <ClInclude Include="..\..\BearDescription\BearDispatchRaysDescription.h" />
     <ClInclude Include="..\..\BearDescription\BearFrameBufferDescription.h" />
     <ClInclude Include="..\..\BearDescription\BearPipelineGraphicsDescription.h" />
     <ClInclude Include="..\..\BearDescription\BearPipelineMeshDescription.h" />
-    <ClInclude Include="..\..\BearDescription\BearPipelineRayTracingDescription.h" />
-    <ClInclude Include="..\..\BearDescription\BearRayTracingShaderTableDescription.h" />
     <ClInclude Include="..\..\BearDescription\BearRenderPassDescription.h" />
     <ClInclude Include="..\..\BearDescription\BearRootSignatureDescription.h" />
     <ClInclude Include="..\..\BearDescription\BearSamplerDescription.h" />
-    <ClInclude Include="..\..\BearDescription\BearTopLevelDescription.h" />
     <ClInclude Include="..\..\BearDescription\BearViewportDescription.h" />
+    <ClInclude Include="..\..\BearDescription\RayTracing\BearPipelineRayTracingDescription.h" />
+    <ClInclude Include="..\..\BearDescription\RayTracing\BearRayTracingBottomLevelDescription.h" />
+    <ClInclude Include="..\..\BearDescription\RayTracing\BearRayTracingShaderTableDescription.h" />
+    <ClInclude Include="..\..\BearDescription\RayTracing\BearRayTracingTopLevelDescription.h" />
     <ClInclude Include="..\..\BearGraphics.hpp" />
     <ClInclude Include="..\..\BearGraphicsEnums.h" />
     <ClInclude Include="..\..\BearRenderBase.h" />

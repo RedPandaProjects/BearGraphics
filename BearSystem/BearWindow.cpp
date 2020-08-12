@@ -35,10 +35,10 @@ LRESULT CALLBACK GlobalOnEventNoClosed(HWND handle, UINT message, WPARAM wParam,
 		break;
 	}
 	{
-		auto viewport = reinterpret_cast<BearWindow*>(GetWindowLongPtrW(handle, GWLP_USERDATA));
-		if (viewport)
+		auto Viewport = reinterpret_cast<BearWindow*>(GetWindowLongPtrW(handle, GWLP_USERDATA));
+		if (Viewport)
 		{
-			viewport->OnEvent(handle, message, wParam, lParam);
+			Viewport->OnEvent(handle, message, wParam, lParam);
 		}
 	}
 	return DefWindowProc(handle, message, wParam, lParam);
@@ -61,77 +61,78 @@ static void RegisterWindowsClass(HINSTANCE hInstance, bool closed)
 	}
 
 
-	WNDCLASSEX wc;
-	wc.style = CS_HREDRAW | CS_VREDRAW;
+	WNDCLASSEX WndClass;
+	WndClass.style = CS_HREDRAW | CS_VREDRAW;
 	if (closed)
 	{
-		wc.lpfnWndProc = GlobalOnEvent;
+		WndClass.lpfnWndProc = GlobalOnEvent;
 	}
 	else
 	{
-		wc.lpfnWndProc = GlobalOnEventNoClosed;
+		WndClass.lpfnWndProc = GlobalOnEventNoClosed;
 	}
-	wc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
-	wc.cbClsExtra = 0;
-	wc.cbWndExtra = 0;
-	wc.hInstance = hInstance;
-	wc.hIcon = LoadIcon(NULL, IDI_WINLOGO);
-	wc.hIconSm = wc.hIcon;
-	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
+	WndClass.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
+	WndClass.cbClsExtra = 0;
+	WndClass.cbWndExtra = 0;
+	WndClass.hInstance = hInstance;
+	WndClass.hIcon = LoadIcon(NULL, IDI_WINLOGO);
+	WndClass.hIconSm = WndClass.hIcon;
+	WndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
 #ifdef DEBUG
-	wc.hbrBackground = CreateSolidBrush(RGB(69, 22, 28));
+	WndClass.hbrBackground = CreateSolidBrush(RGB(69, 22, 28));
 #else
-	wc.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
+	WndClass.hbrBackground = (HBRUSH)GetStockObject(BLACK_BRUSH);
 #endif
-	wc.lpszMenuName = NULL;
+	WndClass.lpszMenuName = NULL;
 	if (closed)
 	{
-		wc.lpszClassName = TEXT("BEAR");
+		WndClass.lpszClassName = TEXT("BEAR");
 	}
 	else
 	{
-		wc.lpszClassName = TEXT("BEARNC");
+		WndClass.lpszClassName = TEXT("BEARNC");
 	}
-	wc.cbSize = sizeof(WNDCLASSEX);
-	RegisterClassEx(&wc);
+	WndClass.cbSize = sizeof(WNDCLASSEX);
+	RegisterClassEx(&WndClass);
 }
-BearWindow::BearWindow(bsize width, bsize height, bool fullscreen, BearFlags<int32> flags) :m_MouseShow(1),m_width(width), m_height(height), m_fullscreen(false), m_mouse_enter(false)
+BearWindow::BearWindow(bsize width, bsize height, bool fullscreen, BearFlags<int32> flags) :m_MouseShow(1),m_Width(width), m_Height(height), m_Fullscreen(false), m_MouseEnter(false)
 {
-	m_events_item = m_events.end();
+	m_EventPtr = m_Events.end();
 	HINSTANCE hInstance = (HINSTANCE)GetModuleHandle(0);
-	RegisterWindowsClass(hInstance, !flags.test(TW_WIHTOUT_CLOSED));
 
+	RegisterWindowsClass(hInstance, !flags.test((int32)BearWindowType::WihtoutClosed));
+	
 
 
 	m_Style = WS_POPUP;
-	if (!flags.test(TW_POPUP))
+	if (!flags.test((int32)BearWindowType::Popup))
 	{
-		if (flags.test(TW_ONLY_CLOSED)) m_Style = WS_OVERLAPPED | WS_SYSMENU | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_DLGFRAME;
+		if (flags.test((int32)BearWindowType::OnlyClosed)) m_Style = WS_OVERLAPPED | WS_SYSMENU | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_DLGFRAME;
 		else m_Style = WS_OVERLAPPEDWINDOW;
 	}
 
 	{
 		RECT rectangle = { 0, 0, static_cast<long>(width), static_cast<long>(height) };
 
-		if (!flags.test(TW_WIHTOUT_CLOSED))
+		if (!flags.test((int32)BearWindowType::WihtoutClosed))
 		{
-			m_window = CreateWindowEx(0, TEXT("BEAR"), TEXT(""), m_Style, 0, 0, 1, 1, NULL, NULL, hInstance, this);
+			m_WindowHandle = CreateWindowEx(0, TEXT("BEAR"), TEXT(""), m_Style, 0, 0, 1, 1, NULL, NULL, hInstance, this);
 		}
 		else
 		{
-			m_window = CreateWindowEx(0, TEXT("BEARNC"), TEXT(""), m_Style, 0, 0, 1, 1, NULL, NULL, hInstance, this);
+			m_WindowHandle = CreateWindowEx(0, TEXT("BEARNC"), TEXT(""), m_Style, 0, 0, 1, 1, NULL, NULL, hInstance, this);
 		}
 
-		AdjustWindowRect(&rectangle, GetWindowLong((HWND)m_window, GWL_STYLE), false);
-		SetWindowPos((HWND)m_window, NULL, 0, 0, rectangle.right - rectangle.left, rectangle.bottom - rectangle.top, SWP_NOMOVE | SWP_NOZORDER);
+		AdjustWindowRect(&rectangle, GetWindowLong((HWND)m_WindowHandle, GWL_STYLE), false);
+		SetWindowPos((HWND)m_WindowHandle, NULL, 0, 0, rectangle.right - rectangle.left, rectangle.bottom - rectangle.top, SWP_NOMOVE | SWP_NOZORDER);
+		
+		uint32 XPosition = static_cast<int32>(((uint32)GetSystemMetrics(SM_CXSCREEN) / 2) - (width / 2));
+		uint32 YPosition = static_cast<int32>(((uint32)GetSystemMetrics(SM_CYSCREEN) / 2) - (height / 2));
 
-		uint32 xpos = static_cast<int32>(((uint32)GetSystemMetrics(SM_CXSCREEN) / 2) - (width / 2));
-		uint32 ypos = static_cast<int32>(((uint32)GetSystemMetrics(SM_CYSCREEN) / 2) - (height / 2));
-
-		SetWindowPos((HWND)m_window, NULL, xpos, ypos, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
+		SetWindowPos((HWND)m_WindowHandle, NULL, XPosition, YPosition, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
 	}
 
-	ShowWindow((HWND)m_window, SW_SHOW);
+	ShowWindow((HWND)m_WindowHandle, SW_SHOW);
 	if (fullscreen)SetFullscreen(fullscreen);
 
 }
@@ -144,17 +145,14 @@ BearWindow::~BearWindow()
 
 void BearWindow::Resize(bsize width, bsize height)
 {
-	m_width = width;
-	m_height = height;
+	m_Width = width;
+	m_Height = height;
 
-	if (!m_fullscreen)
+	if (!m_Fullscreen)
 	{
 
-
-
-
-		SetWindowLong((HWND)m_window, GWL_STYLE, m_Style);
-		//AdjustWindowRect(&rectangle, GetWindowLong((HWND)m_window, GWL_STYLE), false);
+		SetWindowLong((HWND)m_WindowHandle, GWL_STYLE, m_Style);
+		//AdjustWindowRect(&rectangle, GetWindowLong((HWND)m_WindowHandle, GWL_STYLE), false);
 
 		RECT			m_rcWindowBounds;
 		RECT				DesktopRect;
@@ -162,14 +160,14 @@ void BearWindow::Resize(bsize width, bsize height)
 		GetClientRect(GetDesktopWindow(), &DesktopRect);
 
 		SetRect(&m_rcWindowBounds,
-			(DesktopRect.right -static_cast<LONG>( m_width)) / 2,
-			(DesktopRect.bottom - static_cast<LONG>(m_height)) / 2,
-			(DesktopRect.right + static_cast<LONG>(m_width)) / 2,
-			(DesktopRect.bottom + static_cast<LONG>(m_height)) / 2);
+			(DesktopRect.right -static_cast<LONG>( m_Width)) / 2,
+			(DesktopRect.bottom - static_cast<LONG>(m_Height)) / 2,
+			(DesktopRect.right + static_cast<LONG>(m_Width)) / 2,
+			(DesktopRect.bottom + static_cast<LONG>(m_Height)) / 2);
 
 		AdjustWindowRect(&m_rcWindowBounds, m_Style, FALSE);
 
-		SetWindowPos((HWND)m_window,
+		SetWindowPos((HWND)m_WindowHandle,
 			HWND_NOTOPMOST,
 			m_rcWindowBounds.left,
 			m_rcWindowBounds.top,
@@ -179,51 +177,50 @@ void BearWindow::Resize(bsize width, bsize height)
 	}
 	else
 	{
-		SetWindowPos((HWND)m_window, HWND_TOP, 0, 0, static_cast<int32>(m_width), static_cast<int32>(m_height), SWP_FRAMECHANGED);
-		SetWindowLong((HWND)m_window, GWL_STYLE, WS_EX_TOPMOST | WS_POPUP | WS_VISIBLE);
-		ShowWindow((HWND)m_window, SW_MAXIMIZE);
-		SetWindowLong(m_window, GWL_EXSTYLE, WS_EX_TOPMOST);
+		SetWindowPos((HWND)m_WindowHandle, HWND_TOP, 0, 0, static_cast<int32>(m_Width), static_cast<int32>(m_Height), SWP_FRAMECHANGED);
+		SetWindowLong((HWND)m_WindowHandle, GWL_STYLE, WS_EX_TOPMOST | WS_POPUP | WS_VISIBLE);
+		ShowWindow((HWND)m_WindowHandle, SW_MAXIMIZE);
+		SetWindowLong(m_WindowHandle, GWL_EXSTYLE, WS_EX_TOPMOST);
 
-		SetForegroundWindow(m_window);
+		SetForegroundWindow(m_WindowHandle);
 	}
 }
 void BearWindow::SetFullscreen(bool fullscreen)
 {
-	m_fullscreen = fullscreen;
+	m_Fullscreen = fullscreen;
 
-	if (m_fullscreen)
+	if (m_Fullscreen)
 	{
-		SetWindowLong((HWND)m_window, GWL_STYLE, WS_POPUP | WS_VISIBLE);
-		SetWindowLong((HWND)m_window, GWL_EXSTYLE, WS_EX_TOPMOST);
-		SetFocus(m_window);
+		SetWindowLong((HWND)m_WindowHandle, GWL_STYLE, WS_POPUP | WS_VISIBLE);
+		SetWindowLong((HWND)m_WindowHandle, GWL_EXSTYLE, WS_EX_TOPMOST);
+		SetFocus(m_WindowHandle);
 
 
 	}
 	else
 	{
-		SetWindowLong((HWND)m_window, GWL_STYLE, WS_DLGFRAME | WS_SYSMENU | WS_MINIMIZEBOX);
-
+		SetWindowLong((HWND)m_WindowHandle, GWL_STYLE, WS_DLGFRAME | WS_SYSMENU | WS_MINIMIZEBOX);
 
 	}
-	Resize(m_width, m_height);
-	SetForegroundWindow((HWND)m_window);
+	Resize(m_Width, m_Height);
+	SetForegroundWindow((HWND)m_WindowHandle);
 }
 
 bool BearWindow::Update()
 {
-	m_events.clear_not_free();
-	m_events_item = m_events.end();
-	MSG msg;msg.message= WM_NULL;
-	while (PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE))
+	m_Events.clear_not_free();
+	m_EventPtr = m_Events.end();
+	MSG Msg; Msg.message= WM_NULL;
+	while (PeekMessageW(&Msg, NULL, 0, 0, PM_REMOVE))
 	{
-		if (msg.message == WM_QUIT)
+		if (Msg.message == WM_QUIT)
 			return false;
-		TranslateMessage(&msg);
-		DispatchMessageW(&msg);
+		TranslateMessage(&Msg);
+		DispatchMessageW(&Msg);
 	}
-	if (msg.message == WM_QUIT)
+	if (Msg.message == WM_QUIT)
 		return false;
-	m_events_item = m_events.begin();
+	m_EventPtr = m_Events.begin();
 	return true;
 }
 
@@ -236,49 +233,42 @@ void BearWindow::ShowCursor(bool show)
 
 BearVector2<float> BearWindow::GetMousePosition()
 {
-	POINT point;
-	GetCursorPos(&point);
-	if (!IsFullScreen())	ScreenToClient(GetWindowHandle(), &point);
-	return BearFVector2(static_cast<float>(point.x), static_cast<float>(point.y));
+	POINT Point = {};
+	GetCursorPos(&Point);
+	if (!IsFullScreen())	ScreenToClient(GetWindowHandle(), &Point);
+	return BearFVector2(static_cast<float>(Point.x), static_cast<float>(Point.y));
 }
 
 void BearWindow::SetMousePosition(const BearVector2<float>& position)
 {
-	POINT point = { static_cast<LONG>(position.x),static_cast<LONG>(position.y) };
+	POINT Point = { static_cast<LONG>(position.x),static_cast<LONG>(position.y) };
 	if (!IsFullScreen())
-		ClientToScreen(GetWindowHandle(), &point);
-	SetCursorPos(point.x, point.y);
+		ClientToScreen(GetWindowHandle(), &Point);
+	SetCursorPos(Point.x, Point.y);
 }
 
 bool BearWindow::GetEvent(BearEventWindows& e)
 {
-	/*if (m_event_resize.Type == WET_Resize && m_resize_timer.get_elapsed_time().asmiliseconds() > 100)
-	{
-		e = m_event_resize;
-		m_event_resize.Type = WET_None;
-	}
-	else
-	{*/
-	if (m_events_item == m_events.end())
+
+	if (m_EventPtr == m_Events.end())
 		return false;
-	while (m_events_item + 1 != m_events.end() && (m_events_item + 1)->Type == WET_Resize) { m_events_item++; }
-	e = *m_events_item;
-	m_events_item++;
-	//}
+	while (m_EventPtr + 1 != m_Events.end() && (m_EventPtr + 1)->Type == BearWindowEventType::Resize) { m_EventPtr++; }
+	e = *m_EventPtr;
+	m_EventPtr++;
 	return true;
 }
 
 bool BearWindow::Empty() const
 {
-	return m_window == 0;
+	return m_WindowHandle == 0;
 }
 
 void BearWindow::OnEvent(HWND handle, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	bint i = 0;
-	if (m_events_item == m_events.end()) i = -1;
-	else i = m_events.end() - m_events_item;
-	BearEventWindows ev;
+	if (m_EventPtr == m_Events.end()) i = -1;
+	else i = m_Events.end() - m_EventPtr;
+	BearEventWindows EventResult;
 	switch (message)
 	{
 	case WM_SIZE:
@@ -289,17 +279,17 @@ void BearWindow::OnEvent(HWND handle, UINT message, WPARAM wParam, LPARAM lParam
 
 		BearVector2<bsize> new_size(rect.right - rect.left, rect.bottom - rect.top);
 
-		if (m_fullscreen == false &&wParam != SIZE_MINIMIZED && new_size != GetSize())
+		if (m_Fullscreen == false &&wParam != SIZE_MINIMIZED && new_size != GetSize())
 		{
-			if(new_size.x + 8 == m_width && new_size.y + 31 == m_height ) break;
-			m_width = new_size.x;
-			m_height = new_size.y;
-			ev.Size.width = GetSizeFloat().x;
-			ev.Size.height = GetSizeFloat().y;
-			ev.Type = WET_Resize;
-			/*m_event_resize = ev;
+			if(new_size.x + 8 == m_Width && new_size.y + 31 == m_Height ) break;
+			m_Width = new_size.x;
+			m_Height = new_size.y;
+			EventResult.Size.width = GetSizeFloat().x;
+			EventResult.Size.height = GetSizeFloat().y;
+			EventResult.Type = BearWindowEventType::Resize;
+			/*m_event_resize = EventResult;
 			m_resize_timer.restart();*/
-			m_events.push_back(ev);
+			m_Events.push_back(EventResult);
 		}
 		break;
 	}
@@ -310,14 +300,14 @@ void BearWindow::OnEvent(HWND handle, UINT message, WPARAM wParam, LPARAM lParam
 
 		RECT zone;
 		GetClientRect(GetWindowHandle(), &zone);
-		if (m_mouse_enter)
+		if (m_MouseEnter)
 		{
 			if ((zone.left > x || zone.right < x) ||
 				(zone.top > y || zone.bottom < y))
 			{
-				ev.Type = WET_MouseLevae;
-				m_events.push_back(ev);
-				m_mouse_enter = false;
+				EventResult.Type = BearWindowEventType::MouseLevae;
+				m_Events.push_back(EventResult);
+				m_MouseEnter = false;
 			}
 
 		}
@@ -326,27 +316,27 @@ void BearWindow::OnEvent(HWND handle, UINT message, WPARAM wParam, LPARAM lParam
 			if ((zone.left <x && zone.right > x) &&
 				(zone.top < y && zone.bottom > y))
 			{
-				ev.Type = WET_MouseEnter;
-				m_events.push_back(ev);
-				m_mouse_enter = true;
+				EventResult.Type = BearWindowEventType::MouseEnter;
+				m_Events.push_back(EventResult);
+				m_MouseEnter = true;
 			}
 		}
-		ev.Type = WET_MouseMove;
-		ev.Position.x = static_cast<float>(x);
-		ev.Position.y = static_cast<float>(y);
-		m_events.push_back(ev);
+		EventResult.Type = BearWindowEventType::MouseMove;
+		EventResult.Position.x = static_cast<float>(x);
+		EventResult.Position.y = static_cast<float>(y);
+		m_Events.push_back(EventResult);
 		break;
 	}
 	case WM_SETFOCUS:
 	{
-		ev.Type = WET_Active;
-		m_events.push_back(ev);
+		EventResult.Type = BearWindowEventType::Active;
+		m_Events.push_back(EventResult);
 		break;
 	}
 	case WM_KILLFOCUS:
 	{
-		ev.Type = WET_Deactive;
-		m_events.push_back(ev);
+		EventResult.Type = BearWindowEventType::Deactive;
+		m_Events.push_back(EventResult);
 		break;
 	}
 	case WM_SYSKEYDOWN:
@@ -377,9 +367,9 @@ void BearWindow::OnEvent(HWND handle, UINT message, WPARAM wParam, LPARAM lParam
 		auto item = GFromWinowsKey->find(DWORD(wParam));
 		if (item == GFromWinowsKey->end())
 			break;
-		ev.Type = WET_KeyDown;
-		ev.Key = static_cast<BearInput::Key>(item->second);
-		m_events.push_back(ev);
+		EventResult.Type = BearWindowEventType::KeyDown;
+		EventResult.Key = static_cast<BearInput::Key>(item->second);
+		m_Events.push_back(EventResult);
 		break;
 	}
 	case WM_KEYUP:
@@ -410,9 +400,9 @@ void BearWindow::OnEvent(HWND handle, UINT message, WPARAM wParam, LPARAM lParam
 		auto item = GFromWinowsKey->find(DWORD(wParam));
 		if (item == GFromWinowsKey->end())
 			break;
-		ev.Type = WET_KeyUp;
-		ev.Key = static_cast<BearInput::Key>(item->second);
-		m_events.push_back(ev);
+		EventResult.Type = BearWindowEventType::KeyUp;
+		EventResult.Key = static_cast<BearInput::Key>(item->second);
+		m_Events.push_back(EventResult);
 		break;
 	}
 	case WM_MOUSEWHEEL:
@@ -420,67 +410,67 @@ void BearWindow::OnEvent(HWND handle, UINT message, WPARAM wParam, LPARAM lParam
 		int16 delta = static_cast<int16>(HIWORD(wParam));
 		if (delta > 0)
 		{
-			ev.Type = WET_KeyDown;
-			ev.Change = delta / 120.f;
-			ev.Key = BearInput::KeyMouseScrollUp;
+			EventResult.Type = BearWindowEventType::KeyDown;
+			EventResult.Change = delta / 120.f;
+			EventResult.Key = BearInput::KeyMouseScrollUp;
 		}
 		else if (delta < 0)
 		{
-			ev.Type = WET_KeyDown;
-			ev.Change = delta / 120.f;
-			ev.Key = BearInput::KeyMouseScrollDown;
+			EventResult.Type = BearWindowEventType::KeyDown;
+			EventResult.Change = delta / 120.f;
+			EventResult.Key = BearInput::KeyMouseScrollDown;
 		}
-		m_events.push_back(ev);
+		m_Events.push_back(EventResult);
 		break;
 	}
 	case WM_LBUTTONDOWN:
 	{
-		ev.Type = WET_KeyDown;
-		ev.Key = BearInput::KeyMouseLeft;
-		m_events.push_back(ev);
+		EventResult.Type = BearWindowEventType::KeyDown;
+		EventResult.Key = BearInput::KeyMouseLeft;
+		m_Events.push_back(EventResult);
 		break;
 	}
 	case WM_RBUTTONDOWN:
 	{
-		ev.Type = WET_KeyDown;
-		ev.Key = BearInput::KeyMouseRight;
-		m_events.push_back(ev);
+		EventResult.Type = BearWindowEventType::KeyDown;
+		EventResult.Key = BearInput::KeyMouseRight;
+		m_Events.push_back(EventResult);
 		break;
 	}
 	case WM_MBUTTONDOWN:
 	{
-		ev.Type = WET_KeyDown;
-		ev.Key = BearInput::KeyMouseMiddle;
-		m_events.push_back(ev);
+		EventResult.Type = BearWindowEventType::KeyDown;
+		EventResult.Key = BearInput::KeyMouseMiddle;
+		m_Events.push_back(EventResult);
 		break;
 	}
 	case WM_LBUTTONUP:
 	{
-		ev.Type = WET_KeyUp;
-		ev.Key = BearInput::KeyMouseLeft;
-		m_events.push_back(ev);
+		EventResult.Type = BearWindowEventType::KeyUp;
+		EventResult.Key = BearInput::KeyMouseLeft;
+		m_Events.push_back(EventResult);
 		break;
 	}
 	case WM_RBUTTONUP:
 	{
-		ev.Type = WET_KeyUp;
-		ev.Key = BearInput::KeyMouseRight;
-		m_events.push_back(ev);
+		EventResult.Type = BearWindowEventType::KeyUp;
+		EventResult.Key = BearInput::KeyMouseRight;
+		m_Events.push_back(EventResult);
 		break;
 	}
 	case WM_MBUTTONUP:
 	{
-		ev.Type = WET_KeyUp;
-		ev.Key = BearInput::KeyMouseMiddle;
-		m_events.push_back(ev);
+		EventResult.Type = BearWindowEventType::KeyUp;
+		EventResult.Key = BearInput::KeyMouseMiddle;
+		m_Events.push_back(EventResult);
 		break;
 	}
 	case WM_CHAR:
 	{
 		TCHAR ch = TCHAR(wParam);
-		ev.Type = WET_Char;
-		ev.Char = ch;
-		m_events.push_back(ev);
+		EventResult.Type = BearWindowEventType::Char;
+		EventResult.Char = ch;
+		m_Events.push_back(EventResult);
 		break;
 	}
 	default:
@@ -489,11 +479,11 @@ void BearWindow::OnEvent(HWND handle, UINT message, WPARAM wParam, LPARAM lParam
 
 	if (i < 0)
 	{
-		m_events_item = m_events.end();
+		m_EventPtr = m_Events.end();
 	}
 	else if (i)
 	{
-		m_events_item = m_events.begin() + i;
+		m_EventPtr = m_Events.begin() + i;
 	}
 	return;
 }

@@ -22,9 +22,9 @@ void BearPipelineMeshDescription::Copy(const BearPipelineMeshDescription& Right)
 	Shaders.Amplification = Right.Shaders.Amplification;
 	Shaders.Pixel = Right.Shaders.Pixel;
 
-	memcpy(&BlendState, &Right.BlendState,sizeof(BlendStateDescription));
-	memcpy(&DepthStencilState, &Right.DepthStencilState, sizeof(DepthStencilStateDescription));
-	memcpy(&RasterizerState, &Right.RasterizerState, sizeof(RasterizerStateDescription));
+	bear_copy(&BlendState, &Right.BlendState,1);
+	bear_copy(&DepthStencilState, &Right.DepthStencilState, 1);
+	bear_copy(&RasterizerState, &Right.RasterizerState,1);
 
 }
 
@@ -37,9 +37,9 @@ void BearPipelineMeshDescription::Swap(BearPipelineMeshDescription& Right)
 	Shaders.Amplification.swap(Right.Shaders.Amplification);
 	Shaders.Pixel.swap(Right.Shaders.Pixel);
 
-	std::swap(BlendState, Right.BlendState);
-	std::swap(DepthStencilState, Right.DepthStencilState);
-	std::swap(RasterizerState, Right.RasterizerState);
+	bear_swap(BlendState, Right.BlendState);
+	bear_swap(DepthStencilState, Right.DepthStencilState);
+	bear_swap(RasterizerState, Right.RasterizerState);
 }
 
 
@@ -57,17 +57,16 @@ bool BearPipelineMeshDescription::operator==(const BearPipelineMeshDescription& 
 		return false;
 
 
-	if (memcmp(&BlendState, &Right.BlendState, sizeof(BlendStateDescription) ) != 0)
+	if (bear_compare(&BlendState, &Right.BlendState,1 ) != 0)
 		return false;
-	if (memcmp(&DepthStencilState, &Right.DepthStencilState, sizeof(DepthStencilStateDescription)) != 0)
+	if (bear_compare(&DepthStencilState, &Right.DepthStencilState,1) != 0)
 		return false;
 
-	if (memcmp(&DepthStencilState, &Right.DepthStencilState, sizeof(DepthStencilStateDescription)) != 0)
+	if (bear_compare(&DepthStencilState, &Right.DepthStencilState, 1) != 0)
 		return false;
 	
 	return true;
 }
-#pragma optimize( "", off )
 bool BearPipelineMeshDescription::operator<(const BearPipelineMeshDescription& Right) const
 {
 	if (RenderPass != Right.RenderPass)
@@ -82,12 +81,11 @@ bool BearPipelineMeshDescription::operator<(const BearPipelineMeshDescription& R
 		return Shaders.Pixel < Right.Shaders.Pixel;
 
 	int result = 0;
-	result = memcmp(&BlendState, &Right.BlendState, sizeof(BlendStateDescription));
+	result = bear_compare(&BlendState, &Right.BlendState, 1);
 	if (result != 0)
 		return result < 0;
-	result = memcmp(&DepthStencilState, &Right.DepthStencilState, sizeof(DepthStencilStateDescription));
+	result = bear_compare(&DepthStencilState, &Right.DepthStencilState, 1);
 	if (result != 0)
 		return result<0;
-	return memcmp(&DepthStencilState, &Right.DepthStencilState, sizeof(DepthStencilStateDescription))<0;
+	return bear_compare(&DepthStencilState, &Right.DepthStencilState, 1)<0;
 }
-#pragma optimize( "s", on )

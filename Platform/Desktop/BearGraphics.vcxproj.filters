@@ -19,6 +19,12 @@
     <Filter Include="BearSystem">
       <UniqueIdentifier>{93e2c32d-2740-4e34-82ac-ded0eb9fdb2a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BearDescription\Base">
+      <UniqueIdentifier>{dae18a1e-7424-4ba1-835f-9d775e1633b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BearDescription\RayTracing">
+      <UniqueIdentifier>{b51864b7-0761-4428-94e7-7fa8831a1b4a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\BearDescription\BearDescriptorHeapDescription.cpp">
@@ -52,8 +58,8 @@
     <ClCompile Include="..\..\BearSystem\BearWindow.cpp">
       <Filter>BearSystem</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\BearDescription\BearPipelineRayTracingDescription.cpp">
-      <Filter>BearDescription</Filter>
+    <ClCompile Include="..\..\BearDescription\RayTracing\BearPipelineRayTracingDescription.cpp">
+      <Filter>BearDescription\RayTracing</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -131,20 +137,35 @@
     <ClInclude Include="..\..\BearSystem\BearWindow.h">
       <Filter>BearSystem</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\BearDescription\BearPipelineRayTracingDescription.h">
-      <Filter>BearDescription</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\BearDescription\BearBottomLevelDescription.h">
-      <Filter>BearDescription</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\BearDescription\BearTopLevelDescription.h">
-      <Filter>BearDescription</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\BearDescription\BearRayTracingShaderTableDescription.h">
-      <Filter>BearDescription</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\BearDescription\BearDispatchRaysDescription.h">
       <Filter>BearDescription</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearDescription\Base\BearInputLayoutElement.h">
+      <Filter>BearDescription\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearDescription\Base\BearBlendStateDescription.h">
+      <Filter>BearDescription\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearDescription\Base\BearDepthStencilStateDescription.h">
+      <Filter>BearDescription\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearDescription\Base\BearMultisampleStateDescription.h">
+      <Filter>BearDescription\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearDescription\Base\BearRasterizerStateDescription.h">
+      <Filter>BearDescription\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearDescription\RayTracing\BearRayTracingShaderTableDescription.h">
+      <Filter>BearDescription\RayTracing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearDescription\RayTracing\BearRayTracingTopLevelDescription.h">
+      <Filter>BearDescription\RayTracing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearDescription\RayTracing\BearPipelineRayTracingDescription.h">
+      <Filter>BearDescription\RayTracing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\BearDescription\RayTracing\BearRayTracingBottomLevelDescription.h">
+      <Filter>BearDescription\RayTracing</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

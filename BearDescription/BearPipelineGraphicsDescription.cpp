@@ -1,18 +1,18 @@
 #include "BearGraphics.hpp"
 BearPipelineGraphicsDescription::BearPipelineGraphicsDescription()
 {
-	TopologyType = TT_TRIANGLE_LIST;
+	TopologyType = BearTopologyType::TriangleList;
 }
 
 BearPipelineGraphicsDescription::BearPipelineGraphicsDescription(const BearPipelineGraphicsDescription& Right)
 {
-	TopologyType = TT_TRIANGLE_LIST;
+	TopologyType = BearTopologyType::TriangleList;
 	Copy(Right);
 }
 
 BearPipelineGraphicsDescription::BearPipelineGraphicsDescription(BearPipelineGraphicsDescription&& Right)
 {
-	TopologyType = TT_TRIANGLE_LIST;
+	TopologyType = BearTopologyType::TriangleList;
 	Swap(Right);
 }
 
@@ -31,16 +31,16 @@ void BearPipelineGraphicsDescription::Copy(const BearPipelineGraphicsDescription
 
 	TopologyType = Right.TopologyType;
 
-	memcpy(&BlendState, &Right.BlendState,sizeof(BlendStateDescription));
-	memcpy(&DepthStencilState, &Right.DepthStencilState, sizeof(DepthStencilStateDescription));
-	memcpy(&RasterizerState, &Right.RasterizerState, sizeof(RasterizerStateDescription));
+	bear_copy(&BlendState, &Right.BlendState,1);
+	bear_copy(&DepthStencilState, &Right.DepthStencilState, 1);
+	bear_copy(&RasterizerState, &Right.RasterizerState, 1);
 
 }
 
 void BearPipelineGraphicsDescription::Swap(BearPipelineGraphicsDescription& Right)
 {
 	for (bsize i = 0; i < 16; i++)
-		std::swap(InputLayout.Elements[i], Right.InputLayout.Elements[i]);
+		bear_swap(InputLayout.Elements[i], Right.InputLayout.Elements[i]);
 	RenderPass.swap(Right.RenderPass);
 
 
@@ -50,10 +50,10 @@ void BearPipelineGraphicsDescription::Swap(BearPipelineGraphicsDescription& Righ
 	Shaders.Geometry.swap(Right.Shaders.Geometry);
 	Shaders.Pixel.swap(Right.Shaders.Pixel);
 
-	std::swap(TopologyType, Right.TopologyType);
-	std::swap(BlendState, Right.BlendState);
-	std::swap(DepthStencilState, Right.DepthStencilState);
-	std::swap(RasterizerState, Right.RasterizerState);
+	bear_swap(TopologyType, Right.TopologyType);
+	bear_swap(BlendState, Right.BlendState);
+	bear_swap(DepthStencilState, Right.DepthStencilState);
+	bear_swap(RasterizerState, Right.RasterizerState);
 }
 
 
@@ -79,22 +79,21 @@ bool BearPipelineGraphicsDescription::operator==(const BearPipelineGraphicsDescr
 		return false;
 	for (bsize i = 0; i < 16; i++)
 	{
-		if (InputLayout.Elements[i].Type == VF_NONE && Right.InputLayout.Elements[i].Type == VF_NONE)
+		if (InputLayout.Elements[i].Type ==  BearVertexFormat::None && Right.InputLayout.Elements[i].Type ==  BearVertexFormat::None)
 			break;
 		if (InputLayout.Elements[i]!=Right.InputLayout.Elements[i])
 			return false;
 	}
-	if (memcmp(&BlendState, &Right.BlendState, sizeof(BlendStateDescription) ) != 0)
+	if (bear_compare(&BlendState, &Right.BlendState, 1 ) != 0)
 		return false;
-	if (memcmp(&DepthStencilState, &Right.DepthStencilState, sizeof(DepthStencilStateDescription)) != 0)
+	if (bear_compare(&DepthStencilState, &Right.DepthStencilState, 1) != 0)
 		return false;
 
-	if (memcmp(&DepthStencilState, &Right.DepthStencilState, sizeof(DepthStencilStateDescription)) != 0)
+	if (bear_compare(&DepthStencilState, &Right.DepthStencilState, 1) != 0)
 		return false;
 	
 	return true;
 }
-#pragma optimize( "", off )
 bool BearPipelineGraphicsDescription::operator<(const BearPipelineGraphicsDescription& Right) const
 {
 	if (RenderPass != Right.RenderPass)
@@ -117,7 +116,7 @@ bool BearPipelineGraphicsDescription::operator<(const BearPipelineGraphicsDescri
 	int result = 0;
 	for (bsize i = 0; i < 16; i++)
 	{
-		if (InputLayout.Elements[i].Type == VF_NONE && Right.InputLayout.Elements[i].Type == VF_NONE)
+		if (InputLayout.Elements[i].Type == BearVertexFormat::None && Right.InputLayout.Elements[i].Type == BearVertexFormat::None)
 			break;
 		result = InputLayout.Elements[i] < Right.InputLayout.Elements[i];
 		if (result != 0)
@@ -125,12 +124,11 @@ bool BearPipelineGraphicsDescription::operator<(const BearPipelineGraphicsDescri
 	}
 	if (result != 0)
 		return result<0;
-	result = memcmp(&BlendState, &Right.BlendState, sizeof(BlendStateDescription));
+	result = bear_compare(&BlendState, &Right.BlendState,1);
 	if (result != 0)
 		return result < 0;
-	result = memcmp(&DepthStencilState, &Right.DepthStencilState, sizeof(DepthStencilStateDescription));
+	result = bear_compare(&DepthStencilState, &Right.DepthStencilState, 1);
 	if (result != 0)
 		return result<0;
-	return memcmp(&DepthStencilState, &Right.DepthStencilState, sizeof(DepthStencilStateDescription))<0;
+	return bear_compare(&DepthStencilState, &Right.DepthStencilState, 1)<0;
 }
-#pragma optimize( "s", on )

@@ -1,4 +1,4 @@
-﻿// This header defines constants and structures that are useful when parsing 
+﻿// This Header defines constants and structures that are useful when parsing 
 // DDS files.  DDS files were originally designed to use several structures
 // and constants that are native to DirectDraw and are defined in ddraw.h,
 // such as DDSURFACEDESC2 and DDSCAPS2.  This file defines similar 

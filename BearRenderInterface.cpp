@@ -41,79 +41,54 @@ BearFactoryPointer<BearRHI::BearRHIContext> BearRenderInterface::CreateContext()
 }
 BearFactoryPointer<BearRHI::BearRHIShader> BearRenderInterface::CreateVertexShader()
 {
-	if (GFactory)return GFactory->CreateShader(ST_Vertex);
+	if (GFactory)return GFactory->CreateShader(BearShaderType::Vertex);
 	return BearFactoryPointer<BearRHI::BearRHIShader>();
 }
 BearFactoryPointer<BearRHI::BearRHIShader> BearRenderInterface::CreatePixelShader()
 {
-	if (GFactory)return GFactory->CreateShader(ST_Pixel);
+	if (GFactory)return GFactory->CreateShader(BearShaderType::Pixel);
 	return BearFactoryPointer<BearRHI::BearRHIShader>();
 }
 
 BearFactoryPointer<BearRHI::BearRHIShader> BearRenderInterface::CreateComputeShader()
 {
-	if (GFactory)return GFactory->CreateShader(ST_Compute);
+	if (GFactory)return GFactory->CreateShader(BearShaderType::Compute);
 	return BearFactoryPointer<BearRHI::BearRHIShader>();
 }
 
 BearFactoryPointer<BearRHI::BearRHIShader> BearRenderInterface::CreateMeshShader()
 {
-	if (GFactory)return GFactory->CreateShader(ST_Mesh);
+	if (GFactory)return GFactory->CreateShader(BearShaderType::Mesh);
 	return BearFactoryPointer<BearRHI::BearRHIShader>();
 }
 
 BearFactoryPointer<BearRHI::BearRHIShader> BearRenderInterface::CreateAmplificationShader()
 {
-	if (GFactory)return GFactory->CreateShader(ST_Amplification);
+	if (GFactory)return GFactory->CreateShader(BearShaderType::Amplification);
 	return BearFactoryPointer<BearRHI::BearRHIShader>();
 }
 
-BearFactoryPointer<BearRHI::BearRHIShader> BearRenderInterface::CreateRayGenerationShader()
+BearFactoryPointer<BearRHI::BearRHIShader> BearRenderInterface::CreateRayTracingShader()
 {
-	if (GFactory)return GFactory->CreateShader(ST_RayGeneration);
-	return BearFactoryPointer<BearRHI::BearRHIShader>();
-}
-BearFactoryPointer<BearRHI::BearRHIShader> BearRenderInterface::CreateMissShader()
-{
-	if (GFactory)return GFactory->CreateShader(ST_Miss);
-	return BearFactoryPointer<BearRHI::BearRHIShader>();
-}
-BearFactoryPointer<BearRHI::BearRHIShader> BearRenderInterface::CreateCallableShader()
-{
-	if (GFactory)return GFactory->CreateShader(ST_Callable);
-	return BearFactoryPointer<BearRHI::BearRHIShader>();
-}
-BearFactoryPointer<BearRHI::BearRHIShader> BearRenderInterface::CreateIntersectionShader()
-{
-	if (GFactory)return GFactory->CreateShader(ST_Intersection);
-	return BearFactoryPointer<BearRHI::BearRHIShader>();
-}
-BearFactoryPointer<BearRHI::BearRHIShader> BearRenderInterface::CreateAnyHitShader()
-{
-	if (GFactory)return GFactory->CreateShader(ST_AnyHit);
-	return BearFactoryPointer<BearRHI::BearRHIShader>();
-}
-BearFactoryPointer<BearRHI::BearRHIShader> BearRenderInterface::CreateClosestHitShader()
-{
-	if (GFactory)return GFactory->CreateShader(ST_ClosestHit);
+	if (GFactory)return GFactory->CreateShader(BearShaderType::RayTracing);
 	return BearFactoryPointer<BearRHI::BearRHIShader>();
 }
 
 BearFactoryPointer<BearRHI::BearRHIShader> BearRenderInterface::CreateHullShader()
 {
-	if (GFactory)return GFactory->CreateShader(ST_Hull);
+	if (GFactory)return GFactory->CreateShader(BearShaderType::Hull);
 	return BearFactoryPointer<BearRHI::BearRHIShader>();
 }
 
 BearFactoryPointer<BearRHI::BearRHIShader> BearRenderInterface::CreateDomainShader()
 {
-	if (GFactory)return GFactory->CreateShader(ST_Domain);
+	if (GFactory)return GFactory->CreateShader(BearShaderType::Domain);
 	return BearFactoryPointer<BearRHI::BearRHIShader>();
 }
 
 BearFactoryPointer<BearRHI::BearRHIShader> BearRenderInterface::CreateGeometryShader()
 {
-	if (GFactory)return GFactory->CreateShader(ST_Geometry);
+	if (GFactory)return GFactory->CreateShader(BearShaderType::Geometry);
 	return BearFactoryPointer<BearRHI::BearRHIShader>();
 }
 
@@ -147,16 +122,16 @@ BearFactoryPointer<BearRHI::BearRHIPipelineRayTracing> BearRenderInterface::Crea
 	return BearFactoryPointer<BearRHI::BearRHIPipelineRayTracing>();
 }
 
-BearFactoryPointer<BearRHI::BearRHIBottomLevel> BearRenderInterface::CreateBottomLevel(const BearBottomLevelDescription& description)
+BearFactoryPointer<BearRHI::BearRHIRayTracingBottomLevel> BearRenderInterface::CreateRayTracingBottomLevel(const BearRayTracingBottomLevelDescription& description)
 {
-	if (GFactory)return GFactory->CreateBottomLevel(description);
-	return BearFactoryPointer<BearRHI::BearRHIBottomLevel>();
+	if (GFactory)return GFactory->CreateRayTracingBottomLevel(description);
+	return BearFactoryPointer<BearRHI::BearRHIRayTracingBottomLevel>();
 }
 
-BearFactoryPointer<BearRHI::BearRHITopLevel> BearRenderInterface::CreateTopLevel(const BearTopLevelDescription& description)
+BearFactoryPointer<BearRHI::BearRHIRayTracingTopLevel> BearRenderInterface::CreateRayTracingTopLevel(const BearRayTracingTopLevelDescription& description)
 {
-	if (GFactory)return GFactory->CreateTopLevel(description);
-	return BearFactoryPointer<BearRHI::BearRHITopLevel>();
+	if (GFactory)return GFactory->CreateRayTracingTopLevel(description);
+	return BearFactoryPointer<BearRHI::BearRHIRayTracingTopLevel>();
 }
 
 BearFactoryPointer<BearRHI::BearRHIRayTracingShaderTable> BearRenderInterface::CreateRayTracingShaderTable(const BearRayTracingShaderTableDescription& description)

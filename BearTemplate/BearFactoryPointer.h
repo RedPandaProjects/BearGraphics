@@ -94,9 +94,9 @@ public:
 	}
 	inline void swap(BearFactoryPointer&right)
 	{
-		std::swap(m_CurrentType, right.m_CurrentType);
-		std::swap(m_container, right.m_container);
-		std::swap(m_CurObject, right.m_CurObject);
+		bear_swap(m_CurrentType, right.m_CurrentType);
+		bear_swap(m_container, right.m_container);
+		bear_swap(m_CurObject, right.m_CurObject);
 	}
 	template<class C>
 	BearFactoryPointer(const BearFactoryPointer<C>& right) :m_container(0) { auto temp = right.template  cast<T>(); swap(temp); ; }

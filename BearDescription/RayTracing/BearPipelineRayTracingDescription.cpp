@@ -61,8 +61,20 @@ bool BearPipelineRayTracingDescription::operator==(const BearPipelineRayTracingD
 		{
 			if (Shaders[i].Shader != Right.Shaders[i].Shader)
 				return false;
-			if (Shaders[i].NameExport != Right.Shaders[i].NameExport)
+
+			if (Shaders[i].Exports.size() != Right.Shaders[i].Exports.size())
 				return false;
+
+			for (bsize a = 0; a < Shaders[i].Exports.size(); a++)
+			{
+				if (Shaders[i].Exports[a].NameExport != Right.Shaders[i].Exports[a].NameExport)
+					return false;
+				if (Shaders[i].Exports[a].NameFunction != Right.Shaders[i].Exports[a].NameFunction)
+					return false;
+				if (Shaders[i].Exports[a].Type != Right.Shaders[i].Exports[a].Type)
+					return false;
+			}
+
 		}
 	}
 	else
@@ -142,8 +154,23 @@ bool BearPipelineRayTracingDescription::operator<(const BearPipelineRayTracingDe
 		{
 			if (Shaders[i].Shader != Right.Shaders[i].Shader)
 				return Shaders[i].Shader < Right.Shaders[i].Shader;
-			if (Shaders[i].NameExport != Right.Shaders[i].NameExport)
-				return Shaders[i].NameExport < Right.Shaders[i].NameExport;
+			if (Shaders[i].Exports.size() == Right.Shaders[i].Exports.size())
+			{
+				for (bsize a = 0; a < Shaders[i].Exports.size(); a++)
+				{
+					if (Shaders[i].Exports[a].NameExport != Right.Shaders[i].Exports[a].NameExport)
+						return Shaders[i].Exports[a].NameExport < Right.Shaders[i].Exports[a].NameExport;
+					if (Shaders[i].Exports[a].NameFunction != Right.Shaders[i].Exports[a].NameFunction)
+						return Shaders[i].Exports[a].NameFunction < Right.Shaders[i].Exports[a].NameFunction;
+					if (Shaders[i].Exports[a].Type != Right.Shaders[i].Exports[a].Type)
+						return Shaders[i].Exports[a].Type < Right.Shaders[i].Exports[a].Type;
+				}
+			}
+			else
+			{
+				return Shaders[i].Exports.size() < Right.Shaders[i].Exports.size();
+
+			}
 		}
 	}
 	else

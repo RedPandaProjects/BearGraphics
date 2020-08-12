@@ -8,29 +8,29 @@ struct  BearRootSignatureDescription
 	}
 	struct UniformBuffer
 	{
-		UniformBuffer() :Shader(ST_Null) {}
+		UniformBuffer() :Shader(BearShaderType::Null) {}
 		BearShaderType Shader;
 	}
 	UniformBuffers[16];
 
 	struct SRVResource
 	{
-		SRVResource() :Shader(ST_Null), DescriptorType(DT_Image){}
-		BearDescriptorType DescriptorType;
+		SRVResource() :Shader(BearShaderType::Null), DescriptorType(BearSRVDescriptorType::Image){}
+		BearSRVDescriptorType DescriptorType;
 		BearShaderType Shader;
 	}
 	SRVResources[16];
 	struct Sampler
 	{
-		Sampler() :Shader(ST_Null) {}
+		Sampler() :Shader(BearShaderType::Null) {}
 		BearShaderType Shader;
 	}
 	Samplers[16];
 
 	struct UAVResource
 	{
-		UAVResource() :Shader(ST_Null), DescriptorType(DT_Image) {}
-		BearDescriptorType DescriptorType;
+		UAVResource() :Shader(BearShaderType::Null), DescriptorType(BearUAVDescriptorType::Image) {}
+		BearUAVDescriptorType DescriptorType;
 		BearShaderType Shader;
 	}
 	UAVResources[16];
