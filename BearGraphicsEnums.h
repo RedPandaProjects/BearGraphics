@@ -39,7 +39,7 @@ enum  class BearShaderType
 	/// </summary>
 	RayTracing,
 	ST_Count,
-	ST_ALL,
+	ALL,
 };
 enum class BearPipelineType
 {
@@ -189,12 +189,13 @@ enum class BearColorWriteMask
 	RGB = R | G | B,
 	RGBA =R | G | B | A,
 };
+using BearColorWriteFlags = BearFlags<uint32>;
 enum class BearCompareFunction
 {
 	Never,//=0
 	Always,//=1
 	Equal,//==
-	BotEqual,//!=
+	NotEqual,//!=
 	Less,//<
 	Greater,//>
 	LessEqual,//<=
@@ -223,9 +224,9 @@ enum class BearDepthStencilFormat
 {
 	None = 0,
 	Depth16 ,
-	Depth32f,
+	Depth32F,
 	Depth24Stencil8,
-	Depth32fStencil8,
+	Depth32FStencil8,
 };
 enum class BearTextureType
 {
