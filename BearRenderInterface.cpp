@@ -210,6 +210,7 @@ BearFactoryPointer<BearRHI::BearRHIFrameBuffer> BearRenderInterface::CreateFrame
 
 bool BearRenderInterface::RTXSupport()
 {
+	if (GFactory)return GFactory->SupportRayTracing();
 	return false;
 }
 
