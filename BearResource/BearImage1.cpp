@@ -224,8 +224,11 @@ BearImage::BearImage(const BearImage & Image) :m_PixelFotmat(BearTexturePixelFor
 
 void BearImage::Copy(const BearImage & Image)
 {
-	if (Empty())return;
 	Clear();
+	if (Image.Empty())
+	{
+		return;
+	}
 	m_Height = Image.m_Height;
 	m_Width = Image.m_Width;
 	m_Mips = Image.m_Mips;
