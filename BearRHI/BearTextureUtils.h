@@ -3,8 +3,8 @@ class BEARGRAPHICS_API BearTextureUtils
 {
 public:
 	static void Fill(uint8* data, bsize x, bsize y, bsize mip, const BearColor& color, BearTexturePixelFormat format);
-	static void GenerateMip(uint8* dst, uint8* src, bsize w_src, bsize h_src, BearTexturePixelFormat format);
-	static void Scale(uint8* dst, bsize w_dst, bsize h_dst, uint8* src, bsize w_src, bsize h_src, BearTexturePixelFormat format);
+	static void GenerateMip(uint8* dst, uint8* src, bsize w_src, bsize h_src, BearTexturePixelFormat format, BearResizeFilter filter);
+	static void Scale(uint8* dst, bsize w_dst, bsize h_dst, uint8* src, bsize w_src, bsize h_src, BearTexturePixelFormat format, BearResizeFilter filter);
 	static void Append(uint8* dst, bsize w_dst, bsize h_dst, bsize x_dst, bsize y_dst, uint8* src, bsize w_src, bsize h_src, BearVector4<bsize> squard_src, BearTexturePixelFormat dst_format, BearTexturePixelFormat src_format);
 
 
@@ -28,12 +28,12 @@ public:
 	static void  GetPixel(BearColor& color, uint8* data, bsize x, bsize y, bsize depth, bsize w, bsize h, bsize mips, BearTexturePixelFormat format);
 	static void  SetPixel(const BearColor& color, uint8* data, bsize x, bsize y, bsize depth, bsize w, bsize h, bsize mips, BearTexturePixelFormat format);
 private:
-	static void ScaleFloat(uint8* dst, bsize w_dst, bsize h_dst, uint8* src, bsize w_src, bsize h_src, uint8 comp);
-	static void ScaleUint8(uint8* dst, bsize w_dst, bsize h_dst, uint8* src, bsize w_src, bsize h_src, uint8 comp);
+	static void ScaleFloat(uint8* dst, bsize w_dst, bsize h_dst, uint8* src, bsize w_src, bsize h_src, uint8 comp, BearResizeFilter filter);
+	static void ScaleUint8(uint8* dst, bsize w_dst, bsize h_dst, uint8* src, bsize w_src, bsize h_src, uint8 comp, BearResizeFilter filter);
 
 
-	static void GenerateMipFloat(uint8* dst, uint8* src, bsize w_src, bsize h_src, uint8 comps);
-	static void GenerateMipUint8(uint8* dst, uint8* src, bsize w_src, bsize h_src, uint8 comps);
+	static void GenerateMipFloat(uint8* dst, uint8* src, bsize w_src, bsize h_src, uint8 comps, BearResizeFilter filter);
+	static void GenerateMipUint8(uint8* dst, uint8* src, bsize w_src, bsize h_src, uint8 comps, BearResizeFilter filter);
 
 	static void FloatPixelToUint8(uint8* dst, float* src, uint8 comp_dst, uint8 comp_src);
 	static void FloatPixelToFloat(float* dst, float* src, uint8 comp_dst, uint8 comp_src);

@@ -64,7 +64,7 @@ void BearImage::Append(bsize x, bsize y, const BearImage & Image, bsize dst_dept
 	Append(x, y, Image, 0, 0, Image.m_Width, Image.m_Height, dst_depth, src_depth);
 }
 
-void BearImage::Scale(bsize w, bsize h)
+void BearImage::Scale(bsize w, bsize h, BearResizeFilter filter)
 {
 	if (Empty())
 		return;
@@ -79,11 +79,11 @@ void BearImage::Scale(bsize w, bsize h)
 
 		uint8*DestData = Image.m_ImageBuffer + DestSize * i;
 		uint8*src_data = m_ImageBuffer + SourceSize * i;
-		BearTextureUtils::Scale(DestData, Image.m_Width, Image.m_Height, src_data, m_Width, m_Height, m_PixelFotmat);
+		BearTextureUtils::Scale(DestData, Image.m_Width, Image.m_Height, src_data, m_Width, m_Height, m_PixelFotmat, filter);
 	}
 
 	Swap(Image);
-	if (Mips > 1) GenerateMipmap();
+	if (Mips > 1) GenerateMipmap(filter);
 }
 
 void BearImage::ScaleCanvas(bsize w, bsize h)
@@ -105,13 +105,13 @@ void BearImage::ScaleCanvas(bsize w, bsize h)
 }
 
 
-void BearImage::GenerateMipmap(bsize depth)
+void BearImage::GenerateMipmap(bsize depth, BearResizeFilter filter)
 {
 	if (Empty())
 		return;
 	if (m_Mips == 1)
 	{
-		GenerateMipmap();
+		GenerateMipmap(filter);
 	}
 	else
 	{
@@ -120,13 +120,13 @@ void BearImage::GenerateMipmap(bsize depth)
 		{
 			uint8*cur_mip = BearTextureUtils::GetImage(m_ImageBuffer, m_Width, m_Height, m_Mips, depth, i, m_PixelFotmat);
 			uint8*new_mip= BearTextureUtils::GetImage(m_ImageBuffer, m_Width, m_Height, m_Mips, depth, i+1, m_PixelFotmat);
-			BearTextureUtils::GenerateMip(new_mip, cur_mip, BearTextureUtils::GetMip(m_Width, i), BearTextureUtils::GetMip(m_Height, i), m_PixelFotmat);
+			BearTextureUtils::GenerateMip(new_mip, cur_mip, BearTextureUtils::GetMip(m_Width, i), BearTextureUtils::GetMip(m_Height, i), m_PixelFotmat, filter);
 		}
 		
 	}
 }
 
-void BearImage::GenerateMipmap()
+void BearImage::GenerateMipmap(BearResizeFilter filter)
 {
 	if (Empty())
 		return;
@@ -141,7 +141,7 @@ void BearImage::GenerateMipmap()
 	}
 	for (bsize i = 0; m_Depth>i; i++)
 	{
-		GenerateMipmap(i);
+		GenerateMipmap(i, filter);
 	}
 }
 
@@ -166,7 +166,7 @@ void BearImage::NormalizedSizeNotScale()
 	ScaleCanvas(size, size);
 }
 
-void BearImage::NormalizedSize()
+void BearImage::NormalizedSize(BearResizeFilter filter)
 {
 	bsize size = BearMath::max(bear_recommended_size(m_Width), bear_recommended_size(m_Height));
 	Scale(size, size);
@@ -229,6 +229,7 @@ void BearImage::Copy(const BearImage & Image)
 	{
 		return;
 	}
+	m_bCube = Image.m_bCube;
 	m_Height = Image.m_Height;
 	m_Width = Image.m_Width;
 	m_Mips = Image.m_Mips;

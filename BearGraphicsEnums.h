@@ -273,3 +273,12 @@ enum class BearWindowType
 	OnlyClosed = 4,
 	WihtoutClosed = 2,
 };
+enum class BearResizeFilter
+{
+	Default,  // use same filter type that easy-to-use API chooses
+	Box,  // A trapezoid w/1-pixel wide ramps, same result as box for integer scale ratios
+	Triangle,  // On upsampling, produces same results as bilinear texture filtering
+	Cubicbspline,  // The cubic b-spline (aka Mitchell-Netrevalli with B=1,C=0), gaussian-esque
+	Catmullrom ,  // An interpolating cubic spline
+	Mitchell,  // Mitchell-Netrevalli filter with B=1/3, C=1/3
+};

@@ -410,45 +410,45 @@ uint8 BearTextureUtils::GetCountComp(BearTexturePixelFormat format)
 	return 0;
 }
 
-void BearTextureUtils::GenerateMip(uint8 * dst, uint8 * src, bsize w_src, bsize h_src, BearTexturePixelFormat format)
+void BearTextureUtils::GenerateMip(uint8 * dst, uint8 * src, bsize w_src, bsize h_src, BearTexturePixelFormat format, BearResizeFilter filter)
 {
 	if (isCompressor(format))
 	{
 		BearTexturePixelFormat PixelFormatOut;
 		uint8*SourceTemp = TempUncompressor(src, w_src, h_src, format, PixelFormatOut);
 		uint8*DestTemp = TempUncompressor(0, w_src/2, h_src/2, format, PixelFormatOut);
-		GenerateMip(DestTemp, SourceTemp, w_src, h_src, PixelFormatOut);
+		GenerateMip(DestTemp, SourceTemp, w_src, h_src, PixelFormatOut, filter);
 		TempCompress(SourceTemp, 0, w_src, h_src, format);
 		TempCompress(DestTemp, dst, w_src / 2, h_src / 2, format);
 	}
 	else if (isFloatPixel(format))
 	{
-		GenerateMipFloat(dst, src, w_src, h_src,GetCountComp(format));
+		GenerateMipFloat(dst, src, w_src, h_src,GetCountComp(format), filter);
 	}
 	else
 	{
-		GenerateMipUint8(dst, src, w_src, h_src, GetCountComp(format));
+		GenerateMipUint8(dst, src, w_src, h_src, GetCountComp(format), filter);
 	}
 }
 
-void BearTextureUtils::Scale(uint8 * dst, bsize w_dst, bsize h_dst, uint8 * src, bsize w_src, bsize h_src, BearTexturePixelFormat format)
+void BearTextureUtils::Scale(uint8 * dst, bsize w_dst, bsize h_dst, uint8 * src, bsize w_src, bsize h_src, BearTexturePixelFormat format, BearResizeFilter filter)
 {
 	if (isCompressor(format))
 	{
 		BearTexturePixelFormat PixelFormatOut;
 		uint8*SourceTemp = TempUncompressor(src, w_src, h_src, format, PixelFormatOut);
 		uint8*DestTemp = TempUncompressor(0, w_dst, h_dst, format, PixelFormatOut);
-		Scale(DestTemp, w_dst, h_dst, SourceTemp, w_src, h_src, PixelFormatOut);
+		Scale(DestTemp, w_dst, h_dst, SourceTemp, w_src, h_src, PixelFormatOut,filter);
 		TempCompress(SourceTemp, 0, w_src, h_src, format);
 		TempCompress(DestTemp, dst, w_dst, h_dst, format);
 	}
 	else if (isFloatPixel(format))
 	{
-		ScaleFloat(dst, w_dst, h_dst, src, w_src, h_src, GetCountComp(format));
+		ScaleFloat(dst, w_dst, h_dst, src, w_src, h_src, GetCountComp(format), filter);
 	}
 	else
 	{
-		ScaleUint8(dst, w_dst, h_dst, src, w_src, h_src, GetCountComp(format));
+		ScaleUint8(dst, w_dst, h_dst, src, w_src, h_src, GetCountComp(format), filter);
 	}
 }
 
@@ -573,28 +573,65 @@ void BearTextureUtils::SetPixel(const BearColor & color, uint8 * data, bsize x, 
 	return;
 }
 
-void BearTextureUtils::ScaleFloat(uint8 * dst, bsize w_dst, bsize h_dst, uint8 * src, bsize w_src, bsize h_src, uint8 comp)
+void BearTextureUtils::ScaleFloat(uint8 * dst, bsize w_dst, bsize h_dst, uint8 * src, bsize w_src, bsize h_src, uint8 comp, BearResizeFilter filter)
 {
-	stbir_resize_float(reinterpret_cast<float*>(src),static_cast<int>( w_src), static_cast<int>(h_src), 0, reinterpret_cast<float*>(dst), static_cast<int>(w_dst), static_cast<int>(h_dst), 0, comp);
+	stbir_filter Filter = STBIR_FILTER_DEFAULT;
+	switch (filter)
+	{
+	case BearResizeFilter::Box:
+		Filter = STBIR_FILTER_BOX;
+		break;
+	case BearResizeFilter::Triangle:
+		Filter = STBIR_FILTER_TRIANGLE;
+		break;
+	case BearResizeFilter::Cubicbspline:
+		Filter = STBIR_FILTER_CUBICBSPLINE;
+		break;
+	case BearResizeFilter::Catmullrom:
+		Filter = STBIR_FILTER_CATMULLROM;
+		break;
+	case BearResizeFilter::Mitchell:
+		Filter = STBIR_FILTER_MITCHELL;
+		break;
+	}
+	stbir_resize(reinterpret_cast<void*>(src), static_cast<int>(w_src), static_cast<int>(h_src), 0, reinterpret_cast<void*>(dst), static_cast<int>(w_dst), static_cast<int>(h_dst), 0, STBIR_TYPE_FLOAT, comp, -1, 0, STBIR_EDGE_CLAMP, STBIR_EDGE_CLAMP, Filter, Filter, STBIR_COLORSPACE_LINEAR, NULL);
 }
 
-void BearTextureUtils::ScaleUint8(uint8 * dst, bsize w_dst, bsize h_dst, uint8 * src, bsize w_src, bsize h_src, uint8 comp)
+void BearTextureUtils::ScaleUint8(uint8 * dst, bsize w_dst, bsize h_dst, uint8 * src, bsize w_src, bsize h_src, uint8 comp, BearResizeFilter filter)
 {
-
-	stbir_resize_uint8(src, static_cast<int>(w_src), static_cast<int>(h_src), 0, dst, static_cast<int>(w_dst), static_cast<int>(h_dst),0, comp);
+	stbir_filter Filter = STBIR_FILTER_DEFAULT;
+	switch (filter)
+	{
+	case BearResizeFilter::Box:
+		Filter = STBIR_FILTER_BOX;
+		break;
+	case BearResizeFilter::Triangle:
+		Filter = STBIR_FILTER_TRIANGLE;
+		break;
+	case BearResizeFilter::Cubicbspline:
+		Filter = STBIR_FILTER_CUBICBSPLINE;
+		break;
+	case BearResizeFilter::Catmullrom:
+		Filter = STBIR_FILTER_CATMULLROM;
+		break;
+	case BearResizeFilter::Mitchell:
+		Filter = STBIR_FILTER_MITCHELL;
+		break;
+	}
+	stbir_resize(reinterpret_cast<void*>(src), static_cast<int>(w_src), static_cast<int>(h_src), 0, reinterpret_cast<void*>(dst), static_cast<int>(w_dst), static_cast<int>(h_dst), 0, STBIR_TYPE_UINT8, comp, -1, 0, STBIR_EDGE_CLAMP, STBIR_EDGE_CLAMP, Filter, Filter, STBIR_COLORSPACE_LINEAR, NULL);
 
 }
 
 
 
-void BearTextureUtils::GenerateMipFloat(uint8 * dst, uint8 * src, bsize w_src, bsize h_src, uint8 comps)
+void BearTextureUtils::GenerateMipFloat(uint8 * dst, uint8 * src, bsize w_src, bsize h_src, uint8 comps, BearResizeFilter filter)
 {
-	ScaleFloat(dst, w_src / 2, h_src / 2, src, w_src, h_src, comps);
+	ScaleFloat(dst, w_src / 2, h_src / 2, src, w_src, h_src, comps, filter);
 }
 
-void BearTextureUtils::GenerateMipUint8(uint8 * dst, uint8 * src, bsize w_src, bsize h_src, uint8 comps)
+void BearTextureUtils::GenerateMipUint8(uint8 * dst, uint8 * src, bsize w_src, bsize h_src, uint8 comps, BearResizeFilter filter)
 {
-	ScaleUint8(dst, w_src / 2, h_src / 2, src, w_src, h_src, comps);
+	ScaleUint8(dst, w_src / 2, h_src / 2, src, w_src, h_src, comps, filter);
 }
 
 void BearTextureUtils::FloatPixelToUint8(uint8 * dst, float * src, uint8 comp_dst, uint8 comp_src)

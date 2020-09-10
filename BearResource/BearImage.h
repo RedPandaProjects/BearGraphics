@@ -10,17 +10,17 @@ public:
 	void Append(bsize x, bsize y, const BearImage& Image, bsize x_src, bsize y_src, bsize w_src, bsize h_src, bsize dst_depth, bsize src_depth);
 	void Append(bsize x, bsize y, const BearImage& Image, bsize dst_depth, bsize src_depth);
 
-	void Scale(bsize w, bsize h);
+	void Scale(bsize w, bsize h,  BearResizeFilter filter = BearResizeFilter::Default);
 
 	void ScaleCanvas(bsize w, bsize h);
 
 
-	void GenerateMipmap(bsize depth);
-	void GenerateMipmap();
+	void GenerateMipmap(bsize depth, BearResizeFilter filter = BearResizeFilter::Default);
+	void GenerateMipmap(BearResizeFilter filter = BearResizeFilter::Default);
 	void ClearMipLevels();
 
 	void NormalizedSizeNotScale();
-	void NormalizedSize();
+	void NormalizedSize(BearResizeFilter filter = BearResizeFilter::Default);
 
 	BearColor GetPixel(bsize x, bsize y, bsize d = 0)const;
 	void SetPixel(const BearColor& color, bsize x, bsize y, bsize d = 0);
