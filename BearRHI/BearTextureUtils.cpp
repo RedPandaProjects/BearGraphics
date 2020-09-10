@@ -640,7 +640,7 @@ void BearTextureUtils::FloatPixelToUint8(uint8 * dst, float * src, uint8 comp_ds
 	{
 		if (i < comp_src)
 		{
-			*dst = static_cast<uint8>(*src*255.f);
+			* dst = static_cast<uint8>(BearMath::clamp(*src, 0.f, 1.f) *255.f);
 			src++;
 		}
 		else if(i==3)
