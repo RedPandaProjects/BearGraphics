@@ -190,6 +190,41 @@ void BearImage::SetPixel(const BearColor & color, bsize x, bsize y, bsize d)
 	BearTextureUtils::SetPixel(color, m_ImageBuffer, x, y, d, m_Width, m_Height, m_Mips, m_PixelFotmat);
 }
 
+void BearImage::SwapRB()
+{
+	if (Empty())return;
+	BEAR_CHECK(m_Mips == 1);
+	if (m_Mips != 1)return;
+	if (m_PixelFotmat != BearTexturePixelFormat::R8G8B8A8)
+	{
+		for (bsize i = 0; i < m_Depth; i++)
+		{
+			for (bsize x = 0; x < m_Width * m_Height; x++)
+			{
+				for (bsize y = 0; y < m_Width * m_Height; y++)
+				{
+					BearColor Color = GetPixel(x, y, i);
+					bear_swap(Color.R8U, Color.B8U);
+					bear_swap(Color.R32F, Color.B32F);
+					SetPixel(Color, x, y, i);
+				}
+			}
+		}
+	}
+	else
+	{
+		for (bsize i = 0; i < m_Depth; i++)
+		{
+			for (bsize a = 0; a < m_Width*m_Height; a++)
+			{
+				uint8*Pixel = m_ImageBuffer + i * (m_Width * m_Height) + a * 4;
+				bear_swap(Pixel[0], Pixel[2]);
+
+			}
+		}
+	}
+}
+
 void BearImage::Clear()
 {
 	if (m_ImageBuffer)

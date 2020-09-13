@@ -24,7 +24,7 @@ public:
 
 	BearColor GetPixel(bsize x, bsize y, bsize d = 0)const;
 	void SetPixel(const BearColor& color, bsize x, bsize y, bsize d = 0);
-
+	void SwapRB();
 	
 	bool LoadFromFile(const bchar* str);
 	bool LoadFromStream(const BearInputStream& stream);
