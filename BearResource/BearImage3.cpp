@@ -68,7 +68,7 @@ bool BearImage::LoadDDSFromStream(const BearInputStream & stream)
 		}
 		if (Header.ddspf.dwFlags != DDS_FOURCC)
 		{
-			bool alpha = Header.ddspf.dwFlags&(DDS_RGBA&(~DDS_RGB));
+			bool Alpha = Header.ddspf.dwFlags&(DDS_RGBA&(~DDS_RGB));
 			if (Header.ddspf.dwRGBBitCount % 8 || Header.ddspf.dwRGBBitCount > 64)
 			{
 				Clear();
@@ -79,7 +79,7 @@ bool BearImage::LoadDDSFromStream(const BearInputStream & stream)
 			for (bsize x = 0; x < 4; x++)
 				MaskShiftAndSize(Header.ddspf.dwBitsMask[x], ShiftBit + x, SizeBit + x);
 			if (Header.ddspf.dwRBitMask&&Header.ddspf.dwGBitMask&&Header.ddspf.dwBBitMask)
-				m_PixelFotmat = alpha ? BearTexturePixelFormat::R8G8B8A8 : BearTexturePixelFormat::R8G8B8;
+				m_PixelFotmat = Alpha ? BearTexturePixelFormat::R8G8B8A8 : BearTexturePixelFormat::R8G8B8;
 			else	if (Header.ddspf.dwRBitMask&&Header.ddspf.dwGBitMask)
 				m_PixelFotmat = BearTexturePixelFormat::R8G8;
 			else
@@ -257,7 +257,7 @@ bool BearImage::SaveToDds(const bchar* name)
 	case BearTexturePixelFormat::R32G32B32F:
 	case BearTexturePixelFormat::R32G32B32A32F:
 		Header.dwHeaderFlags |= DDSD_LINEARSIZE;
-		Header.dwPitchOrLinearSize = BearTextureUtils::GetSizePixel(m_PixelFotmat) * m_Width;
+		Header.dwPitchOrLinearSize = static_cast<DWORD>(BearTextureUtils::GetSizePixel(m_PixelFotmat) * m_Width);
 		break;
 	default:
 		break;

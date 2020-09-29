@@ -1,6 +1,5 @@
 #pragma once
 
-#pragma warning(disable:4995)
 #include "../BearCore/BearCore.hpp"
 
 #ifdef BEARGRAPHICS_EXPORTS

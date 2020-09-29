@@ -113,7 +113,7 @@ bool BearPipelineGraphicsDescription::operator<(const BearPipelineGraphicsDescri
 
 	if (TopologyType != Right.TopologyType)
 		return TopologyType < Right.TopologyType;
-	int result = 0;
+	bint result = 0;
 	for (bsize i = 0; i < 16; i++)
 	{
 		if (InputLayout.Elements[i].Type == BearVertexFormat::None && Right.InputLayout.Elements[i].Type == BearVertexFormat::None)

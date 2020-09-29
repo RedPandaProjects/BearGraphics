@@ -80,7 +80,7 @@ bool BearPipelineMeshDescription::operator<(const BearPipelineMeshDescription& R
 	if (Shaders.Pixel != Right.Shaders.Pixel)
 		return Shaders.Pixel < Right.Shaders.Pixel;
 
-	int result = 0;
+	bint result = 0;
 	result = bear_compare(&BlendState, &Right.BlendState, 1);
 	if (result != 0)
 		return result < 0;
