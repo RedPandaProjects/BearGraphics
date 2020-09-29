@@ -29,17 +29,17 @@ class BEARGRAPHICS_API BearWindow
 	BEAR_CLASS_WITHOUT_COPY(BearWindow);
 public:
 	BearWindow(bsize width = 0x400, bsize height = 0x300, bool fullscreen = false, BearFlags<int32> flags = 0);
-	~BearWindow();
-	void Resize(bsize width, bsize height);
-	bool Update();
-	void  ShowCursor(bool show);
-	void SetFullscreen(bool fullscreen);
-	BearVector2<float> GetMousePosition();
-	void SetMousePosition(const BearVector2<float>& position);
-	bool GetEvent(BearEventWindows& e);
+	virtual	~BearWindow();
+	virtual void Resize(bsize width, bsize height);
+	virtual void BeginFrame();
+	virtual void EndFrame();
+	static bool  OnFrame();
+	virtual void ShowCursor(bool show);
+	virtual void SetFullscreen(bool fullscreen);
+	virtual BearVector2<float> GetMousePosition()const;
+	virtual void SetMousePosition(const BearVector2<float>& position);
+	virtual bool GetEvent(BearEventWindows& e);
 	bool Empty()const;
-
-
 	inline
 #ifdef WINDOWS
 		HWND
@@ -64,6 +64,9 @@ public:
 	{
 		return BearVector2<bsize>(m_Width, m_Height);
 	}
+protected:
+	virtual void OnEvent(BearEventWindows& e);
+public:
 #ifndef BEARGRAPHICS_EXPORTS
 private:
 #endif

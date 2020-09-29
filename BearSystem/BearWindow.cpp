@@ -206,11 +206,18 @@ void BearWindow::SetFullscreen(bool fullscreen)
 	SetForegroundWindow((HWND)m_WindowHandle);
 }
 
-bool BearWindow::Update()
+void BearWindow::BeginFrame()
 {
 	m_Events.clear_not_free();
 	m_EventPtr = m_Events.end();
-	MSG Msg; Msg.message= WM_NULL;
+}
+void BearWindow::EndFrame()
+{
+	m_EventPtr = m_Events.begin();
+}
+bool BearWindow::OnFrame()
+{
+	MSG Msg; Msg.message = WM_NULL;
 	while (PeekMessageW(&Msg, NULL, 0, 0, PM_REMOVE))
 	{
 		if (Msg.message == WM_QUIT)
@@ -220,10 +227,8 @@ bool BearWindow::Update()
 	}
 	if (Msg.message == WM_QUIT)
 		return false;
-	m_EventPtr = m_Events.begin();
 	return true;
 }
-
 void BearWindow::ShowCursor(bool show)
 {
 	if (m_MouseShow != show)
@@ -231,7 +236,7 @@ void BearWindow::ShowCursor(bool show)
 	m_MouseShow = show;
 }
 
-BearVector2<float> BearWindow::GetMousePosition()
+BearVector2<float> BearWindow::GetMousePosition()const
 {
 	POINT Point = {};
 	GetCursorPos(&Point);
@@ -263,6 +268,10 @@ bool BearWindow::Empty() const
 	return m_WindowHandle == 0;
 }
 
+void BearWindow::OnEvent(BearEventWindows& e)
+{
+}
+
 void BearWindow::OnEvent(HWND handle, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	bint i = 0;
@@ -281,7 +290,7 @@ void BearWindow::OnEvent(HWND handle, UINT message, WPARAM wParam, LPARAM lParam
 
 		if (m_Fullscreen == false &&wParam != SIZE_MINIMIZED && new_size != GetSize())
 		{
-			if(new_size.x + 8 == m_Width && new_size.y + 31 == m_Height ) break;
+			if(new_size.x  == m_Width && new_size.y == m_Height ) break;
 			m_Width = new_size.x;
 			m_Height = new_size.y;
 			EventResult.Size.width = GetSizeFloat().x;
@@ -289,7 +298,7 @@ void BearWindow::OnEvent(HWND handle, UINT message, WPARAM wParam, LPARAM lParam
 			EventResult.Type = BearWindowEventType::Resize;
 			/*m_event_resize = EventResult;
 			m_resize_timer.restart();*/
-			m_Events.push_back(EventResult);
+			OnEvent(EventResult);
 		}
 		break;
 	}
@@ -306,7 +315,7 @@ void BearWindow::OnEvent(HWND handle, UINT message, WPARAM wParam, LPARAM lParam
 				(zone.top > y || zone.bottom < y))
 			{
 				EventResult.Type = BearWindowEventType::MouseLevae;
-				m_Events.push_back(EventResult);
+				OnEvent(EventResult);
 				m_MouseEnter = false;
 			}
 
@@ -317,26 +326,26 @@ void BearWindow::OnEvent(HWND handle, UINT message, WPARAM wParam, LPARAM lParam
 				(zone.top < y && zone.bottom > y))
 			{
 				EventResult.Type = BearWindowEventType::MouseEnter;
-				m_Events.push_back(EventResult);
+				OnEvent(EventResult);
 				m_MouseEnter = true;
 			}
 		}
 		EventResult.Type = BearWindowEventType::MouseMove;
 		EventResult.Position.x = static_cast<float>(x);
 		EventResult.Position.y = static_cast<float>(y);
-		m_Events.push_back(EventResult);
+		OnEvent(EventResult);
 		break;
 	}
 	case WM_SETFOCUS:
 	{
 		EventResult.Type = BearWindowEventType::Active;
-		m_Events.push_back(EventResult);
+		OnEvent(EventResult);
 		break;
 	}
 	case WM_KILLFOCUS:
 	{
 		EventResult.Type = BearWindowEventType::Deactive;
-		m_Events.push_back(EventResult);
+		OnEvent(EventResult);
 		break;
 	}
 	case WM_SYSKEYDOWN:
@@ -369,7 +378,7 @@ void BearWindow::OnEvent(HWND handle, UINT message, WPARAM wParam, LPARAM lParam
 			break;
 		EventResult.Type = BearWindowEventType::KeyDown;
 		EventResult.Key = static_cast<BearInput::Key>(item->second);
-		m_Events.push_back(EventResult);
+		OnEvent(EventResult);
 		break;
 	}
 	case WM_KEYUP:
@@ -402,7 +411,7 @@ void BearWindow::OnEvent(HWND handle, UINT message, WPARAM wParam, LPARAM lParam
 			break;
 		EventResult.Type = BearWindowEventType::KeyUp;
 		EventResult.Key = static_cast<BearInput::Key>(item->second);
-		m_Events.push_back(EventResult);
+		OnEvent(EventResult);
 		break;
 	}
 	case WM_MOUSEWHEEL:
@@ -420,49 +429,49 @@ void BearWindow::OnEvent(HWND handle, UINT message, WPARAM wParam, LPARAM lParam
 			EventResult.Change = delta / 120.f;
 			EventResult.Key = BearInput::KeyMouseScrollDown;
 		}
-		m_Events.push_back(EventResult);
+		OnEvent(EventResult);
 		break;
 	}
 	case WM_LBUTTONDOWN:
 	{
 		EventResult.Type = BearWindowEventType::KeyDown;
 		EventResult.Key = BearInput::KeyMouseLeft;
-		m_Events.push_back(EventResult);
+		OnEvent(EventResult);
 		break;
 	}
 	case WM_RBUTTONDOWN:
 	{
 		EventResult.Type = BearWindowEventType::KeyDown;
 		EventResult.Key = BearInput::KeyMouseRight;
-		m_Events.push_back(EventResult);
+		OnEvent(EventResult);
 		break;
 	}
 	case WM_MBUTTONDOWN:
 	{
 		EventResult.Type = BearWindowEventType::KeyDown;
 		EventResult.Key = BearInput::KeyMouseMiddle;
-		m_Events.push_back(EventResult);
+		OnEvent(EventResult);
 		break;
 	}
 	case WM_LBUTTONUP:
 	{
 		EventResult.Type = BearWindowEventType::KeyUp;
 		EventResult.Key = BearInput::KeyMouseLeft;
-		m_Events.push_back(EventResult);
+		OnEvent(EventResult);
 		break;
 	}
 	case WM_RBUTTONUP:
 	{
 		EventResult.Type = BearWindowEventType::KeyUp;
 		EventResult.Key = BearInput::KeyMouseRight;
-		m_Events.push_back(EventResult);
+		OnEvent(EventResult);
 		break;
 	}
 	case WM_MBUTTONUP:
 	{
 		EventResult.Type = BearWindowEventType::KeyUp;
 		EventResult.Key = BearInput::KeyMouseMiddle;
-		m_Events.push_back(EventResult);
+		OnEvent(EventResult);
 		break;
 	}
 	case WM_CHAR:
@@ -470,7 +479,7 @@ void BearWindow::OnEvent(HWND handle, UINT message, WPARAM wParam, LPARAM lParam
 		TCHAR ch = TCHAR(wParam);
 		EventResult.Type = BearWindowEventType::Char;
 		EventResult.Char = ch;
-		m_Events.push_back(EventResult);
+		OnEvent(EventResult);
 		break;
 	}
 	default:
