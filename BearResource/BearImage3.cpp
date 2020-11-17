@@ -94,7 +94,7 @@ bool BearImage::LoadDDSFromStream(const BearInputStream & stream)
 			}
 
 			uint32 pixel = 0;
-			Create(m_Width, m_Height, m_Mips, m_Depth, m_PixelFotmat);
+			Create(m_Width, m_Height, m_Mips, m_Depth, m_PixelFotmat,m_bCube);
 			for (bsize d = 0; d < m_Depth; d++)
 			{
 				for (bsize m = 0; m < m_Mips; m++)
