@@ -1,5 +1,5 @@
 #include "BearGraphics.hpp"
-#ifdef WINDOWS
+#if CURRENT_PROCCESOR == PLATFORM_WINDOWS
 BEARTOOL_API BearMap<int32, int32>* LToWinowsKey;
 BEARTOOL_API BearMap<int32, int32>* GFromWinowsKey;
 static bsize LCount = 0;

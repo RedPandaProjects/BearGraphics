@@ -41,9 +41,9 @@ public:
 	virtual bool GetEvent(BearEventWindows& e);
 	bool Empty()const;
 	inline
-#ifdef WINDOWS
+#if CURRENT_PLATFORM == PLATFORM_WINDOWS
 		HWND
-#elif LINUX
+#else
 		void*
 #endif
 		GetWindowHandle() const
@@ -70,18 +70,18 @@ public:
 #ifndef BEARGRAPHICS_EXPORTS
 private:
 #endif
-#ifdef WINDOWS
+#ifdef CURRENT_PROCCESOR == PLATFORM_WINDOWS
 	void OnEvent(HWND handle, UINT message, WPARAM wParam, LPARAM lParam);
 #endif
 
 private:
 
-#ifdef WINDOWS
+#if CURRENT_PLATFORM == PLATFORM_WINDOWS
 	DWORD m_Style;
 	bool m_MouseShow;
 	HWND
-#elif LINUX
-	void*
+#else
+		void*
 #endif
 	m_WindowHandle;
 	BearVector<BearEventWindows>  m_Events;

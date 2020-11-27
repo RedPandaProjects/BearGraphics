@@ -36,7 +36,7 @@
 RENDER_BEGIN_CLASS_REGISTRATION2(Shader, Object, BearShaderType type)
 
 #ifdef DEVELOPER_VERSION	
-RENDER_METHOD_REGISTRATION(bool, LoadAsText, const bchar* text, const bchar* entry_point, const BearMap<BearStringConteniar, BearStringConteniar>& defines, BearString& out_error, BearIncluder* includer, const bchar* file_name, const bchar* out_pdb)
+RENDER_METHOD_REGISTRATION(bool, LoadAsText, const bchar* text, const bchar* entry_point, const BearMap<BearStringConteniar, BearStringConteniar>& defines, BearString& out_error, BearIncluder* includer, const bchar* file_name = nullptr, const bchar* out_pdb = nullptr)
 RENDER_METHOD_REGISTRATION(void*, GetPointer)
 RENDER_METHOD_REGISTRATION(bsize, GetSize)
 #endif
