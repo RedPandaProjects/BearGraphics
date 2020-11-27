@@ -70,7 +70,7 @@ public:
 #ifndef BEARGRAPHICS_EXPORTS
 private:
 #endif
-#ifdef CURRENT_PROCCESOR == PLATFORM_WINDOWS
+#ifdef CURRENT_PLATFORM == PLATFORM_WINDOWS
 	void OnEvent(HWND handle, UINT message, WPARAM wParam, LPARAM lParam);
 #endif
 
