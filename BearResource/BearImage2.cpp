@@ -24,8 +24,6 @@ extern "C"
 #include "StbImage/stb_image_write.h"
 bool BearImage::LoadFromFile(const bchar * str)
 {
-	if (LoadDDSFromFile(str))
-		return true;
 	BearFileStream stream;
 	if (!stream.Open(str))
 		return false;
@@ -34,8 +32,6 @@ bool BearImage::LoadFromFile(const bchar * str)
 
 bool BearImage::LoadFromStream(const BearInputStream & stream)
 {
-	if (LoadDDSFromStream(stream))
-		return true;
 	BearMemoryStream memory(stream);
 	return LoadFromBuffer(memory);
 }
