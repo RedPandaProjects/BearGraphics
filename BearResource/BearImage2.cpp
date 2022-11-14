@@ -1,7 +1,10 @@
 #include "BearGraphics.hpp"
 #include "BearRHI/BearTextureUtils.h"
+#define STB_IMAGE_STATIC
 #define STB_IMAGE_IMPLEMENTATION
 #define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "StbImage/stb_image.h"
+#include "StbImage/stb_image_write.h"
 
 extern "C"
 {
@@ -20,8 +23,7 @@ extern "C"
 		return  bear_realloc<uint8>((uint8*)x, n);
 	}
 }
-#include "StbImage/stb_image.h"
-#include "StbImage/stb_image_write.h"
+
 bool BearImage::LoadFromFile(const bchar * str)
 {
 	BearFileStream stream;
